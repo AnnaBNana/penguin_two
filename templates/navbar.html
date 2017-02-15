@@ -1,8 +1,10 @@
-<div class="ui inverted fixed menu">
-    <a class="yellow vertically fitted item penguin_logo">the &nbsp;<span class="yellow">pen</span>guin</a>
-  <div class="right menu">
-    <a class="yellow vertically fitted item">Shop</a>
-    <a class="yellow vertically fitted item">Learn</a>
-    <a class="yellow vertically fitted item">Blog</a>
+<nav class="nav-bar">
+  <div class="nav-wrapper  grey darken-3">
+      <a class="penguin_logo" href="/">the &nbsp;<span class="yellow-text text-accent-4">pen</span>guin</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down nav-list">
+        <li class="shop"><a href="{% url 'shop:index'%}">Shop</a></li>
+        <li class="learn"><a href="{% url 'learn:index'%}">Learn</a></li>
+        <li class="blog"><a href="{% url 'blog:index'%}">Blog</a></li>
+      </ul>
   </div>
-</div>
+</nav>

@@ -2,10 +2,17 @@
 {% block navbar %}{% endblock %}
 {% block content %}
   <div class="bg">
-    <div class="front_buttons">
-      <button type="button" class="ui inverted yellow huge button shop_button">Shop</button>
-      <button type="button" class="ui inverted yellow huge button learn_button">Learn</button>
-      <div class="penguin_splash">the penguin</div>
+    <div class="front_buttons" id="frontb">
+      <a href="{% url 'shop:index'%}">
+        <button type="button" class="waves-effect waves-light btn-large black-text amber lighten-2">Shop</button>
+      </a>
+      <a href="{% url 'learn:index'%}">
+        <button type="button" class="waves-effect waves-light btn-large black-text amber darken-1">Learn</button>
+      </a>
+      <a href="{% url 'blog:index'%}">
+        <button type="button" class="waves-effect waves-light btn-large black-text amber darken-4">Blog</button>
+      </a>
+      <div class="penguin_splash yellow-text text-lighten-2">The Penguin</div>
     </div>
   </div>
 {% endblock %}

@@ -1,0 +1,66 @@
+$light-text: #ffffe7;
+
+.penguin_logo {
+  font-family: 'Lobster Two', cursive;
+  font-size: 2.2em;
+  padding-left: 20px;
+}
+.bg {
+  height: 100vh;
+  width: 100%;
+  background: url("../imgs/pen_placeholder_img.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.front_buttons {
+  text-align: center;
+  padding-top: 50px;
+}
+.penguin_splash {
+  font-family: 'Zeyada', cursive;
+  color: $light-text;
+  margin-top: 25vh;
+}
+.light-yellow {
+  color: $light-text;
+}
+@media screen and (max-width: 550px) {
+  .penguin_splash {
+    font-size: 4rem;
+  }
+}
+@media all and (min-width: 551px) {
+  .penguin_splash {
+    font-size: 8rem;
+  }
+}
+@media all and (min-width: 1000px) {
+  .penguin_splash {
+    font-size: 16rem;
+    margin-top: 150px;
+  }
+}
+.nav-bar {
+  z-index: 3 !important;
+}
+.side-nav {
+  z-index: -1 !important;
+  padding-top: 80px;
+}
+body {
+  height: 70px;
+}
+.wrapper {
+  margin-left: 300px;
+}
+nav a:hover {
+   background-color: unset !important;
+}
+nav ul li:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+.sidebar-header {
+  padding-left: 20px;
+}
