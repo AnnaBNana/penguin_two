@@ -5,5 +5,8 @@
   {% block content %}
     <div class="wrapper">
       <h3 class="ui center aligned header">Shop</h3>
+      {% for item in products %}
+        <p><img src="{{item.images.first.file.url}}" alt="">{{item}}</p>
+      {% endfor %}
     </div>
   {% endblock %}

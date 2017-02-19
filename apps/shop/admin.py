@@ -3,11 +3,10 @@ from .models import Image, Pen, Make, Nib, Knife, Bulletin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django_summernote.admin import SummernoteModelAdmin
 
-class ImageAdmin(admin.ModelAdmin):
-    fields = ('file')
-
 class ImageInline(GenericTabularInline):
     model = Image
+    fields = ('file', 'image_thumb')
+    readonly_fields = ('image_thumb',)
 
 class PenAdmin(SummernoteModelAdmin):
     inlines = [

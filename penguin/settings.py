@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_summernote',
+    'storages',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -133,3 +133,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+THUMB_SIZE = 100,100
+AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
+AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
+AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
+AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
+MEDIA_URL = "http://{}.s3.amazonaws.com/".format(AWS_STORAGE_BUCKET_NAME)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
