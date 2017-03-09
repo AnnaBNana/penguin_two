@@ -28,3 +28,9 @@ urlpatterns = [
     url(r'^blog/', include('apps.blog.urls', namespace='blog')),
     url(r'^summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]

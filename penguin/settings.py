@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = ('127.0.0.1')
 
 # Application definition
 
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_summernote',
     'storages',
+    'sorl.thumbnail',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -53,6 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'penguin.urls'
@@ -133,7 +137,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-THUMB_SIZE = 100,100
+THUMB_SIZE = 200,200
 AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
 AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']

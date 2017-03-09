@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
+{% load shop_extras %}
+{% load thumbnail %}
   {% block sidebar %}
     {% include 'shop/sidebar.html' %}
   {% endblock %}
   {% block content %}
     <div class="wrapper">
-      <h3 class="ui center aligned header">Shop</h3>
-      {% for item in products %}
-        <p><img src="{{item.images.first.file.url}}" alt="">{{item}}</p>
-      {% endfor %}
+      <h3 class="ui center aligned header">Recently Added Products</h3>
+        <div class="row">
+        {% for item in products %}
+          <div class="col">
+            <a href="{% url 'shop:show_product' item.model_name item.id %}">
+              <div class="card">
+                <div class="card-image">
+                  {% thumbnail item.images.all.0.image "200" as im %}
+                    <img src="{{im.url}}" alt="image for {{item}}">
+                  {% endthumbnail %}
+                </div>
+                <div class="card-content">
+                  <p>{{item}}</p>
+                  <p>${{item.price}}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+        </div>
     </div>
   {% endblock %}

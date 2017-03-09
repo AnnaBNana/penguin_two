@@ -39,13 +39,14 @@
 
 .side-nav {
   z-index: -1 !important;
-  padding-top: 80px; }
+  padding-top: 80px;
+  width: 240px !important; }
 
 body {
   height: 70px; }
 
 .wrapper {
-  margin-left: 300px; }
+  margin-left: 260px; }
 
 nav a:hover {
   background-color: unset !important; }
@@ -55,5 +56,13 @@ nav ul li:hover {
 
 .sidebar-header {
   padding-left: 20px; }
+
+.card.horizontal {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.note {
+  font-size: 0.9em; }
 
 /*# sourceMappingURL=penguin.css.map */

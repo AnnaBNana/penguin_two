@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block sidebar %}
+  {% include 'shop/sidebar.html' %}
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  <h3 class="header center">{{product}}</h3>
+  <div class="row">
+    <div class="col s6">
+      <div class="carousel carousel-slider">
+        {% for image in images %}
+          <a class="carousel-item" href="#one!">
+            {% thumbnail image.image "300" as im%}
+              <img src="{{im.url}}">
+            {% endthumbnail %}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col s6">
+      <div class="row">
+        <div class="col s12 grey lighten-3">
+          <strong>Specs:</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4">
+          <strong>Year:</strong> {{product.year}}
+        </div>
+        <div class="col s4">
+          <strong>Make:</strong> {{product.make}}
+        </div>
+        <div class="col s4">
+          <strong>Model:</strong> {{product.model}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4">
+          <strong>Body:</strong> {{product.body_color}}
+        </div>
+        <div class="col s4">
+          <strong>Cap:</strong> {{product.cap_color}}
+        </div>
+        <div class="col s4">
+          <strong>Length:</strong> {{product.length}} in.
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <strong>Condition:</strong> {{product.condition}}
+        </div>
+        <div class="col s6">
+          <strong>Flaws:</strong> {{product.flaws}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 grey lighten-3">
+          <strong>Description:</strong>
+        </div>
+        <div class="col s12">
+          {{product.description | safe}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 grey lighten-3">
+          <strong>Nib:</strong> {% if product.nib_alternative %}*{% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4">
+          <strong>Make:</strong> {{product.nib_make}}
+        </div>
+        <div class="col s4">
+          <strong>Style:</strong> {{product.nib_style}}
+        </div>
+        <div class="col s4">
+          <strong>Material:</strong> {{product.nib_material}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4">
+          <strong>Grade:</strong> {{product.nib_grade}}
+        </div>
+        <div class="col s4">
+          <strong>Flexibility:</strong> {{product.nib_flexibility}}
+        </div>
+        <div class="col s4">
+          <strong>Description:</strong> {{product.nib_description}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s7 flow-text">
+          ${{product.price}}
+        </div>
+      </div>
+      {% if product.nib_alternative %}
+      <div class="row">
+        <div class="col s12 note">
+          <span class="note">* other nib options available, fill in request during check-out</span>
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <a href="{% url 'shop:show_product' product.model_name product.id %}"><button type="button" class="btn grey darken-3">Add to cart</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.carousel.carousel-slider').carousel();
+  $('.carousel').carousel();
+  $('.carousel-slider').slider({full_width: false});
+});
+</script>
+
+{% endblock %}

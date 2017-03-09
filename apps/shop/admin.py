@@ -1,12 +1,11 @@
 from django.contrib import admin
-from .models import Image, Pen, Make, Nib, Knife, Bulletin
+from .models import Image, Pen, Make, Knife, Bulletin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django_summernote.admin import SummernoteModelAdmin
+from sorl.thumbnail.admin import AdminImageMixin
 
-class ImageInline(GenericTabularInline):
+class ImageInline(AdminImageMixin, GenericTabularInline):
     model = Image
-    fields = ('file', 'image_thumb')
-    readonly_fields = ('image_thumb',)
 
 class PenAdmin(SummernoteModelAdmin):
     inlines = [
@@ -21,6 +20,5 @@ class KnifeAdmin(SummernoteModelAdmin):
 
 admin.site.register(Pen, PenAdmin)
 admin.site.register(Make)
-admin.site.register(Nib)
 admin.site.register(Knife, KnifeAdmin)
 admin.site.register(Bulletin, BulletinAdmin)

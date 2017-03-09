@@ -3,6 +3,7 @@ from PIL import Image as Img
 import StringIO
 
 import boto3
+from sorl.thumbnail import ImageField, get_thumbnail
 
 from django.db import models
 from django.contrib import admin
@@ -21,6 +22,7 @@ s3 = session.resource('s3')
 SOLD_CHOICES = (
     ('S','Sold'),
     ('A','For Sale'),
+    ('P', 'Pending'),
     ('O', 'On Sale'),
     ('C','Collection'),
 )
@@ -40,53 +42,20 @@ CONDITIONS = (
 
 
 class Image(models.Model):
-    def image_thumb(self):
-        return mark_safe('<img src="{}" width="100" height="100" />'.format(self.file.url))
     def __unicode__(self):
         return "Image for: {}".format(self.content_object.__unicode__())
-    image_thumb.short_description = 'Image'
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type','object_id')
-    file = models.ImageField(null=True, upload_to='images')
-    thumb = models.ImageField(upload_to='thumbs', editable=False, blank=True, null=True)
+    image = ImageField(null=True, upload_to='images')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    def save(self, *args, **kwargs):
-        super(Image, self).save(*args, **kwargs)
-        if not self.thumb:
-            self.make_thumb()
-        print "save executed"
-    def make_thumb(self):
-        img = Img.open(storage.open(self.file.name))
-        img.thumbnail(THUMB_SIZE)
-        thumb_io = StringIO.StringIO()
-        img.save(thumb_io, format='JPEG')
-        thumb_file = InMemoryUploadedFile(thumb_io, None, "thumb_" + self.file.name, 'image/jpeg',thumb_io.len, None)
-        self.thumb = thumb_file
-        self.save(update_fields=['thumb'])
 
 
 class Make(models.Model):
     def __unicode__(self):
         return self.maker
     maker = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-class Nib(models.Model):
-    def __unicode__(self):
-        return str(self.make) + " " + str(self.model)
-    make = models.ForeignKey(Make)
-    material = models.CharField(max_length=255)
-    model = models.CharField(max_length=255)
-    size = models.CharField(max_length=255)
-    style = models.CharField(max_length=255)
-    additional_cost = models.DecimalField(max_digits=4,decimal_places=2)
-    status = models.CharField(max_length=1,choices=SOLD_CHOICES,default='A')
-    sold_date = models.DateField(blank=True,null=True)
-    quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -98,6 +67,9 @@ class Sale(models.Model):
 
 
 class Pen(models.Model):
+    def __init__(self, *args, **kwargs):
+        super(Pen, self).__init__(*args, **kwargs)
+        self.model_name = self.__class__.__name__
     def __unicode__(self):
         return "{} {} {} {}".format(self.year, self.body_color, self.make, self.model)
     make = models.ForeignKey(Make,related_name='pen')
@@ -115,7 +87,13 @@ class Pen(models.Model):
     purchase_date = models.DateField()
     description = models.TextField(max_length=2000)
     sold_date = models.DateField(blank=True,null=True)
-    nib = models.ForeignKey(Nib, related_name="pen")
+    nib_description = models.CharField(max_length=255)
+    nib_make = models.CharField(max_length=255)
+    nib_grade = models.CharField(max_length=255)
+    nib_style = models.CharField(max_length=255)
+    nib_material = models.CharField(max_length=255)
+    nib_flexibility = models.CharField(max_length=255)
+    nib_alternative = models.BooleanField()
     images = GenericRelation(Image)
     sale = models.ForeignKey(Sale,related_name='pen',blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
