@@ -1,9 +1,137 @@
-{% extends 'base.html' %}
-{% block sidebar %}
-  {% include 'shop/sidebar.html' %}
-{% endblock %}
+{% extends 'base.html' %} 
+{% load thumbnail %} 
+{% block sidebar %} 
+  {% include 'shop/sidebar.html' %} 
+{% endblock %} 
+{% load static %} 
 {% block content %}
 <div class="wrapper">
-  <h2>Product</h2>
+  <h3 class="header center">{{product}}</h3>
+  <div class="row">
+    <div class="col s6">
+      <div class="slider-for">
+        {% for image in images %}
+        <div class="content-box" id="lg-photo">
+          {% thumbnail image.image "x300" as im %}
+          {% if product.status == "S" %}
+          <a class="close-ribbon">sold</a>
+          {% endif %}
+          <img src="{{im.url}}"  width="{{ im.width }}" height="{{ im.height }}" class="main-product-image" id="main-product-image"> 
+          {% endthumbnail %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="slider-nav">
+        {% for image in images %}
+          {% thumbnail image.image "100" as im %}
+          <img src="{{im.url}}" class="img-thumb"> 
+          {% endthumbnail %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col s6 product-data">
+      <div class="row">
+        <div class="col s7 flow-text product-price">
+          ${{product.price}}
+        </div>
+        {% if product.status == "A" %}
+        <a href="{% url 'shop:add_to_cart' product.id %}" class="cart-btn">
+          <button type="button" class="btn yellow accent-4">Add to cart</button>
+        </a>
+        </a>
+        {% else %}
+        <button type="button" class="btn yellow accent-4 disabled">Add to cart</button>
+        {% endif %}
+        
+      </div>
+      <table class="bordered product-tables">
+        <caption class="grey darken-3 yellow-text text-accent-4 product-headers">{{product.type|capfirst}} Details:</caption>
+        <tbody>
+          {% if product.pen %}
+          <tr>
+            <td class="product-cat">Year:</td>
+            <td>{{product.pen.year}}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td class="product-cat">Make:</td>
+            <td>{{product.make}}</td>
+          </tr>
+          <tr>
+            <td class="product-cat">Model:</td>
+            <td>{{product.model}}</td>
+          </tr>
+          {% if product.pen %}
+          <tr>
+            <td class="product-cat">Cap:</td>
+            <td>{{product.pen.cap_color}}</td>            
+          </tr>
+          <tr>
+            <td class="product-cat">Body:</td>
+            <td>{{product.pen.body_color}}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td class="product-cat">Length:</td>
+            <td>{{product.length}}</td>
+          </tr>
+          <tr>
+            <td class="product-cat">Condition:</td>
+            <td>{{product.get_condition_display}}</td>
+          </tr>
+          <tr>
+            <td class="product-cat">Flaws:</td>
+            <td>{{product.flaws}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="grey darken-3 yellow-text text-accent-4 product-headers center-align">
+      Description:
+    </div>
+    <div class="col s12 description">
+      {{product.description | safe}}
+    </div>
+  </div>
+  {% if product.pen %}
+  <table class="bordered product-tables">
+    <caption class="grey darken-3 yellow-text text-accent-4 product-headers">Nib Details: {% if product.pen.nib_alternative %}*{% endif %} </caption>
+    <tbody>
+      <tr>
+        <td class="product-cat">Make:</td>
+        <td>{{product.pen.nib_make}}</td>
+        <td class="product-cat">Style:</td>
+        <td>{{product.pen.nib_style}}</td>
+        <td class="product-cat">Material:</td>
+        <td>{{product.pen.nib_material}}</td>
+      </tr>
+      <tr>
+        <td class="product-cat">Grade:</td>
+        <td>{{product.pen.nib_grade}}</td>
+        <td class="product-cat">Flexibility:</td>
+        <td>{{product.pen.nib_flexibility}}</td>
+        <td class="product-cat">Description:</td>
+        <td>{{product.pen.nib_description}}</td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+  <div class="row">
+    {% if product.status == "A" %}
+    <a href="{% url 'shop:add_to_cart' product.id %}"><button type="button" class="btn yellow accent-4">Add to cart</button></a>
+    {% else %}
+    <button type="button" class="btn yellow accent-4 disabled">Add to cart</button>
+    {% endif %}
+  </div>
+  {% if product.pen.nib_alternative %}
+  <div class="row">
+    <div class="col s12 note">
+      <span class="note">* other nib options available, fill in request during check-out</span>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
+

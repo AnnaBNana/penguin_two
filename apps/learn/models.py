@@ -12,6 +12,8 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Article(models.Model):
+    def __unicode__(self):
+        return self.headline
     headline = models.CharField(max_length=255)
     text = models.TextField(max_length=75000)
     category = models.ForeignKey(Category, related_name='article')

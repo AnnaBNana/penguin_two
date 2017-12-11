@@ -3,7 +3,12 @@
     {% include 'learn/sidebar.html' %}
   {% endblock %}
   {% block content %}
-    <div class="wrapper">
-      <h3 class="ui center aligned header">Learn</h3>
+    <div class="wrapper" id="article" data-id="{{article.id}}">
+      {% if not article %}
+        <h5 class="center">There are no articles currently, check back soon!</h5>
+      {% else %}
+      <h3 class="ui center aligned header">{{article.headline}}</h3>
+      {{article.text|safe}}
+      {% endif %}
     </div>
   {% endblock %}

@@ -22,15 +22,18 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('apps.users.urls', namespace='users')),
-    url(r'^shop/', include('apps.shop.urls', namespace='shop')),
+    url(r'^', include('apps.shop.urls', namespace='shop')),
     url(r'^learn/', include('apps.learn.urls', namespace='learn')),
     url(r'^blog/', include('apps.blog.urls', namespace='blog')),
     url(r'^summernote/', include('django_summernote.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
+    urlpatterns += static(settings.MEDIA_URL)
+    print "url:", settings.MEDIA_URL, "root:", settings.MEDIA_ROOT

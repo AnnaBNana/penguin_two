@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block sidebar %}
+  {% include 'shop/sidebar.html' %}
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+  <h3 class="header center">Your Cart:</h3>
+  {% if not items %}
+  <div class="row">
+    <h5 class="center red-text text-darken-2">There's nothing in your cart!</h5>
+  </div>
+  {% else %}
+    {% if error %} 
+      <div class="sold-items-err">
+        <i class="fa fa-exclamation-triangle fa-2x err-circle" aria-hidden="true"></i>
+        {{error}} 
+        {% for item in sold_items %}
+          {{item}}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% for item in items %}
+    <div class="row">
+      <ul class="collection">
+        <li class="collection-item">
+          {% thumbnail item.image.all.0.image "120" as im %}
+          <div class="col s2">
+            <a href="{% url 'shop:show_product' item.id %}"><img class="cart-img" src="{{im.url}}" alt="image for {{item}}"></a>
+          </div>
+          {% endthumbnail %}
+          <p class="col s7 cart-text">{{item}}</p>
+          <a class="col s1 cart-text grey-text" id="cart-delete" href="{% url 'shop:remove_from_cart' item.id %}">
+            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+          </a>
+          <p class="col s2 amber-text text-darken-4 cart-text cart-price">${{item.price}}</p>
+        </li>
+      </ul>
+    </div>
+    {% endfor %}
+    <div class="row rt">
+      <p class="emphasis-small">Item Subtotal: ${{total}}</p>
+    </div>
+    <div class="row rt">
+      <a href="{% url 'shop:checkout' %}">
+        <button class="btn yellow accent-4" type="button">Checkout</button>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

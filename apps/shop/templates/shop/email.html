@@ -1,0 +1,60 @@
+{% load shop_extras %} {% load thumbnail %} {% load static %}
+<!DOCTYPE html> {% load shop_extras %} {% load thumbnail %} {% load static %}
+<html lang="en" style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+
+<head style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+</head>
+
+<body style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+
+    <div class="wrapper" style="padding: 0;margin: 0 auto;font-family: 'Roboto', 'Verdana', 'sans-serif';width: 80%;">
+        {% if seller%}
+        <div class="seller-text" style="padding: 0;margin: 20px 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+            Congratulations! You made a sale! The email we sent your client is shown below. Don't forget to mark your orders complete
+            and email the client at
+            <a href="mailto:{{order.shipping_address.email}}" style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-decoration: none;color: #0288d1;">{{order.shipping_address.email}}</a> once their order has shipped.
+        </div>
+        <ul style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';margin-bottom: 20px;">
+            {% for item in order.products.all %}
+            <lip style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">id#: {{order.id}}, item description: {{item}} {% endfor %}
+            </lip>
+        </ul>
+        {% endif %}
+        <div class="header" style="padding: 10px 20px;margin: 0;font-family: 'Lobster Two', 'Arial Narrow', Arial, sans-serif;width: 100%;font-size: 2em;color: #fff;background-color: #424242;">
+            the
+            <span class="yellow" style="padding: 0;margin: 0;font-family: 'Lobster Two', 'Arial Narrow', Arial, sans-serif;color: #ffd600;">pen</span>guin
+        </div>
+        <div class="blurb" style="padding: 20px;margin: 0 auto;font-family: 'Roboto', 'Verdana', 'sans-serif';width: 80%;line-height: 1.5em;">
+
+            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Dear {{order.shipping_address.addressee|firstonly|capleading}},</p>
+            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Thank you very much for your purchase of 
+                {% for item in order.products.all %}
+                    {{item}}
+                    {% if item != order.products.last %}
+                    ,
+                    {% endif %}
+                {% endfor %}
+                . {{thank_you}} I hope you will use and enjoy {{prep}} for many years to come.
+            </p>
+            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Best Regards,</p>
+            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Rick</p>
+        </div>
+        <h2 style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-align: center;">Order Summary</h2>
+        <div class="row order-summary" style="padding: 0;margin: 20px auto;font-family: 'Roboto', 'Verdana', 'sans-serif';border: 1px solid #eeeeee;width: 90%;">
+            <div class="col s6 order" style="padding: 20px;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';border-right: 1px solid #eeeeee;width: 50%;display: inline-block;vertical-align: top;box-sizing: border-box;">
+                <h5 style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';font-size: 1.2em;font-weight: bold;">Order:</h5>
+                <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Order #: {{order.id}}</p>
+                <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Order total: ${{order.subtotal|add_float:order.shipping}}</p>
+                <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Shipping carrier: {{order.shipping_carrier}}</p>
+                <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Shipping service: {{order.shipping_service}}</p>
+            </div>
+            <div class="col s6 address" style="padding: 20px;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';display: inline-block;vertical-align: top;box-sizing: border-box;">
+                <h5 style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';font-size: 1.2em;font-weight: bold;">Address:</h5>
+                {{order.shipping_address|linebreaksbr}}
+            </div>
+        </div>
+        <div class="footer" style="padding: 10px 20px;margin: 0;font-family: 'Lobster Two', 'Arial Narrow', Arial, sans-serif;width: 100%;font-size: 2em;color: #fff;background-color: #424242;height: 1.6em;"></div>
+    </div>
+</body>
+
+</html>

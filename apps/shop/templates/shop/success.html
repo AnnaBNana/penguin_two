@@ -1,0 +1,47 @@
+{% load shop_extras %}
+{% load thumbnail %} 
+{% load static %}
+<div class="success-container">
+    <div class="center">
+        <i class="fa fa-check-circle fa-4x light-green-text text-darken-1" aria-hidden="true"></i>
+        <h3 class="light-green-text text-darken-1 success-msg">We got your order!</h3>
+    </div>
+    <h4 class="center">Order Summary:</h4>
+    <div class="row order-summary">
+        <div class="col s6 order">
+            <h5>Order:</h5>
+            <p>Order #: {{order.id}}</p>
+            <p>Order total: ${{order.subtotal|add_float:order.shipping}}</p>
+            <p>Shipping carrier: {{order.shipping_carrier}}</p>
+            <p>Shipping service: {{order.shipping_service}}</p>
+        </div>
+        <div class="col s6 address">
+            <h5>Address:</h5>
+            {{order.shipping_address|linebreaksbr}}
+        </div>
+    </div>
+    <div class="order-review-cont">
+        {% for product in order.products.all %}
+            <div class="row">
+                {% thumbnail product.image.all.0.image "x50" as im %}
+                <div class="col s2">
+                    <img src="{{im.url}}" class="main-product-image" width={{im.width}} height={{im.height}}>     
+                </div>
+                {% endthumbnail %}
+                <span class="col s8">
+                    {{product}}
+                </span> 
+                <span class="col s2 right-align">
+                    ${{product.price}}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="center">
+        <p>If there's something wrong with the above and you need to contact us, or if you just want to talk, find us at <a href="mailto:rpropas@thepenguinpen.com">rpropas@thepenguinpen.com</a></p>
+        <a href="{% url 'shop:index' %}">
+            <button class="btn yellow accent-4" type="button">Continue Shopping </button>
+        </a>
+    </div>
+
+</div>

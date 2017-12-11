@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load shop_extras %}
+{% load thumbnail %} 
+{% block sidebar %} 
+    {% include 'shop/sidebar.html' %} 
+{% endblock %} 
+{% block content %}
+    <div class="wrapper">
+        <h3 class="ui center aligned header">News</h3>
+        {% for bulletin in bulletins %}
+        <div class="row">
+            <div class="col s12 m12">
+                <div class="card-panel white">
+                    <h3 class="grey lighten-3 bulletin-head">{{bulletin.headline}}</h3>
+                <div class="bulletin-body">
+                    {{bulletin.text|replace_url|safe|truncatechars_html:150}} 
+                    {% if bulletin.text|is_trunc %}
+                    <button type="button" class="btn waves-effect waves-gray btn-flat modal-trigger" id="{{bulletin.id}}"> read more </button>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for each bulletin -->
+        <div id="modal{{bulletin.id}}" class="modal">
+            <div class="modal-content">
+                <h5 class="modal-head grey lighten-3">
+                    {{bulletin.headline}}
+                    <i class="fa fa-window-close-o closer" aria-hidden="true"></i>
+                </h5>
+                <div class="modal-body">
+                    {{bulletin.text|safe}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

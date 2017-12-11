@@ -2,9 +2,21 @@ from django.contrib import admin
 from .models import Category, Article
 from django_summernote.admin import SummernoteModelAdmin
 
-# Register your models here.
 class ArticleAdmin(SummernoteModelAdmin):
-    pass
+    search_fields = [
+        "headline",
+        "text",
+        "category__name"
+    ]
+    list_filter = [
+        "category__name"
+    ]
 
-admin.site.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    search_fields = [
+        "name"
+    ]
+
+
+admin.site.register(Category,CategoryAdmin)
 admin.site.register(Article,ArticleAdmin)

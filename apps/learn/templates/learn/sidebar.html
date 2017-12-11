@@ -1,6 +1,11 @@
 <ul class="side-nav fixed sn">
-  <div class="container ctforsidenav">
-    <li>Learn Link 1</li>
-    <li>Learn Link 2</li>
-  </div>
+    {% for item in all_articles %}
+        {% if item.headline %}
+            <li class="text-grey darken-2 article-item" data-id="{{item.id}}"><a href="{% url 'learn:article' item.id %}">{{item}}</a></li>
+        {% else %}
+            <li class="divider"></li>
+            <li><a href="#" class="subheader grey darken-3 yellow-text text-accent-4">{{item}}</a></li>
+            <li class="divider"></li>
+        {% endif %}
+    {% endfor %}
 </ul>

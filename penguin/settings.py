@@ -29,6 +29,8 @@ ALLOWED_HOSTS = []
 
 INTERNAL_IPS = ('127.0.0.1')
 
+TEMPLATE_DEBUG = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +48,9 @@ INSTALLED_APPS = [
     'storages',
     'sorl.thumbnail',
     'debug_toolbar',
+    'autofixture',
+    'django_countries',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -74,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'penguin.context_processors.cart_count',
             ],
         },
     },
@@ -129,11 +135,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -142,5 +147,12 @@ AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
 AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
 AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
-MEDIA_URL = "http://{}.s3.amazonaws.com/".format(AWS_STORAGE_BUCKET_NAME)
+AWS_QUERYSTRING_AUTH = False
+MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
+STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#session persistance settings
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 3600
+SESSION_SAVE_EVERY_REQUEST = True
