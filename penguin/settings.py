@@ -25,7 +25,7 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 # remove for deployment
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['52.53.151.159']
 
 # INTERNAL_IPS = ('127.0.0.1')
 
@@ -95,7 +95,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'apropas',
+        'USER': 'ubuntu',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
