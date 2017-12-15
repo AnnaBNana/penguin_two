@@ -25,7 +25,7 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 # remove for deployment
 DEBUG = False
 
-ALLOWED_HOSTS = ['54.193.123.91']
+ALLOWED_HOSTS = ['localhost']
 
 # INTERNAL_IPS = ('127.0.0.1')
 
