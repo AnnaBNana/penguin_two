@@ -131,6 +131,7 @@ def search(request):
 def product(request,id):
     product = Product.objects.get(id=id)
     images = Image.objects.filter(product=product)
+    print images
     context = {
         "product": product,
         "images": images,

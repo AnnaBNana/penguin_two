@@ -25,11 +25,49 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 # remove for deployment
 DEBUG = False
 
-ALLOWED_HOSTS = ['52.53.151.159']
+ALLOWED_HOSTS = ['54.215.112.61', 'ec2-54-215-112-61.us-west-1.compute.amazonaws.com']
 
 # INTERNAL_IPS = ('127.0.0.1')
 
 TEMPLATE_DEBUG = False
+
+THUMBNAIL_DEBUG = True
+ADMINS = [('Anna', 'apropas@gmail.com')] 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'applogfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'penguin.log'),
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10,
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['applogfile'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'penguin': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        },	
+    }
+}
 
 # Application definition
 
@@ -149,6 +187,7 @@ AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
 AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
 AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
+MEDIA_ROOT = MEDIA_URL
 STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

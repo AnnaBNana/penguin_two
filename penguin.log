@@ -1,0 +1,174 @@
+Internal Server Error: /learn/
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/learn/views.py", line 9, in index
+    article = Article.objects.latest("created_at")
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 558, in latest
+    return self._earliest_or_latest(field_name=field_name, direction="-")
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 552, in _earliest_or_latest
+    return obj.get()
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 374, in get
+    num = len(clone)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 232, in __len__
+    self._fetch_all()
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 1118, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 53, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/sql/compiler.py", line 894, in execute_sql
+    raise original_exception
+ProgrammingError: relation "learn_article" does not exist
+LINE 1: ..."."created_at", "learn_article"."updated_at" FROM "learn_art...
+                                                             ^
+
+Internal Server Error: /show/product/1
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/shop/views.py", line 132, in product
+    product = Product.objects.get(id=id)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+DoesNotExist: Product matching query does not exist.
+Internal Server Error: /show/product/1
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/shop/views.py", line 132, in product
+    product = Product.objects.get(id=id)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+DoesNotExist: Product matching query does not exist.
+Internal Server Error: /show/product/1
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/shop/views.py", line 132, in product
+    product = Product.objects.get(id=id)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+DoesNotExist: Product matching query does not exist.
+Internal Server Error: /show/product/1
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/shop/views.py", line 132, in product
+    product = Product.objects.get(id=id)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+DoesNotExist: Product matching query does not exist.
+Internal Server Error: /show/product/3
+Traceback (most recent call last):
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/penguin_two/apps/shop/views.py", line 139, in product
+    return render(request, 'shop/product.html', context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/loader.py", line 68, in render_to_string
+    return template.render(context, request)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/backends/django.py", line 66, in render
+    return self.template.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 207, in render
+    return self._render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/test/utils.py", line 107, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 957, in render_annotated
+    return self.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 177, in render
+    return compiled_parent._render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/test/utils.py", line 107, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 957, in render_annotated
+    return self.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/loader_tags.py", line 72, in render
+    result = block.nodelist.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 957, in render_annotated
+    return self.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/defaulttags.py", line 216, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/template/base.py", line 957, in render_annotated
+    return self.render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/templatetags/thumbnail.py", line 59, in render
+    return self._render(context)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/templatetags/thumbnail.py", line 137, in _render
+    thumbnail = get_thumbnail(file_, geometry, **options)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/shortcuts.py", line 8, in get_thumbnail
+    return default.backend.get_thumbnail(file_, geometry_string, **options)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/base.py", line 94, in get_thumbnail
+    cached = default.kvstore.get(thumbnail)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/kvstores/base.py", line 26, in get
+    return self._get(image_file.key)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/kvstores/base.py", line 145, in _get
+    value = self._get_raw(add_prefix(key, identity))
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/sorl/thumbnail/kvstores/cached_db_kvstore.py", line 36, in _get_raw
+    value = KVStoreModel.objects.get(key=key).value
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 374, in get
+    num = len(clone)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 232, in __len__
+    self._fetch_all()
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 1118, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/query.py", line 53, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch)
+  File "/home/ubuntu/penguin_two/venv/local/lib/python2.7/site-packages/django/db/models/sql/compiler.py", line 894, in execute_sql
+    raise original_exception
+ProgrammingError: relation "thumbnail_kvstore" does not exist
+LINE 1: ..._kvstore"."key", "thumbnail_kvstore"."value" FROM "thumbnail...
+                                                             ^
+
