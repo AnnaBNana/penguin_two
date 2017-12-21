@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 INTERNAL_IPS = ('127.0.0.1')
 
-# TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = True
 
 LOGGING = {
     'version': 1,

@@ -608,6 +608,7 @@ def email_text(request, order, seller):
         context["seller"] = True
     return render(request, "shop/email.html", context)
 
+
 def get_all_search_fields():
     product_fields = Product._meta.get_fields()
     product_field_names = [field.name for field in product_fields if field.get_internal_type() == "CharField" or field.get_internal_type() == "TextField"]

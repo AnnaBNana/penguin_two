@@ -1,53 +1,44 @@
-{% extends 'base.html' %} 
-{% load thumbnail %}
-{% block sidebar %} 
-{% include 'shop/sidebar.html' %} 
-{% endblock %} 
-{% block content %}
+{% extends 'base.html' %} {% load thumbnail %} {% block sidebar %} {% include 'shop/sidebar.html' %} {% endblock %} {% block content %}
 <div class="wrapper" id="store">
     <h3 class="center">{{headline}}</h3>
     <div class="row" id="main">
-      {% for item in products %}
-      <div class="col s3 magic">
-        <a href="{% url 'shop:show_product' item.id %}">
-          <div class="card hoverable">
-            <div class="card-image">
-              {% thumbnail item.image.all.0.image 'x250' as im %}
-              <img src="{{im.url}}" alt="image for {{item}}" class="product-thumbs"> {% endthumbnail %}
-            </div>
-            <div class="card-content">
-              <p class="truncate">{{item}}</p>
-              <p>${{item.price}}</p>
-            </div>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+        {% for item in products %}
+        <div class="col s3 magic">
+            <a href="{% url 'shop:show_product' item.id %}">
+                <div class="card hoverable">
+                    <div class="card-image">
+                        {% thumbnail item.image.all.0.image 'x250' as im %} {{im}}
+                        <img src="{{im.url}}" alt="image for {{item}}" class="product-thumbs"> {% endthumbnail %}
+                    </div>
+                    <div class="card-content">
+                        <p class="truncate">{{item}}</p>
+                        <p>${{item.price}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
     <div class="row">
-      <div class="col s4 left-align">
-        {% if products.has_previous %}
-          <a href="{% url 'shop:filter' %}?filter={{filter}}&value={{value}}&page={{ products.previous_page_number }}" class="grey-text text-darken-3 waves-effect waves-light nav-arrows">
-            <i class="large material-icons left btn-icon">chevron_left</i>
-            Previous
-          </a> 
+        <div class="col s4 left-align">
+            {% if products.has_previous %}
+            <a href="{% url 'shop:filter' %}?filter={{filter}}&value={{value}}&page={{ products.previous_page_number }}" class="grey-text text-darken-3 waves-effect waves-light nav-arrows">
+                <i class="large material-icons left btn-icon">chevron_left</i> Previous
+            </a>
+            {% endif %}
+        </div>
+        {% if products %}
+        <div class="col s4 nav-pages center-align">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}
+        </div>
         {% endif %}
-      </div>
-      {% if products %}
-      <div class="col s4 nav-pages center-align">
-        Page {{ products.number }} of {{ products.paginator.num_pages }}
-      </div>
-      {% endif %}
-      <div class="col s4 right-align">
-        {% if products.has_next %}
-          <a href="{% url 'shop:filter' %}?filter={{filter}}&value={{value}}&page={{products.next_page_number}}" class="grey-text text-darken-3 waves-effect waves-light nav-arrows">
+        <div class="col s4 right-align">
+            {% if products.has_next %}
+            <a href="{% url 'shop:filter' %}?filter={{filter}}&value={{value}}&page={{products.next_page_number}}" class="grey-text text-darken-3 waves-effect waves-light nav-arrows">
             Next
             <i class="large material-icons right">chevron_right</i>
-          </a>
-        {% endif %}
-      </div>
+          </a> {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
-
-
