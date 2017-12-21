@@ -23,13 +23,13 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.53.151.159']
 
-INTERNAL_IPS = ('127.0.0.1')
+# INTERNAL_IPS = ('127.0.0.1')
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 LOGGING = {
     'version': 1,
@@ -131,7 +131,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'apropas',
+        'USER': 'ubuntu',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -175,9 +175,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
 THUMB_SIZE = 200,200
 AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
 AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
@@ -187,7 +187,7 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
 STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
