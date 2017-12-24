@@ -23,13 +23,49 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['54.215.112.61', 'ec2-54-215-112-61.us-west-1.compute.amazonaws.com']
 
-# INTERNAL_IPS = ('127.0.0.1')
+INTERNAL_IPS = ('127.0.0.1')
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'applogfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'penguin.log'),
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10,
+        },
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'penguin': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        },
+    }
+}
 
 THUMBNAIL_DEBUG = True
 ADMINS = [('Anna', 'apropas@gmail.com')] 
@@ -88,7 +124,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'autofixture',
     'django_countries',
-    'phonenumber_field'
+    'phonenumber_field',
+    'adminsortable',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -118,6 +155,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'penguin.context_processors.cart_count',
+                'django.template.context_processors.static',
             ],
         },
     },
@@ -133,7 +171,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'ubuntu',
+        'USER': 'apropas',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',

@@ -609,47 +609,6 @@ def email_text(request, order, seller):
         context["seller"] = True
     return render(request, "shop/email.html", context)
 
-def mail_test(request):
-    order = Order.objects.get(id=30)
-    products = order.products.all()
-    pens = order.products.filter(pen__isnull=False)
-    knives = order.products.filter(knife__isnull=False)
-    if len(pens) == len(products):
-        item_type = "pens"
-    elif len(knives) == len(products):
-        item_type = "knives"
-    else:
-        item_type = "items"
-    prep = "them"
-    if len(products) == 1:
-        prep = "it"
-        thank_you = "These are great {} and this is a fine example.".format(item_type)
-        if item_type == "pens":
-            item_type = "pen"
-        elif item_type == "knives":
-            item_type = "knife"
-    else:
-        thank_you = ""
-    context = {
-        "order": order,
-        "thank_you": thank_you,
-        "item_type": item_type,
-        "prep": prep, 
-        "seller": True
-    }
-    text = render(request, "shop/email.html", context)
-    test_email = "Anna Propas <apropas@gmail.com>"
-    order_notification = requests.post(
-        MAILGUN_DOMAIN,
-        auth=("api", MAILGUN_KEY),
-        data={
-            "from":   test_email,
-            "to": [test_email],
-            "subject": "CSS Test",
-            "html": text
-        }
-    )
-    return render(request, "shop/email.html", context)
 
 def get_all_search_fields():
     product_fields = Product._meta.get_fields()
