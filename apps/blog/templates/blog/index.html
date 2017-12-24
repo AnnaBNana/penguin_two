@@ -1,31 +1,17 @@
-{% extends 'base.html' %}
-  {% block sidebar %}
-    {% include 'blog/sidebar.html' %}
-  {% endblock %}
-  {% block content %}
-    {% load tz %}
-    <div class="wrapper" id="blog" data-id="{{post.id}}">
-      {% if not post and not intro %}
+{% extends 'base.html' %} 
+{% block sidebar %} 
+{% include 'blog/sidebar.html' %} 
+{% endblock %} 
+{% block content %} 
+{% load tz %}
+<div class="wrapper" id="blog" data-id="{{post.id}}">
+    {% if not post %}
         <h5 class="center">There are no blog posts currently, check back soon!</h5>
-      {% endif %}
-      {% if intro %}
-        <h3 class="center-align">{{intro.title}}</h3>
-        {{intro.text|safe}}
-        <div class="divider"></div>
-      {% endif %}
-      {% if post %}
-      <h4 class="ui center aligned header">{{post}}</h4>
-      <p class="date-stamp grey-text text-lighten-1 center-align">Last Updated: {{post.updated_at|date:"F j, Y"}} at {{post.updated_at|time:"g:i a"}}</p>
-      {% endif %}
-      {% if intro %}
-        {% if slice_length == 550 %}
-          {{post.text|safe|truncatewords_html:slice_length}}
-          <div class="center-wrapper">
-            <a href="{% url 'blog:blog' post.id %}" class="blog-continue"><button type="button" class="waves-effect waves-yellow btn-flat">Finish Reading</button></a>
-          </div>
-        {% endif %}
-      {% else %} 
+    {% endif %} 
+    {% if post %}
+        <h4 class="ui center aligned header">{{post}}</h4>
+        <p class="date-stamp grey-text text-lighten-1 center-align">Last Updated: {{post.updated_at|date:"F j, Y"}} at {{post.updated_at|time:"g:i a"}}</p>
         {{post.text|safe}}
-      {% endif %}
-    </div>
-  {% endblock %}
+    {% endif %} 
+</div>
+{% endblock %}
