@@ -24,7 +24,6 @@ class ImageInline(AdminImageMixin, admin.TabularInline):
 
 class PenInline(admin.StackedInline):
     form = PenAdminForm
-    classes = ['collapse']
     model = Pen
     verbose_name_plural = "Pen Details"
     max_num = 1
@@ -40,10 +39,21 @@ class KnifeInline(admin.StackedInline):
 class ProductAdmin(SummernoteModelAdmin):
     form = ProductAdminForm
     ordering = ('-updated_at',)
+    fieldsets = (
+        (None, {
+            'fields': ('make', 'model', 'condition', 'flaws', 'length', 'width', 'depth', 'weight', 'price', 'description')
+        }),
+        ('Purchase Information', {
+            'fields': ('purchase_source', 'purchase_date', 'cost')
+        }),
+        ('Stocking Information', {
+            'fields': ('in_stock', 'status', 'sold_date', 'sale')
+        }),
+    )
     inlines = [
+        PenInline,
         ImageInline,
-        KnifeInline,
-        PenInline
+        KnifeInline, 
     ]
     exclude = ('order',)
     search_fields = [
@@ -80,7 +90,6 @@ class ProductAdmin(SummernoteModelAdmin):
         mark_sold
     ]
 
-
 # order inline
 class AddressInline(admin.StackedInline):
     model = Address
@@ -89,10 +98,16 @@ class AddressInline(admin.StackedInline):
     max_num = 1
 
 
+class ProductInline(admin.TabularInline):
+    model = Product
+    fields = ['id','make','model']
+    readonly_fields = ['id','make','model']
+    extra = 0
+
 class OrderAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     inlines = [
-        # AddressInline,
+        ProductInline
     ]
     search_fields = [
         "order_method",
@@ -116,7 +131,6 @@ class OrderAdmin(admin.ModelAdmin):
         "order_method",
         "status",
     ]
-
 
 
 class SaleAdmin(admin.ModelAdmin):
