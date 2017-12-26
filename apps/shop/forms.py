@@ -65,12 +65,26 @@ class InchWidget(widgets.TextInput):
         return mark_safe("<span>{} in.</span>".format(super(InchWidget, self).render(name,value,attrs)))
 
 class ProductAdminForm(ModelForm):
+    class Meta:
+        labels = {
+            "in_stock": "Number in Stock",
+            "cost": "Purchase cost",
+
+        }
     def __init__(self, *args, **kwargs):
         super(ProductAdminForm, self).__init__(*args, **kwargs)
         self.fields['weight'].widget = OunceWidget()
         self.fields['length'].widget = InchWidget()
         self.fields['width'].widget = InchWidget()
         self.fields['depth'].widget = InchWidget()
+    def clean(self):
+        status = self.cleaned_data.get('status')
+        in_stock = self.cleaned_data.get('in_stock')
+        if in_stock > 0 and status != 'A':
+            raise forms.ValidationError("If item status is sold, item 'number in stock' must be 0.")
+        if in_stock < 1 and status != 'S':
+            raise forms.ValidationError("If product 'number in stock' is 0, item must be marked sold.")
+
 
 class PenAdminForm(ModelForm):
     class Meta:
