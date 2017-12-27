@@ -18,7 +18,6 @@ def add_float(value, num):
 
 @register.filter
 def replace_url(value):
-    print value
     pattern = r'<img.+?>'
     match = re.search(pattern, value)
     repl = "<p class='img-note'>Click 'read more' to view images</p>"

@@ -13,7 +13,6 @@ def index(request):
         "article": article,
         "all_articles": article_list(),
     }
-    print context
     return render(request, 'learn/index.html', context)
 
 def article(request,id):
