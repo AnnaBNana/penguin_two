@@ -246,14 +246,14 @@ def shipping_cost(request):
         phone = "510-754-3278"
     )
     address = add_address(request, messages)
-    print "address after validation", address
+    # print "address after validation", address
     if 'shipping_address' in address:
         to_address = address['to_address']
         address_id = address['shipping_address'].id
     else:
         # return errors?
-        print "return errors"
-        print address
+        # print "return errors"
+        # print address
         return JsonResponse(address)
     data = {
         "item_ids": item_ids,
@@ -359,7 +359,7 @@ def add_address(request, messages):
         )
     if response.status_code == 200:
         if not response.json().get("is_valid"):
-            print "failed validation"
+            # print "failed validation"
             message = "Email invalid"
             if response.json().get("did_you_mean"):
                 message += "; did you mean: {}".format(response.json().get("did_you_mean"))
@@ -443,7 +443,7 @@ def get_shipping(request, data):
         height = 5.375
         width = 1.625
     else:
-        print "irregular items present"
+        # print "irregular items present"
         usps_shipment = None
         fedex_shipment = None
         if len(items) == 1:

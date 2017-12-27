@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^learn/', include('apps.learn.urls', namespace='learn')),
     url(r'^blog/', include('apps.blog.urls', namespace='blog')),
     url(r'^summernote/', include('django_summernote.urls')),
-] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
@@ -36,4 +36,3 @@ if settings.DEBUG:
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
     urlpatterns += static(settings.MEDIA_URL)
-    print "url:", settings.MEDIA_URL, "root:", settings.MEDIA_ROOT
