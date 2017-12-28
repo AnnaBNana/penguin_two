@@ -6,7 +6,7 @@
   {% endblock %}
   {% block content %}
     <div class="wrapper">
-      <h3 class="ui center aligned header">News</h3>
+      <h4 class="ui center aligned header">News</h4>
       {% for bulletin in bulletins %}
       <div class="row">
         <div class="col s12 m12">
@@ -37,7 +37,7 @@
       {% endfor %}
       <a href="{% url 'shop:news' %}"><button class="waves-effect waves-light yellow accent-4 btn news-btn">see all news</button></a>
       <div class="divider"></div>
-      <h3 class="ui center aligned header">Recently Added</h3>
+      <h4 class="ui center aligned header">Recently Added</h4>
       <div class="row" id="main-content">
        {% for item in products %}
       <div class="col s3 magic">
@@ -62,7 +62,4 @@
         </a>
       {% endif %}
     </div>
-  {% endblock %}
-  {% block footer %} 
-  {% include 'shop/footer.html' %} 
   {% endblock %}

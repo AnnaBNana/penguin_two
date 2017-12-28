@@ -23,13 +23,13 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['54.215.112.61', 'ec2-54-215-112-61.us-west-1.compute.amazonaws.com']
+# ALLOWED_HOSTS = ['54.215.112.61', 'ec2-54-215-112-61.us-west-1.compute.amazonaws.com']
 
 INTERNAL_IPS = ('127.0.0.1')
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ADMINS = [('Anna', 'apropas@gmail.com')] 
 
@@ -134,7 +134,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'ubuntu',
+        'USER': 'apropas',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -190,6 +190,7 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
 MEDIA_ROOT = MEDIA_URL
 STATIC_URL = '/static/'
+# STATIC_ROOT = "../static"
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings

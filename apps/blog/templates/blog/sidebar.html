@@ -1,4 +1,4 @@
-<ul class="side-nav fixed sn">
+<ul class="side-nav fixed">
   {% for blog in recent_blogs %}
   <li id="blog-item">
     <a href="{% url 'blog:blog' blog.id %}" class="blog-item" id="link-wrapper" data-id="{{blog.id}}">

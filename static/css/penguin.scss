@@ -44,10 +44,12 @@ a:hover {
 }
 
 .wrapper {
-  margin-left: 260px;
-  margin-right: 20px;
-  margin-bottom: 50px;
+  margin: 20px 20px 50px 260px;
   flex: 1 0 auto;
+}
+
+#blog {
+  margin-top: 60px;
 }
 
 .light-yellow {
@@ -173,7 +175,7 @@ nav ul li:hover {
 }
 
 .checkout-container {
-  padding: 60px;
+  padding: 100px 50px;
 }
 
 .mods {

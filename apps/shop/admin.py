@@ -41,7 +41,7 @@ class ProductAdmin(SummernoteModelAdmin):
     ordering = ('-updated_at',)
     fieldsets = (
         (None, {
-            'fields': ('make', 'model', 'condition', 'flaws', 'length', 'width', 'depth', 'weight', 'price', 'description')
+            'fields': ('make', 'model', 'condition', 'flaws', 'special_shipping', 'length', 'width', 'depth', 'weight', 'price', 'description')
         }),
         ('Purchase Information', {
             'fields': ('purchase_source', 'purchase_date', 'cost')

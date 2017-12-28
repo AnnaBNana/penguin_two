@@ -1,5 +1,5 @@
 {% regroup all_articles by category__name as article_list %}
-<ul class="side-nav fixed sn">
+<ul class="side-nav fixed">
     {% for category in article_list %}
     <li><a href="#" class="subheader grey darken-3 yellow-text text-accent-4">{{category.grouper}}</a></li>
     <li class="divider"></li>

@@ -24,10 +24,11 @@ a:hover {
   height: 100vh; }
 
 .wrapper {
-  margin-left: 260px;
-  margin-right: 20px;
-  margin-bottom: 50px;
+  margin: 20px 20px 50px 260px;
   flex: 1 0 auto; }
+
+#blog {
+  margin-top: 60px; }
 
 .light-yellow {
   color: #ffffe7; }
@@ -115,7 +116,7 @@ nav ul li:hover {
   margin-top: 20px; }
 
 .checkout-container {
-  padding: 60px; }
+  padding: 100px 50px; }
 
 .mods {
   vertical-align: top; }
