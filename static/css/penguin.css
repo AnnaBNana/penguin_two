@@ -325,6 +325,10 @@ div.indicator {
     .success-container .order-summary .address {
       padding: 20px; }
 
+img#main-product-image.main-product-image {
+  width: 100%;
+  height: auto; }
+
 .close-ribbon {
   position: absolute;
   top: 0;
