@@ -68,34 +68,34 @@ def search(request):
         all_products = Product.objects.filter(updated_at__range=(month_ago,today), status="A").order_by('updated_at').prefetch_related('image')
         headline = "Items added in the past {} days".format(value)
     elif field == "all":
-        all_products = Product.objects.filter(status="A").exclude(pen__isnull=True).order_by('-updated_at').prefetch_related('image')
+        all_products = Product.objects.filter(status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image')
         headline = "All Pens"
     elif field == "shop":
         if value == "other":
             make_list = ["pelikan", "parker", "montblanc", "waterman's"]
             query = reduce(operator.or_, (Q(make__iexact=x) for x in make_list))
-            all_products = Product.objects.filter(status="A").exclude(query).exclude(pen__country__iexact="it").prefetch_related('image')
+            all_products = Product.objects.filter(status="A", knife__isnull=True).exclude(query).exclude(pen__country__iexact="it").prefetch_related('image')
             headline = "Other Pens"
         elif value == "italian":
-            all_products = Product.objects.filter(pen__country__iexact="it", status="A").prefetch_related('image')
+            all_products = Product.objects.filter(pen__country__iexact="it", status="A", knife__isnull=True).prefetch_related('image')
             headline = "Italian Pens"
         elif value == "german":
             germans = ["montblanc", "pelikan"]
             query = reduce(operator.or_, (Q(make__iexact=x) for x in germans))
-            all_products = Product.objects.filter(pen__country__iexact="de", status="A").exclude(query).prefetch_related("image")
+            all_products = Product.objects.filter(pen__country__iexact="de", status="A", knife__isnull=True).exclude(query).prefetch_related("image")
             headline = "Other German Pens"
         else:
-            all_products = Product.objects.filter(make__iexact=value, status="A").order_by('-updated_at').prefetch_related('image').prefetch_related('image')
+            all_products = Product.objects.filter(make__iexact=value, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image').prefetch_related('image')
             headline = "Pens manufactured by {}".format(value.capitalize())
     elif field == "price":
         if value == "high":
-            all_products = Product.objects.filter(price__gt=600, status="A").order_by('-updated_at').prefetch_related('image')
+            all_products = Product.objects.filter(price__gt=600, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image')
             phrase = "over $600"
         elif value == "low":
-            all_products = Product.objects.filter(price__lt=200, status="A").order_by('-updated_at').prefetch_related('image')
+            all_products = Product.objects.filter(price__lt=200, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image')
             phrase = "under $200"
         else:
-            all_products = Product.objects.filter(price__lt=int(value), price__gt=int(value)-200, status="A").order_by('-updated_at').prefetch_related('image')
+            all_products = Product.objects.filter(price__lt=int(value), price__gt=int(value)-200, status="A", knife__isnull=True ).order_by('-updated_at').prefetch_related('image')
             phrase = "between ${} and ${}".format(str(int(value)-200), value)
         headline = "Pens {}".format(phrase)
     elif field == "other":
@@ -199,27 +199,6 @@ def checkout(request):
 
 def complete(request):
     order = Order.objects.get(id=17)
-    # print order
-    # cart = request.session['cart']
-    # items = Product.objects.filter(pk__in=cart)
-    # print items[0].order
-    # if "order_id" in request.session:
-    #     order_id = request.session["order_id"]
-    #     order = Order.objects.prefetch_related("products").get(id=order_id)
-        # print order
-        # print order.products.all()
-        # print order.id
-        # print order.product.all()
-        # products = Product.objects.filter(order__id=order_id)
-        # print products
-        # for product in products:
-            # print product.order
-        # products = order.prefetch_related("product")
-        # print products
-        # print dir(order)
-        # print vars(order)
-    # else:
-        # return redirect(reverse("shop:checkout"))
     context = {
         "order": order
     }
@@ -266,14 +245,14 @@ def shipping_cost(request):
         phone = "510-754-3278"
     )
     address = add_address(request, messages)
-    print "address after validation", address
+    # print "address after validation", address
     if 'shipping_address' in address:
         to_address = address['to_address']
         address_id = address['shipping_address'].id
     else:
         # return errors?
-        print "return errors"
-        print address
+        # print "return errors"
+        # print address
         return JsonResponse(address)
     data = {
         "item_ids": item_ids,
@@ -379,7 +358,7 @@ def add_address(request, messages):
         )
     if response.status_code == 200:
         if not response.json().get("is_valid"):
-            print "failed validation"
+            # print "failed validation"
             message = "Email invalid"
             if response.json().get("did_you_mean"):
                 message += "; did you mean: {}".format(response.json().get("did_you_mean"))
@@ -463,7 +442,7 @@ def get_shipping(request, data):
         height = 5.375
         width = 1.625
     else:
-        print "irregular items present"
+        # print "irregular items present"
         usps_shipment = None
         fedex_shipment = None
         if len(items) == 1:
@@ -524,8 +503,7 @@ def create_order(data):
     order = Order.objects.create(**orderData)
     # add order id to each item just sold
     order.products.set(data["items"])
-    current_date = datetime.now().date()
-    data["items"].update(status="S", sold_date=current_date)
+    Order.objects.update_sold_items(data['items'])
     return order
 
 def send_emails(request, order):
@@ -608,47 +586,6 @@ def email_text(request, order, seller):
         context["seller"] = True
     return render(request, "shop/email.html", context)
 
-def mail_test(request):
-    order = Order.objects.get(id=30)
-    products = order.products.all()
-    pens = order.products.filter(pen__isnull=False)
-    knives = order.products.filter(knife__isnull=False)
-    if len(pens) == len(products):
-        item_type = "pens"
-    elif len(knives) == len(products):
-        item_type = "knives"
-    else:
-        item_type = "items"
-    prep = "them"
-    if len(products) == 1:
-        prep = "it"
-        thank_you = "These are great {} and this is a fine example.".format(item_type)
-        if item_type == "pens":
-            item_type = "pen"
-        elif item_type == "knives":
-            item_type = "knife"
-    else:
-        thank_you = ""
-    context = {
-        "order": order,
-        "thank_you": thank_you,
-        "item_type": item_type,
-        "prep": prep, 
-        "seller": True
-    }
-    text = render(request, "shop/email.html", context)
-    test_email = "Anna Propas <apropas@gmail.com>"
-    order_notification = requests.post(
-        MAILGUN_DOMAIN,
-        auth=("api", MAILGUN_KEY),
-        data={
-            "from":   test_email,
-            "to": [test_email],
-            "subject": "CSS Test",
-            "html": text
-        }
-    )
-    return render(request, "shop/email.html", context)
 
 def get_all_search_fields():
     product_fields = Product._meta.get_fields()

@@ -29,7 +29,43 @@ DEBUG = True
 
 INTERNAL_IPS = ('127.0.0.1')
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'applogfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'penguin.log'),
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10,
+        },
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'penguin': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        },
+    }
+}
 
 # Application definition
 
@@ -50,7 +86,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'autofixture',
     'django_countries',
-    'phonenumber_field'
+    'phonenumber_field',
+    'adminsortable',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -80,6 +117,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'penguin.context_processors.cart_count',
+                'django.template.context_processors.static',
             ],
         },
     },
@@ -139,9 +177,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 THUMB_SIZE = 200,200
 AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
 AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
@@ -151,7 +189,7 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
 STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600

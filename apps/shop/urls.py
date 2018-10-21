@@ -13,7 +13,5 @@ urlpatterns = [
     url(r'^filter$', views.search, name='filter'),
     url(r'^shipping_cost$', views.shipping_cost, name="shipping_cost"),
     url(r'^cart_total$', views.get_cart_total, name="cart_total"),
-    # url(r'^charge$', views.charge, name='charge'),
     url(r'^create/order$', views.order_handler, name="order_handler"),
-    url(r'^mail_test$', views.mail_test, name="mail_test")
 ]

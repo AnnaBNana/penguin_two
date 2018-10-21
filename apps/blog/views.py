@@ -1,18 +1,13 @@
 from django.shortcuts import render
-from .models import Post, Intro
+from .models import Post
 
 def index(request, id=-1):
     if id < 0:
-        try:
-            intro = Intro.objects.get(id=1)
-        except Intro.DoesNotExist:
-            intro = None
         try:
             post = Post.objects.latest('updated_at')
         except Post.DoesNotExist:
             post = None
     else:
-        intro = None
         post = Post.objects.get(id=id)
     if post:
         post_length = len(post.text)
@@ -20,7 +15,6 @@ def index(request, id=-1):
     else:
         slice_length = 0
     context = {
-        'intro': intro,
         'post': post,
         'slice_length':  slice_length,
         'recent_blogs': blog_list(),

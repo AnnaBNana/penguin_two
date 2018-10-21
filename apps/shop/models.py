@@ -7,7 +7,7 @@ from sorl.thumbnail import ImageField, get_thumbnail
 import django_countries.fields as countries
 import phonenumber_field.modelfields as phonenumber
 
-from django.db import models
+from django.db import models, transaction
 from django.contrib import admin
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
@@ -71,12 +71,48 @@ def validate_year(value):
             params={'value': value,'year':thisYear},
         )
 
+
 class OrderManager(models.Manager):
     def validate_create(self, data):
         for field in data:
             if not data[field]:
                 return False
         return True
+
+    def update_sold_items(self,items): # this sucks
+        with transaction.atomic():
+            for item in items:
+                if item.in_stock > 1:
+                    # if we have multiple of this item available, here we duplicate the item and add it to the database, while marking the original item as sold with quantity 0. hacky
+                    pen = getattr(item, 'pen', None)
+                    knife = getattr(item, 'knife', None)
+                    images = item.image.all()
+                    item.pk = None
+                    item.in_stock -= 1
+                    item.status = 'A'
+                    item.order = None
+                    item.sold_date = None
+                    item.save()
+                    if pen:
+                        # pen must be duplicated bc one to one relationship 
+                        pen.pk = None
+                        pen.product = item
+                        pen.save()
+                        item.pen = pen
+                    elif knife:
+                        # as with pen
+                        knife.pk = None
+                        knife.product = item
+                        knife.save()
+                        item.knife = knife
+                    for image in images:
+                        # images must be duplicated, as with pen
+                        image.pk = None
+                        image.product = item
+                        image.save()
+            current_date = datetime.now().date()
+            items.update(status='S', sold_date=current_date, in_stock=0)
+
 
 class Sale(models.Model):
     def __unicode__(self):
@@ -129,16 +165,18 @@ class Product(models.Model):
     depth = models.DecimalField("Depth in inches", max_digits=5,decimal_places=1, validators=[MinValueValidator(0.1)], default=1.0, help_text="Please modify depth default only if item to be shipped is not a single pen.")
     weight = models.DecimalField("Weight in ounces", max_digits=5,decimal_places=1,default=3.0,validators=[MinValueValidator(0.1)])
     price = models.DecimalField(max_digits=8,decimal_places=2,validators=[MinValueValidator(0.01)])
-    cost = models.DecimalField(max_digits=8,decimal_places=2,validators=[MinValueValidator(0.01)])
+    description = models.TextField(max_length=2000)
     purchase_source = models.CharField(max_length=55)
     purchase_date = models.DateField()
+    cost = models.DecimalField(max_digits=8,decimal_places=2,validators=[MinValueValidator(0.01)], help_text="If number in stock is more than 1 enter average purchase cost")
     status = models.CharField(max_length=1,choices=SOLD_CHOICES,default='A')
-    description = models.TextField(max_length=2000)
+    in_stock = models.IntegerField(default=1, validators=[MinValueValidator(0)], help_text="If number is 0 product must be marked sold.")
     sold_date = models.DateField(blank=True,null=True)
     sale = models.ForeignKey(Sale, related_name='products', blank=True, null=True, on_delete=models.CASCADE)
     order = models.ForeignKey(Order,related_name='products', blank=True, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class Pen(models.Model):
     product = models.OneToOneField(Product, related_name='pen', on_delete=models.CASCADE)

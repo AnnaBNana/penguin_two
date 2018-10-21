@@ -2,7 +2,9 @@ from django.contrib import admin
 from .models import Category, Article
 from django_summernote.admin import SummernoteModelAdmin
 
-class ArticleAdmin(SummernoteModelAdmin):
+from adminsortable.admin import SortableAdmin
+
+class ArticleAdmin(SummernoteModelAdmin, SortableAdmin):
     search_fields = [
         "headline",
         "text",
@@ -12,7 +14,7 @@ class ArticleAdmin(SummernoteModelAdmin):
         "category__name"
     ]
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(SortableAdmin):
     search_fields = [
         "name"
     ]

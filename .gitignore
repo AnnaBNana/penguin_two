@@ -1,1 +1,4 @@
+.Python
 *.pyc
+.sass-cache
+.vscode

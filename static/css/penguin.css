@@ -1,3 +1,16 @@
+html, body {
+  height: 100%; }
+
+body {
+  display: flex;
+  flex-direction: column; }
+
+a {
+  color: #0277bd; }
+
+a:hover {
+  color: #03a9f4; }
+
 .penguin_logo {
   font-family: 'Lobster Two', cursive;
   font-size: 2.2em;
@@ -13,13 +26,16 @@
 .wrapper {
   margin-left: 260px;
   margin-right: 20px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  flex: 1 0 auto; }
 
 .light-yellow {
   color: #ffffe7; }
 
 .navbar-fixed {
   z-index: 1000; }
+  .navbar-fixed a:hover {
+    color: #eeeeee; }
 
 @media all and (max-width: 990px) {
   .wrapper {
@@ -359,5 +375,27 @@ img#main-product-image.main-product-image {
 #checkout-err,
 .radio-shipping-option {
   display: none; }
+
+footer {
+  font-weight: 100; }
+  footer.page-footer {
+    padding: 0; }
+  footer .container {
+    width: 100%;
+    padding: 0 0 0 240px;
+    box-sizing: border-box; }
+    footer .container .row {
+      width: 100%;
+      margin: 0; }
+      footer .container .row .section {
+        text-align: center; }
+        footer .container .row .section .section-header {
+          font-size: 1.3em; }
+  footer .footer-copyright {
+    font-size: 0.8em; }
+  footer a {
+    color: #ffd600; }
+  footer a:hover {
+    color: #ffff8d; }
 
 /*# sourceMappingURL=penguin.css.map */

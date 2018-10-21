@@ -4,10 +4,29 @@ $accent-yellow: #ffd600;
 $light-accent: #eeeeee;
 $warning: #d84315;
 $dark-warning: #ad1457;
+$link-color: #0277bd;
+$link-hover: #03a9f4;
 
 @mixin ib {
   display: inline-block;
   vertical-align: top;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: $link-color;
+}
+
+a:hover {
+  color: $link-hover;
 }
 
 .penguin_logo {
@@ -28,6 +47,7 @@ $dark-warning: #ad1457;
   margin-left: 260px;
   margin-right: 20px;
   margin-bottom: 50px;
+  flex: 1 0 auto;
 }
 
 .light-yellow {
@@ -36,6 +56,9 @@ $dark-warning: #ad1457;
 
 .navbar-fixed {
   z-index: 1000;
+  a:hover {
+    color: $light-accent;
+  }
 }
 
 @media all and (max-width: 990px) {
@@ -458,4 +481,35 @@ img#main-product-image.main-product-image {
 #checkout-err,
 .radio-shipping-option {
   display: none;
+}
+
+footer {
+  font-weight: 100;
+  &.page-footer {
+    padding: 0;
+  }
+  .container {
+    width: 100%;
+    padding: 0 0 0 240px;
+    box-sizing: border-box;
+    .row {
+      width: 100%;
+      margin: 0;
+      .section {
+        text-align: center;
+        .section-header {
+          font-size: 1.3em;
+        }
+      }
+    }
+  }
+  .footer-copyright {
+    font-size: 0.8em;
+  }
+  a{
+    color: $accent-yellow;
+  }
+  a:hover {
+    color: #ffff8d;
+  }
 }
