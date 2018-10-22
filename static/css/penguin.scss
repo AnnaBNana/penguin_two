@@ -280,15 +280,25 @@ nav {
 
 .slider-for img {
   margin: 0 auto;
-  // width: 90%;
   margin-bottom: 20px;
 }
 .slick-slide {
   outline: 0;
 }
 .slider-nav img {
-  height: 80px;
+  height: 50px;
+  margin: 0 10px;
 }
+.slick-prev:before, .slick-next:before{
+    color:$dark-grey;
+}
+.slider-nav {
+  width: 90%;
+  margin-left: 20px;
+}
+
+// end slick settings
+
 .collapsible-body {
   border-bottom: none;
 }
@@ -512,4 +522,7 @@ footer {
   a:hover {
     color: #ffff8d;
   }
+}
+.desc-field {
+  vertical-align: top; 
 }

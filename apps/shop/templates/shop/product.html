@@ -12,7 +12,7 @@
       <div class="slider-for">
         {% for image in images %}
         <div class="content-box" id="lg-photo">
-          {% thumbnail image.image "x300" as im %}
+          {% thumbnail image.image "x400" as im %}
           {% if product.status == "S" %}
           <a class="close-ribbon">sold</a>
           {% endif %}
@@ -23,7 +23,7 @@
       </div>
       <div class="slider-nav">
         {% for image in images %}
-          {% thumbnail image.image "100" as im %}
+          {% thumbnail image.image "200" as im %}
           <img src="{{im.url}}" class="img-thumb"> 
           {% endthumbnail %}
         {% endfor %}
@@ -102,18 +102,18 @@
       <tr>
         <td class="product-cat">Make:</td>
         <td>{{product.pen.nib_make}}</td>
-        <td class="product-cat">Style:</td>
-        <td>{{product.pen.nib_style}}</td>
         <td class="product-cat">Material:</td>
         <td>{{product.pen.nib_material}}</td>
+        <td class="product-cat desc-field" rowspan="2">Description:</td>
+        <td class="desc-field" rowspan="2">{{product.pen.nib_description}}</td>
       </tr>
       <tr>
         <td class="product-cat">Grade:</td>
         <td>{{product.pen.nib_grade}}</td>
         <td class="product-cat">Flexibility:</td>
         <td>{{product.pen.nib_flexibility}}</td>
-        <td class="product-cat">Description:</td>
-        <td>{{product.pen.nib_description}}</td>
+        <td></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

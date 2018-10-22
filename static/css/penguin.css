@@ -212,7 +212,15 @@ nav .cart-count {
   outline: 0; }
 
 .slider-nav img {
-  height: 80px; }
+  height: 50px;
+  margin: 0 10px; }
+
+.slick-prev:before, .slick-next:before {
+  color: #212121; }
+
+.slider-nav {
+  width: 90%;
+  margin-left: 20px; }
 
 .collapsible-body {
   border-bottom: none; }
@@ -397,5 +405,8 @@ footer {
     color: #ffd600; }
   footer a:hover {
     color: #ffff8d; }
+
+.desc-field {
+  vertical-align: top; }
 
 /*# sourceMappingURL=penguin.css.map */

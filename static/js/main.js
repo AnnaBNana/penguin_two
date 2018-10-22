@@ -54,20 +54,22 @@ $(document).ready(function() {
   });
 
   // SETTINGS FOR SLICK SLIDER
-  $('.slider-for').slick({
+  $(".slider-for").slick({
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
     fade: true,
-    asNavFor: '.slider-nav'
+    asNavFor: ".slider-nav",
+    adaptiveHeight: true
   });
-  $('.slider-nav').slick({
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    focusOnSelect: true,
+  $(".slider-nav").slick({
     variableWidth: true,
-    asNavFor: '.slider-for'
+    infinite: false,
+    centerMode: true,
+    asNavFor: ".slider-for",
+    lazyLoad: 'ondemand',
+    focusOnSelect: true,
+    dots: true
   });
 
   $('.button-collapse').sideNav();
