@@ -7,7 +7,9 @@ from .forms import SaleAdminForm, ProductAdminForm, PenAdminForm
 
 # helper functions 
 def obj_display(obj):
-    return "#{}: {} {}".format(obj.id, obj.make, obj.model)
+    model = unicodedata.normalize('NFKD', obj.model).encode('ascii', 'ignore')
+    make = unicodedata.normalize('NFKD', obj.make).encode('ascii', 'ignore')
+    return "#{}: {} {}".format(obj.id, make, model)
 
 def mark_sold(modeladmin, request, queryset):
     queryset.update(status="S")
