@@ -74,7 +74,7 @@ def search(request):
         if value == "other":
             make_list = ["pelikan", "parker", "montblanc", "waterman's"]
             query = reduce(operator.or_, (Q(make__iexact=x) for x in make_list))
-            all_products = Product.objects.filter(status="A", knife__isnull=True).exclude(query).exclude(pen__country__iexact="it").prefetch_related('image')
+            all_products = Product.objects.filter(status="A", knife__isnull=True).exclude(query).exclude(pen__country__iexact="it").exclude(pen__country__iexact="de").prefetch_related('image')
             headline = "Other Pens"
         elif value == "italian":
             all_products = Product.objects.filter(pen__country__iexact="it", status="A", knife__isnull=True).prefetch_related('image')

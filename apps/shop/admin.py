@@ -1,3 +1,4 @@
+import unicodedata
 from django.contrib import admin
 from .models import Product, Image, Pen, Knife, Bulletin, Order, Sale, Address
 from django.contrib.contenttypes.admin import GenericTabularInline

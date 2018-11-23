@@ -134,9 +134,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
         # deployment
-        'USER': 'apropas',
+        # 'USER': 'apropas',
         # local
-        # 'USER': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': 'somepassword',
         'HOST': 'localhost',
         'PORT': '5432',

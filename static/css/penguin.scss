@@ -262,7 +262,7 @@ nav {
   }
 }
 .card {
-  min-height: 20vw;
+  // min-height: 20vw;
   .card-image img {
       max-width: 100%;
       width: auto;
@@ -525,4 +525,23 @@ footer {
 }
 .desc-field {
   vertical-align: top; 
+}
+#main .magic {
+  width: 100% !important;
+  display: inline-block;
+  float: none;
+}
+#main {
+  -moz-column-count: 4;
+  -webkit-column-count: 4;
+  column-count: 4;
+  -moz-column-width: 4;
+  -webkit-column-width: 4;
+  column-width: 250px;
+}
+.headline {
+  margin: 50px 0 30px 0;
+}
+div.col.s3#magic {
+  padding: 0;
 }

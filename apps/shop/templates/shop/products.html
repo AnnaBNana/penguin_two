@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load thumbnail %} {% block sidebar %} {% include 'shop/sidebar.html' %} {% endblock %} {% block content %}
 <div class="wrapper" id="store">
-    <h3 class="center">{{headline}}</h3>
+    <h3 class="center headline">{{headline}}</h3>
     <div class="row" id="main">
         {% for item in products %}
         <div class="col s3 magic">
