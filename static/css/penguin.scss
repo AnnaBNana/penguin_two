@@ -528,8 +528,8 @@ footer {
 }
 #main .magic {
   width: 100% !important;
-  // display: inline-block;
-  float: left;
+  display: inline-block;
+  float: none;
 }
 #main {
   -moz-column-count: 4;

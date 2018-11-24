@@ -409,7 +409,8 @@ footer {
 
 #main .magic {
   width: 100% !important;
-  float: left; }
+  display: inline-block;
+  float: none; }
 
 #main {
   -moz-column-count: 4;

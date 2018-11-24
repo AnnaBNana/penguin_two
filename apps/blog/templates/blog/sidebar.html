@@ -2,7 +2,7 @@
   {% for blog in recent_blogs %}
   <li id="blog-item">
     <a href="{% url 'blog:blog' blog.id %}" class="blog-item" id="link-wrapper" data-id="{{blog.id}}">
-      <div class="blog-title" id="title">{{blog|truncatechars:30}}</div>
+      <div class="blog-title truncate" id="title">{{blog}}</div>
       <div class="blog-stamp grey-text" id="date">{{blog.updated_at|date:"F jS, Y"}}</div>
     </a>
   </li>
