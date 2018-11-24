@@ -134,13 +134,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
         # local
-        # 'USER': 'postgres',
+        'USER': 'postgres',
         # deployment
-        'USER': 'ubuntu',
+        # 'USER': 'ubuntu',
         # local
-        # 'PASSWORD': 'somepassword',
+        'PASSWORD': 'somepassword',
         # deployment
-        'PASSWORD': 'root',
+        # 'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -193,7 +193,7 @@ AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
 AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
 AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings

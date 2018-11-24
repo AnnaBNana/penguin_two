@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% load thumbnail %} {% block sidebar %} {% include 'shop/sidebar.html' %} {% endblock %} {% block content %}
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block sidebar %}
+{% include 'shop/sidebar.html' %}
+{% endblock %}
+{% block content %}
 <div class="wrapper" id="store">
     <h3 class="center headline">{{headline}}</h3>
     <div class="row" id="main">
@@ -42,4 +47,3 @@
     </div>
 </div>
 {% endblock %}
-{% block footer %} {% include 'shop/footer.html' %} {% endblock %}

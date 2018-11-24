@@ -4,7 +4,7 @@
   {% include 'shop/sidebar.html' %}
 {% endblock %}
 {% block content %}
-<div class="wrapper">
+<div class="wrapper" id="store">
   <h3 class="header center">Your Cart:</h3>
   {% if not items %}
   <div class="row">
@@ -46,7 +46,6 @@
         <button class="btn yellow accent-4" type="button">Checkout</button>
       </a>
     </div>
+    {% endif %}
   </div>
-  {% endif %}
 {% endblock %}
-{% block footer %} {% include 'shop/footer.html' %} {% endblock %}

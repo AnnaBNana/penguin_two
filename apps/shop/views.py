@@ -46,15 +46,19 @@ MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
 # ALL GET ROUTES
 
 def index(request):
-    today = datetime.now()
-    month_ago = today - timedelta(days=int(30))
-    products = Product.objects.filter(status="A").exclude(pen__isnull=True).prefetch_related('pen').prefetch_related('image')
     if 'cart' not in request.session:
         request.session['cart'] = []
+    today = datetime.now()
+    month_ago = today - timedelta(days=int(30))
+    all_products = Product.objects.filter(status='A').order_by('-created_at').prefetch_related('pen').prefetch_related('image')
+    paginator = Paginator(all_products, 24)
+    products = paginator.page(1)
+
     context = {
-        "products": products,
-        "bulletins": Bulletin.objects.filter(updated_at__range=(month_ago,today), active=True).order_by('-updated_at')[:3]
+        'products': products,
+        'bulletins': Bulletin.objects.filter(updated_at__range=(month_ago, today), active=True).order_by('-updated_at')[:3]
     }
+
     return render(request, 'shop/index.html', context)
 
 def search(request):
@@ -62,17 +66,15 @@ def search(request):
     value = request.GET.get('value')
     page = request.GET.get('page')
     # TODO: datetime handling will need changing in production
-    if field == "created_at":
-        today = datetime.now()
-        month_ago = today - timedelta(days=int(value))
-        all_products = Product.objects.filter(updated_at__range=(month_ago,today), status="A").order_by('updated_at').prefetch_related('image')
-        headline = "Items added in the past {} days".format(value)
-    elif field == "all":
-        all_products = Product.objects.filter(status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image')
-        headline = "All Pens"
-    elif field == "shop":
-        if value == "other":
-            make_list = ["pelikan", "parker", "montblanc", "waterman's"]
+    if field == 'recent':
+        all_products = Product.objects.filter(status='A').order_by('-created_at').prefetch_related('image')
+        headline = 'All Products'
+    elif field == 'all':
+        all_products = Product.objects.filter(status='A', knife__isnull=True).order_by('-updated_at').prefetch_related('image')
+        headline = 'All Pens'
+    elif field == 'shop':
+        if value == 'other':
+            make_list = ['pelikan', 'parker', 'montblanc', "waterman's"]
             query = reduce(operator.or_, (Q(make__iexact=x) for x in make_list))
             all_products = Product.objects.filter(status="A", knife__isnull=True).exclude(query).exclude(pen__country__iexact="it").exclude(pen__country__iexact="de").prefetch_related('image')
             headline = "Other Pens"
@@ -85,8 +87,9 @@ def search(request):
             all_products = Product.objects.filter(pen__country__iexact="de", status="A", knife__isnull=True).exclude(query).prefetch_related("image")
             headline = "Other German Pens"
         else:
+            print(value)
             all_products = Product.objects.filter(make__iexact=value, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image').prefetch_related('image')
-            headline = "Pens manufactured by {}".format(value.capitalize())
+            headline = "Pens Manufactured by {}".format(value.capitalize())
     elif field == "price":
         if value == "high":
             all_products = Product.objects.filter(price__gt=600, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image')
@@ -110,7 +113,7 @@ def search(request):
         all_products = Product.objects.annotate(
            search=SearchVector(*all_fields),
           ).filter(search=value, status="A").order_by('-updated_at').prefetch_related('image')
-        headline = "Search results for: '{}'".format(value)
+        headline = "Search Results For: '{}'".format(value)
     paginator = Paginator(all_products, 24)
     try:
         products = paginator.page(page)

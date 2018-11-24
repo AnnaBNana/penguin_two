@@ -21,7 +21,9 @@
     {% endblock %}
     {% block sidebar %}{% endblock %}
     {% block content %}{% endblock %}
-    {% block footer %}{% endblock %}
+    {% block footer %}
+      {% include 'footer.html' %}
+    {% endblock %}
     <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
   </body>
