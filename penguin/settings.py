@@ -195,7 +195,7 @@ AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
 STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
