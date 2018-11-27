@@ -133,14 +133,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        # local
-        'USER': 'postgres',
-        # deployment
-        # 'USER': 'ubuntu',
-        # local
-        'PASSWORD': 'somepassword',
-        # deployment
-        # 'PASSWORD': 'root',
+        'USER': 'ubuntu',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -179,24 +173,36 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-THUMB_SIZE = 200,200
-AWS_LOCATION = os.environ['PENGUIN_S3_REGION']
-AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
-AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
-AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
-AWS_QUERYSTRING_AUTH = False
-MEDIA_URL = "http://s3-{}.s3.amazonaws.com/".format(AWS_LOCATION)
-STATIC_URL = '/static/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #session persistance settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
+
+# static and media storage in s3 settings
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+THUMB_SIZE = 200,200
+# aws access for IAM user
+AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
+AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
+# S3 target bucket
+AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
+
+# bucket url
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
+# permissions
+AWS_DEFAULT_ACL = 'public-read'
+AWS_QUERYSTRING_AUTH = False
+
+# STATIC FILES STORAGE
+STATIC_LOCATION = 'static'
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
+
+# MEDIA FILES STORAGE
+MEDIA_LOCATION = '/media/'
+MEDIA_URL = "http://{}/{}}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
+DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
+

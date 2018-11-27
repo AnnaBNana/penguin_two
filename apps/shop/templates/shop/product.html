@@ -1,7 +1,7 @@
 {% extends 'base.html' %} 
 {% load thumbnail %} 
 {% block sidebar %} 
-  {% include 'shop/sidebar.html' %} 
+  {% include 'shop/sidebar.html' %}
 {% endblock %} 
 {% load static %} 
 {% block content %}
@@ -12,6 +12,7 @@
       <div class="slider-for">
         {% for image in images %}
         <div class="content-box" id="lg-photo">
+          {{image.image}}
           {% thumbnail image.image "x400" as im %}
           {% if product.status == "S" %}
           <a class="close-ribbon">sold</a>
