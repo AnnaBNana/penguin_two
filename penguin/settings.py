@@ -203,6 +203,6 @@ STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
 
 # MEDIA FILES STORAGE
 MEDIA_LOCATION = '/media/'
-MEDIA_URL = "http://{}/{}}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
+MEDIA_URL = "http://{}/{}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
 DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
 
