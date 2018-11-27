@@ -23,13 +23,13 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['52.53.151.159']
+ALLOWED_HOSTS = ['54.215.201.137']
 
-INTERNAL_IPS = ('127.0.0.1')
+# INTERNAL_IPS = ('127.0.0.1')
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 LOGGING = {
     'version': 1,
