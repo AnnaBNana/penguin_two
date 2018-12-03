@@ -215,7 +215,7 @@ class Bulletin(models.Model):
     def __unicode__(self):
         return "{}".format(self.headline)
     headline = models.CharField(max_length=155)
-    text = models.TextField(max_length=2000)
+    text = models.TextField(max_length=75000)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
