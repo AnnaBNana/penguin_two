@@ -278,7 +278,7 @@ def shipping_cost(request):
 
 def order_handler(request):
     #kick user out of checkout if cart is empty
-    logger.warn('the logging works!')
+    logging.warn('the logging works!')
     try:
         cart = request.session['cart']
     except KeyError:
