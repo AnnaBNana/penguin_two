@@ -21,6 +21,8 @@ import operator
 import requests
 import urlparse
 
+import logging
+
 
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -276,6 +278,7 @@ def shipping_cost(request):
 
 def order_handler(request):
     #kick user out of checkout if cart is empty
+    logger.warn('the logging works!')
     try:
         cart = request.session['cart']
     except KeyError:

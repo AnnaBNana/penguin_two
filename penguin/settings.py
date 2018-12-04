@@ -23,13 +23,16 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
+
+# DEV
+
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+# PROD
 
 ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
 
-# ALLOWED_HOSTS = ['127.0.0.1']
-
-# INTERNAL_IPS = ('127.0.0.1')
 
 TEMPLATE_DEBUG = False
 
@@ -127,9 +130,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'penguin.wsgi.application'
 
+# DEV
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'penguin',
+#         'USER': 'postgres',
+#         'PASSWORD': 'somepassword',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+# PROD
 
 DATABASES = {
     'default': {
@@ -201,6 +215,13 @@ AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 # permissions
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
+
+# DEV
+
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+
+# PROD
 
 # STATIC FILES STORAGE
 STATIC_LOCATION = 'static'
