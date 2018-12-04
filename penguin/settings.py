@@ -19,11 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
+SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = True
+DEBUG = False
 
 # DEV
 
@@ -61,7 +61,7 @@ LOGGING = {
 
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['applogfile'],
             'level': 'ERROR',
             'propagate': True,
         },
@@ -196,6 +196,12 @@ THUMB_SIZE = 200,200
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
+
+# SSL settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_BROWSER_XSS_FILTER = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # static and media storage in s3 settings
 STATICFILES_DIRS = [
