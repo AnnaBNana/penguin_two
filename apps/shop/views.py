@@ -23,6 +23,7 @@ import urlparse
 
 import logging
 
+logger = logging.getLogger('penguin')
 
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -278,7 +279,7 @@ def shipping_cost(request):
 
 def order_handler(request):
     #kick user out of checkout if cart is empty
-    logging.warn('the logging works!')
+    logger.warning('the logging works!')
     try:
         cart = request.session['cart']
     except KeyError:
