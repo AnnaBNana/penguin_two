@@ -37,7 +37,7 @@ class ComplexEncoder(json.JSONEncoder):
 
 stripe.api_key = os.environ['STRIPE_PRIVATE_KEY']
 easypost.api_key = os.environ['EASYPOST_PRODUCTION_KEY']
-MAILGUN_DOMAIN = "https://api.mailgun.net/v3/sandbox0586d32429d14009806d4cd0efa6313b.mailgun.org/messages"
+MAILGUN_DOMAIN = "https://api.mailgun.net/v3/mg.thepenguinpen.com"
 MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
 MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
 MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']
