@@ -295,7 +295,7 @@ def order_handler(request):
     # the charge still remains to be completed if customer went through stripe
     if "address_id" not in parsed_address\
     or not parsed_address["address_id"]:
-        return JsonResponse({"error": "There was a problem with your address, please contact <a href='mailto:rpropas@thepenguinpen.com'>rpropas@thepenguinpen.com</a>"})
+        return JsonResponse({"error": "There was a problem with your address, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     if request.POST["method"] == "card":
         charge_cents = int(100 * (float(items_total) + float(parsed_shipping["shipping"][0])))
         # catch exceptions returned by stripe API
@@ -308,7 +308,7 @@ def order_handler(request):
             )
             order_id = charge.id
         except stripe.InvalidRequestError:
-            return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rpropas@thepenguinpen.com'>rpropas@thepenguinpen.com</a>"})
+            return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     else:
         order_id = parsed_payment["id"]
     # this is the data we need to complete the order
