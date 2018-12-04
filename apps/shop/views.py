@@ -21,9 +21,6 @@ import operator
 import requests
 import urlparse
 
-import logging
-
-logger = logging.getLogger('penguin')
 
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -279,7 +276,6 @@ def shipping_cost(request):
 
 def order_handler(request):
     #kick user out of checkout if cart is empty
-    logger.warning('the logging works!')
     try:
         cart = request.session['cart']
     except KeyError:
@@ -534,7 +530,7 @@ def send_emails(request, order):
     order_text = email_text(request, order, True)
     if receipt.status_code != 200:
         response["error"] = "receipt"
-        response["error_code"] == receipt.status_code
+        response["error_code"] = receipt.status_code
     # send email to owner notifying that package needs to be shipped.
     order_notification = requests.post(
         MAILGUN_DOMAIN,

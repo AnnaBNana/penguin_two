@@ -23,18 +23,18 @@ SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
 
 # DEV
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # PROD
 
-ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
+# ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
 
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 LOGGING = {
     'version': 1,
@@ -132,29 +132,29 @@ WSGI_APPLICATION = 'penguin.wsgi.application'
 
 # DEV
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'penguin',
-#         'USER': 'postgres',
-#         'PASSWORD': 'somepassword',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-# PROD
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'ubuntu',
-        'PASSWORD': 'root',
+        'USER': 'postgres',
+        'PASSWORD': 'somepassword',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+# PROD
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'penguin',
+#         'USER': 'ubuntu',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -224,18 +224,18 @@ AWS_QUERYSTRING_AUTH = False
 
 # DEV
 
-# STATIC_URL = '/static/'
-# MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 # PROD
 
-# STATIC FILES STORAGE
-STATIC_LOCATION = 'static'
-STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
-STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
+# # STATIC FILES STORAGE
+# STATIC_LOCATION = 'static'
+# STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+# STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
 
-# MEDIA FILES STORAGE
-MEDIA_LOCATION = '/media/'
-MEDIA_URL = "http://{}/{}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
-DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
+# # MEDIA FILES STORAGE
+# MEDIA_LOCATION = '/media/'
+# MEDIA_URL = "http://{}/{}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
+# DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
 
