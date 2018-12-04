@@ -35,11 +35,12 @@ class ComplexEncoder(json.JSONEncoder):
 # remove for production
 # SESSION_ID = os.environ['TEST_ONLY_UUID']
 
-stripe.api_key = os.environ['STRIPE_SECRET_KEY']
-easypost.api_key = os.environ['EASYPOST_PRODUCTION']
-MAILGUN_KEY = os.environ['MAILGUN_PRIVATE']
+stripe.api_key = os.environ['STRIPE_PRIVATE_KEY']
+easypost.api_key = os.environ['EASYPOST_PRODUCTION_KEY']
 MAILGUN_DOMAIN = "https://api.mailgun.net/v3/sandbox0586d32429d14009806d4cd0efa6313b.mailgun.org/messages"
 MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
+MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
+MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']
 
 # TODO: every time you select products, must check if they are sold or not
 
@@ -325,7 +326,7 @@ def order_handler(request):
     }
     order = create_order(data)
     if not order:
-        return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rpropas@thepenguinpen.com'>rpropas@thepenguinpen.com</a>"})
+        return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     request.session["order_id"] = order.id
     # print order
     # send emails to owner and client
@@ -357,7 +358,7 @@ def add_address(request, messages):
     response = requests.get(
         "https://api.mailgun.net/v3/address/validate", 
         params={'address': request.POST["email"],"mailbox_verification": True},
-        auth=('api', "pubkey-7f1899afe4683d86ba6180c60c249fc6")
+        auth=('api', MAILGUN_PUBLIC_KEY)
         )
     if response.status_code == 200:
         if not response.json().get("is_valid"):
@@ -517,7 +518,7 @@ def send_emails(request, order):
     # send receipt
     receipt = requests.post(
         MAILGUN_DOMAIN,
-        auth=("api", MAILGUN_KEY),
+        auth=("api", MAILGUN_PRIVATE_KEY),
         data={
             "from": MAILGUN_SENDER,
             "to": [receiver],
@@ -533,7 +534,7 @@ def send_emails(request, order):
     # send email to owner notifying that package needs to be shipped.
     order_notification = requests.post(
         MAILGUN_DOMAIN,
-        auth=("api", MAILGUN_KEY),
+        auth=("api", MAILGUN_PRIVATE_KEY),
         data={
             "from": MAILGUN_SENDER,
             "to": [MAILGUN_SENDER],
@@ -546,7 +547,7 @@ def send_emails(request, order):
         response["error_code"] = order_notification.status_code
         order_notification = requests.post(
             MAILGUN_DOMAIN,
-            auth=("api", MAILGUN_KEY),
+            auth=("api", MAILGUN_PRIVATE_KEY),
             data={
                 "from": "Anna Propas <apropas@gmail.com>",
                 "to": ["Anna Propas <apropas@gmail.com>"],

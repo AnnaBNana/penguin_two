@@ -2,7 +2,6 @@ paypal.Button.render(
   {
     env: "production", // Or 'sandbox',
     client: {
-      production: "wx6zjy2zwskxdbn4$ecd4c83a3f227db6881f5c2816c22796",
       sandbox: "d4zk9xdbrvrqcfkg$4efca6c52781660bd41305709b3f4f4f"
     },
     commit: true, // Show a 'Pay Now' button
