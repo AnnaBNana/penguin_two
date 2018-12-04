@@ -307,7 +307,7 @@ $("#same-address").change(function(){
 })
 
   // STRIPE //
-  var stripe = Stripe('pk_test_vDG4jh3tyP2w3gPw30eupWR2');
+  var stripe = Stripe('pk_live_SJkP9QwhaGqiauF71RyXA6pv');
   var elements = stripe.elements();
 
     // Custom styling can be passed to options when creating an Element.
@@ -347,11 +347,9 @@ $("#same-address").change(function(){
         // Inform the user if there was an error
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
-        // console.log("there are errors", result.error)
       } else {
-        // Send the token to your server
+        // Send token to server
         stripeTokenHandler(result.token);
-        // console.log(result.token)
       }
     });
   });
@@ -366,7 +364,6 @@ $("#same-address").change(function(){
     form.appendChild(hiddenInput);
     // Submit the form
     // must gather data from other forms first, send it along to a custom route with ajax
-    // form.submit();
     var url = "/create/order"
     data = {
       "method": "card",

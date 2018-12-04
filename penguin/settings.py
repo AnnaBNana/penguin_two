@@ -25,7 +25,9 @@ SECRET_KEY = 't5ai^5e5l0_qh0tq1dwdqdywfz75mxs74tya+pr0wnxmj^4osw'
 # remove for deployment
 DEBUG = False
 
-ALLOWED_HOSTS = ['54.215.201.137']
+ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
+
+# ALLOWED_HOSTS = ['127.0.0.1']
 
 # INTERNAL_IPS = ('127.0.0.1')
 
@@ -173,6 +175,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# DEFAULT FOR SORL THUMBNAIL
+THUMB_SIZE = 200,200
+
 #session persistance settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
@@ -182,10 +187,11 @@ SESSION_SAVE_EVERY_REQUEST = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-THUMB_SIZE = 200,200
+
 # aws access for IAM user
 AWS_ACCESS_KEY_ID = os.environ['PENGUIN_S3_KEY']
 AWS_SECRET_ACCESS_KEY = os.environ['PENGUIN_S3_SECRET']
+
 # S3 target bucket
 AWS_STORAGE_BUCKET_NAME = os.environ['PENGUIN_S3_BUCKET']
 

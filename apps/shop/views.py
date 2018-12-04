@@ -35,9 +35,9 @@ class ComplexEncoder(json.JSONEncoder):
 # remove for production
 # SESSION_ID = os.environ['TEST_ONLY_UUID']
 
-stripe.api_key = os.environ['TEST_SECRET_KEY']
-easypost.api_key = os.environ['PENGUIN_EASYPOST_PRODUCTION']
-MAILGUN_KEY = os.environ['PENGUIN_MAILGUN_PRIVATE']
+stripe.api_key = os.environ['STRIPE_SECRET_KEY']
+easypost.api_key = os.environ['EASYPOST_PRODUCTION']
+MAILGUN_KEY = os.environ['MAILGUN_PRIVATE']
 MAILGUN_DOMAIN = "https://api.mailgun.net/v3/sandbox0586d32429d14009806d4cd0efa6313b.mailgun.org/messages"
 MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
 
