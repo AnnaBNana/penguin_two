@@ -37,7 +37,7 @@ class ComplexEncoder(json.JSONEncoder):
 
 stripe.api_key = os.environ['STRIPE_PRIVATE_KEY']
 easypost.api_key = os.environ['EASYPOST_PRODUCTION_KEY']
-MAILGUN_DOMAIN = "https://api.mailgun.net/v3/mg.thepenguinpen.com"
+MAILGUN_BASE_URL = "https://api.mailgun.net/v3/mg.thepenguinpen.com/"
 MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
 MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
 MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']
@@ -517,7 +517,7 @@ def send_emails(request, order):
     text = email_text(request, order, False)
     # send receipt
     receipt = requests.post(
-        MAILGUN_DOMAIN,
+        MAILGUN_BASE_URL + "messages",
         auth=("api", MAILGUN_PRIVATE_KEY),
         data={
             "from": MAILGUN_SENDER,
@@ -533,7 +533,7 @@ def send_emails(request, order):
         response["error_code"] = receipt.status_code
     # send email to owner notifying that package needs to be shipped.
     order_notification = requests.post(
-        MAILGUN_DOMAIN,
+        MAILGUN_BASE_URL + "messages",
         auth=("api", MAILGUN_PRIVATE_KEY),
         data={
             "from": MAILGUN_SENDER,
@@ -546,7 +546,7 @@ def send_emails(request, order):
         response["error"] = "order notification"
         response["error_code"] = order_notification.status_code
         order_notification = requests.post(
-            MAILGUN_DOMAIN,
+            MAILGUN_BASE_URL + "messages",
             auth=("api", MAILGUN_PRIVATE_KEY),
             data={
                 "from": "Anna Propas <apropas@gmail.com>",
