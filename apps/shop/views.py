@@ -143,7 +143,7 @@ def product(request,id):
 
 
 def news(request):
-    bulletins = Bulletin.objects.filter(active=True)
+    bulletins = Bulletin.objects.filter(active=True).order_by('-updated_at')
     context = {
         "bulletins": bulletins,
     }
