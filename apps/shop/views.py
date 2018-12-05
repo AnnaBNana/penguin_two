@@ -292,7 +292,7 @@ def order_handler(request):
         parsed_payment = urlparse.parse_qs(request.POST["payment"])
 
     msg = 'the parsed payment: {}'.format(parsed_payment)
-    logger.info(msg)
+    logger.error(msg)
     # get all cart items as queryset
     items = Product.objects.filter(pk__in=cart)
     # get items total
