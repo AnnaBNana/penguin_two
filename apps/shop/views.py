@@ -280,12 +280,16 @@ def order_handler(request):
         cart = request.session['cart']
     except KeyError:
         request.session['cart'] = []
+        logger.error('there was a cart error')
         return JsonResponse({"cart_empty":True})
     # payment must be handled differently if sent by paypal vs stripe
     try:
         parsed_payment = json.loads(request.POST["payment"])
     except ValueError:
+        logger.error('there was an error retrieving payment')
         parsed_payment = urlparse.parse_qs(request.POST["payment"])
+
+    logger.info('the parsed payment: ' + parsed_payment)
     # get all cart items as queryset
     items = Product.objects.filter(pk__in=cart)
     # get items total
@@ -293,8 +297,7 @@ def order_handler(request):
     parsed_address = urlparse.parse_qs(request.POST['address'])
     parsed_shipping = urlparse.parse_qs(request.POST['shipping'])
     # the charge still remains to be completed if customer went through stripe
-    if "address_id" not in parsed_address\
-    or not parsed_address["address_id"]:
+    if "address_id" not in parsed_address or not parsed_address["address_id"]:
         return JsonResponse({"error": "There was a problem with your address, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     if request.POST["method"] == "card":
         charge_cents = int(100 * (float(items_total) + float(parsed_shipping["shipping"][0])))
@@ -307,7 +310,9 @@ def order_handler(request):
                 description="Charge for order to {}".format(parsed_address['email'])
             )
             order_id = charge.id
-        except stripe.InvalidRequestError:
+        except stripe.InvalidRequestError as e:
+            logger.error('there was a problem with stripe: ' + e)
+            logger.error('there was a problem with stripe: ' + e.message)
             return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     else:
         order_id = parsed_payment["id"]
