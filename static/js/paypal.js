@@ -1,6 +1,6 @@
 paypal.Button.render(
   {
-    env: "production", // Or 'sandbox',
+    env: "sandbox", // Or 'production',
     client: {
       sandbox:
         "Adg9O06PQRVmZpYW61GezSzDHXsEwZiEPZRAx2cBQ5XaUWwyeIlWUOeXuEKiMfPL3jhhpPIMAbSOHazQ"
