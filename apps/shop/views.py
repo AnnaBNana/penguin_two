@@ -291,7 +291,8 @@ def order_handler(request):
         logger.error('there was an error retrieving payment')
         parsed_payment = urlparse.parse_qs(request.POST["payment"])
 
-    logger.info('the parsed payment: ' + parsed_payment)
+    msg = 'the parsed payment: {}'.format(parsed_payment)
+    logger.info(msg)
     # get all cart items as queryset
     items = Product.objects.filter(pk__in=cart)
     # get items total
@@ -313,8 +314,8 @@ def order_handler(request):
             )
             order_id = charge.id
         except stripe.InvalidRequestError as e:
-            logger.error('there was a problem with stripe: ' + e)
-            logger.error('there was a problem with stripe: ' + e.message)
+            logger.error('there was a problem with stripe: {}'.format(e))
+            logger.error('there was a problem with stripe: '.format(e.message))
             return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     else:
         order_id = parsed_payment["id"]
