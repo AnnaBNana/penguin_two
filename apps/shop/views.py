@@ -20,7 +20,9 @@ import json
 import operator
 import requests
 import urlparse
+import logging
 
+logger = logging.getLogger(__name__)
 
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
