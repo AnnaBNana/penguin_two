@@ -62,12 +62,13 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['applogfile'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': True,
         },
         'penguin': {
             'handlers': ['applogfile',],
             'level': 'DEBUG',
+            'propagate': True,
         },
     }
 }
