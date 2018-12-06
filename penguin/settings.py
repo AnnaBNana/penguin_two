@@ -23,18 +23,18 @@ SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
 
 # DEV
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # PROD
 
-ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
+# ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
 
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 LOGGING = {
     'version': 1,
@@ -133,29 +133,29 @@ WSGI_APPLICATION = 'penguin.wsgi.application'
 
 # DEV
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'penguin',
-#         'USER': 'postgres',
-#         'PASSWORD': 'somepassword',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-# PROD
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'ubuntu',
-        'PASSWORD': 'root',
+        'USER': 'postgres',
+        'PASSWORD': 'somepassword',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+# PROD
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'penguin',
+#         'USER': 'ubuntu',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -199,10 +199,10 @@ SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
 
 # SSL settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_BROWSER_XSS_FILTER = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # static and media storage in s3 settings
 STATICFILES_DIRS = [
