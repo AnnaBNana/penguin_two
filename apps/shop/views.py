@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
+from django.conf import settings
 
 from .forms import BillingAddressForm, AddressForm
 from models import Pen, Knife, Image, Bulletin, Product, Order, Sale, Address
@@ -37,7 +38,7 @@ class ComplexEncoder(json.JSONEncoder):
 # remove for production
 # SESSION_ID = os.environ['TEST_ONLY_UUID']
 
-stripe.api_key = os.environ['STRIPE_TEST_PRIVATE_KEY']
+stripe.api_key = os.environ['STRIPE_PRIVATE_KEY']
 easypost.api_key = os.environ['EASYPOST_PRODUCTION_KEY']
 MAILGUN_BASE_URL = "https://api.mailgun.net/v3/mg.thepenguinpen.com/"
 MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
@@ -62,7 +63,7 @@ def index(request):
         'bulletins': Bulletin.objects.filter(updated_at__range=(month_ago, today), active=True).order_by('-updated_at')[:3]
     }
 
-    return render(request, 'shop/index.html', context)
+    return render(request, 'shop/temp_index.html', context)
 
 def search(request):
     field = request.GET.get('filter')

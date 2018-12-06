@@ -410,7 +410,8 @@ footer {
 #main .magic {
   width: 100% !important;
   display: inline-block;
-  float: none; }
+  float: none;
+  z-index: -1; }
 
 #main {
   -moz-column-count: 4;
@@ -428,5 +429,15 @@ div.col.s3#magic {
 
 .custom-text-headline {
   margin-top: 100px; }
+
+.temp-body {
+  background-color: #212121;
+  color: #ffffe7;
+  padding: 100px; }
+  .temp-body .welcome {
+    font-size: 3em;
+    text-align: center; }
+  .temp-body .info {
+    font-size: 1.5em; }
 
 /*# sourceMappingURL=penguin.css.map */

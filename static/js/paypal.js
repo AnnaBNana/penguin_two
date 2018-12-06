@@ -1,9 +1,11 @@
 paypal.Button.render(
   {
-    env: "sandbox", // Or 'production',
+    env: "production", // Or 'production',
     client: {
       sandbox:
-        "Adg9O06PQRVmZpYW61GezSzDHXsEwZiEPZRAx2cBQ5XaUWwyeIlWUOeXuEKiMfPL3jhhpPIMAbSOHazQ"
+        "Adg9O06PQRVmZpYW61GezSzDHXsEwZiEPZRAx2cBQ5XaUWwyeIlWUOeXuEKiMfPL3jhhpPIMAbSOHazQ",
+      production: 
+        "AeLNC6tjMpH3BANJJz7Q1CiPOeK5cS4sYxsWMzno1aEV7CGA59L-G-T7Xgfv4RZYg42PGS60pEwTerHY"
     },
     commit: true, // Show a 'Pay Now' button
     style: {

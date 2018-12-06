@@ -307,7 +307,7 @@ $("#same-address").change(function(){
 })
 
   // STRIPE //
-  var stripe = Stripe('pk_test_FMSbuQaOxYqZhILgBHxVWDOq');
+  var stripe = Stripe('pk_live_SJkP9QwhaGqiauF71RyXA6pv');
   var elements = stripe.elements();
 
     // Custom styling can be passed to options when creating an Element.

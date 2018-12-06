@@ -31,11 +31,12 @@ DEBUG = False
 
 # PROD
 
-ALLOWED_HOSTS = ['54.215.201.137', 'newpenguin.thepenguinpen.com']
+ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com']
 
 
 TEMPLATE_DEBUG = False
 
+# loggers will log to penguin.log when debug == false
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -74,7 +75,6 @@ LOGGING = {
 }
 
 # Application definition
-
 INSTALLED_APPS = [
     'apps.users',
     'apps.shop',
@@ -159,8 +159,6 @@ DATABASES = {
 
 
 # Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -178,16 +176,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 # DEFAULT FOR SORL THUMBNAIL
@@ -199,10 +192,10 @@ SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
 
 # SSL settings
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_BROWSER_XSS_FILTER = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_BROWSER_XSS_FILTER = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # static and media storage in s3 settings
 STATICFILES_DIRS = [
@@ -223,20 +216,18 @@ AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
 
-# DEV
+# DEV static
 
-# STATIC_URL = '/static/'
-# MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
-# PROD
-
+# PROD static
 # STATIC FILES STORAGE
 STATIC_LOCATION = 'static'
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
 STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
 
+# media settings should be the same for dev and prod
 # MEDIA FILES STORAGE
 MEDIA_LOCATION = '/media/'
 MEDIA_URL = "http://{}/{}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
 DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
-
