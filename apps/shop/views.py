@@ -63,7 +63,7 @@ def index(request):
         'bulletins': Bulletin.objects.filter(updated_at__range=(month_ago, today), active=True).order_by('-updated_at')[:3]
     }
 
-    return render(request, 'shop/temp_index.html', context)
+    return render(request, 'shop/index.html', context)
 
 def search(request):
     field = request.GET.get('filter')
