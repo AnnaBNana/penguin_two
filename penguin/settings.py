@@ -31,7 +31,7 @@ DEBUG = False
 
 # PROD
 
-ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com']
+ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com', 'www.thepenguinpen.com']
 
 
 TEMPLATE_DEBUG = False

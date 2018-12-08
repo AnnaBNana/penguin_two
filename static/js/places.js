@@ -21,7 +21,7 @@ let fieldNames = {
     administrative_area_level_1: "state",
     postal_code: "zip_code",
     country: "country"
-}
+};
 
 var element = document.getElementById("autocomplete");
 
