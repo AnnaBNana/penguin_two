@@ -1,4 +1,4 @@
-var newCost;
+var newCost = 0;
 // checkout navigation
 $("#back-to-address").click(function () {
   changeTab("1", "2", "delivery")
