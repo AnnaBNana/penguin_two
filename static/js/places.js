@@ -15,7 +15,7 @@ var componentForm = {
     postal_code: 'short_name'
 };
 
-let fieldNames = {
+var fieldNames = {
     street_number: "street",
     locality: "city",
     administrative_area_level_1: "state",
