@@ -26,23 +26,23 @@ class AddressForm(ModelForm):
             'email'
         ]
         widgets = {
-            'addressee': TextInput(attrs={'required': "true", "id": "recip", "class": "ad-field"}),
-            'street': TextInput(attrs={'id': 'autocomplete', 'class': 'field ad-field','required': "true"}),
-            'city': TextInput(attrs={'class': 'input-field col mods field ad-field', 'id': 'locality','required': "true"}),
-            'state': TextInput(attrs={'class': 'input-field col mods field ad-field', 'id': 'administrative_area_level_1','required': "true"}),
-            'zip_code': TextInput(attrs={'class': 'input-field col mods ad-field', 'id': 'postal_code','required': "true"}),
-            'phone': TextInput(attrs={'class': 'input-field col mods ad-field', 'id': 'phone','required': "true"}),
-            'email': TextInput(attrs={'class': 'input-field col mods ad-field', 'id': 'email','required': "true"}),
+            'addressee': TextInput(attrs={'required': "true", "id": "recip", "class": "address-field"}),
+            'street': TextInput(attrs={'id': 'autocomplete', 'class': 'field address-field','required': "true"}),
+            'city': TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'locality','required': "true"}),
+            'state': TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'administrative_area_level_1','required': "true"}),
+            'zip_code': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'postal_code','required': "true"}),
+            'phone': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'phone','required': "true"}),
+            'email': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'email','required': "true"}),
             'apt': TextInput(attrs={'class': 'input-field col mods', 'id': 'apt'}),
         }
 
 class BillingAddressForm(forms.Form):
-    name = forms.CharField(required=True,widget=forms.TextInput(attrs={"id": "billing-name", "class": "ad-field"}))
-    address_line1 = forms.CharField(required=True,widget=forms.TextInput(attrs={"onFocus": "geolocate()", "id": "billing-street", "class": "ad-field"}))
+    name = forms.CharField(required=True,widget=forms.TextInput(attrs={"id": "billing-name", "class": "address-field"}))
+    address_line1 = forms.CharField(required=True,widget=forms.TextInput(attrs={"onFocus": "geolocate()", "id": "billing-street", "class": "address-field"}))
     address_line2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input-field col mods', 'id': 'billing-apt'}))
-    address_city = forms.CharField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods field ad-field', 'id': 'billing-city','required': "true"}))
-    address_state = forms.CharField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods field ad-field', 'id': 'billing-state','required': "true"}))
-    address_zip = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods ad-field', 'id': 'billing-zip','required': "true"}))
+    address_city = forms.CharField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'billing-city','required': "true"}))
+    address_state = forms.CharField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'billing-state','required': "true"}))
+    address_zip = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'billing-zip','required': "true"}))
     address_country = LazyTypedChoiceField(choices=countries)
 
 

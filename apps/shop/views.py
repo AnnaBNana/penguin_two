@@ -261,13 +261,16 @@ def shipping_cost(request):
         # print "return errors"
         # print address
         return JsonResponse(address)
+    print(order_subtotal)
     data = {
         "item_ids": item_ids,
         "items": items,
         "to_address": to_address,
-        "from_address": from_address
+        "from_address": from_address,
+        "order_subtotal": order_subtotal
     }
     shipping_choices = get_shipping(request, data)
+    print(shipping_choices)
     context = {
         "total_cost": order_subtotal,
         "usps_shipment": shipping_choices["usps_shipment"], 
@@ -425,6 +428,7 @@ def get_shipping(request, data):
     items = data["items"]
     to_address = data["to_address"]
     from_address = data["from_address"]
+    order_subtotal = data["order_subtotal"]
     weight = items.aggregate(Sum('weight'))['weight__sum']
     special_shipping = items.filter(special_shipping=True).count()
     knives = items.exclude(knife__isnull=True)
@@ -441,6 +445,13 @@ def get_shipping(request, data):
             from_address = from_address,
             parcel = usps_parcel
         )
+        insurance = easypost.Insurance.create(
+            to_address = to_address,
+            from_address = from_address,
+            carrier = "USPS",
+            amount = order_subtotal,
+        )
+        print(insurance)
         fedex_parcel =  easypost.Parcel.create(
             weight = weight,
             carrier_accounts = "FedEx",
@@ -489,6 +500,7 @@ def get_shipping(request, data):
         from_address = from_address,
         parcel = parcel
     )
+    shipment.insure(amount=order_subtotal)
     return {
         "shipment": shipment.to_json(), 
         "usps_shipment": usps_shipment.to_json() if usps_shipment else None,

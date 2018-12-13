@@ -284,10 +284,10 @@ var validateRadios = function(radios) {
 // changes country field id
 var c = document.getElementById("id_country")
 c.id = "country"
-c.className = "ad-field"
+c.className = "address-field"
 
 // sets validation focus out event listeners to desired fields
-var adFields = document.getElementsByClassName("ad-field");
+var adFields = document.getElementsByClassName("address-field");
 // console.log(adFields)
 for (field of adFields) {
   field.addEventListener("focusout", function (e) {
