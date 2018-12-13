@@ -9,6 +9,7 @@ from django.conf import settings
 
 from .forms import BillingAddressForm, AddressForm
 from models import Pen, Knife, Image, Bulletin, Product, Order, Sale, Address
+import helpers as Helpers
 
 import stripe
 import ssl
@@ -277,6 +278,8 @@ def shipping_cost(request):
         "fedex_shipment": shipping_choices["fedex_shipment"],
         "all_options": shipping_choices["shipment"],
         "address_id": address_id,
+        "usps_insurance": Helpers.generate_insurance(order_subtotal),
+        "usps_express_insurance": Helpers.generate_insurance_express(order_subtotal)
         }
     return JsonResponse(context)
 
@@ -445,13 +448,6 @@ def get_shipping(request, data):
             from_address = from_address,
             parcel = usps_parcel
         )
-        insurance = easypost.Insurance.create(
-            to_address = to_address,
-            from_address = from_address,
-            carrier = "USPS",
-            amount = order_subtotal,
-        )
-        print(insurance)
         fedex_parcel =  easypost.Parcel.create(
             weight = weight,
             carrier_accounts = "FedEx",
@@ -500,7 +496,6 @@ def get_shipping(request, data):
         from_address = from_address,
         parcel = parcel
     )
-    shipment.insure(amount=order_subtotal)
     return {
         "shipment": shipment.to_json(), 
         "usps_shipment": usps_shipment.to_json() if usps_shipment else None,

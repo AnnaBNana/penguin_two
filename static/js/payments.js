@@ -58,17 +58,22 @@ var callback = function(res){
     country = shipment.to_address.country,
     uspsShipment = JSON.parse(res.usps_shipment),
     fedexShipment = JSON.parse(res.fedex_shipment),
+    insurance = res.usps_insurance,
+    expressInsurance = res.usps_express_insurance,
     orderSubtotal = res.order_subtotal, 
     type, displayName, rate, carrier, service;
     console.log("this is the shipment:", shipment);
     console.log("fedex shipment", fedexShipment)
     console.log("usps shipment:", uspsShipment);
+    console.log("the insurance: " + insurance)
+    console.log("the express insurance: " + expressInsurance)
     if (uspsShipment) {
       type = "usps-low";
       displayName = "USPS Flat Rate:";
       rate = uspsShipment.rates[0].rate;
       carrier = uspsShipment.rates[0].carrier;
       service = uspsShipment.rates[0].service;
+      rate = (parseFloat(rate) + parseFloat(insurance)).toFixed(2);
       addRadio(type, displayName, rate, carrier, service) 
     }
     if (fedexShipment) {
@@ -85,7 +90,8 @@ var callback = function(res){
       displayName = fedexHigh.service.replace(/_/g, " ").toLowerCase() + ":";
       rate = fedexHigh.rate;
       carrier = fedexHigh.carrier;
-      service = fedexHigh.servide
+      service = fedexHigh.servide;
+      rate = (parseFloat(rate) + parseFloat(expressInsurance)).toFixed(2);
       addRadio(type, displayName, rate, carrier, service);
     }
     if (shipment) {
