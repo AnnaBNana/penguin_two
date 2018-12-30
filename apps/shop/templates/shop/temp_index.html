@@ -10,16 +10,14 @@
     <link type="text/css" rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}" media="screen,projection" />
 </head>
 <body class="temp-body">
-    <div>
-        <p class="welcome">Hi there! Looking for the Penguin Pen? </p>
-        <p class="info">You found us, but we're currently in the process of rolling out the new site. Here's what you have to look forward to:</p>
-        <ul class="browser-default">
-            <li>Checkout! Now you can choose your pen and buy in real time!</li>
-            <li>Same great content! We have a brand new blog, and plenty of informational articles.</li>
-            <li>Better navigation! You'll see...</li>
-            <li>Don't worry! If you love talking to Rick and communicating directly for a more personal experience, you still can. Drop him a note: <a href="mailto:rickpropas@comcast.net">rickpropas@comcast.net</a></li>
-        </ul>
-        <p>Well, that's about all, we hope to see you tomorrow when the new site is up, and in the meantime, you can find the old site <a href="http://oldpenguin.thepenguinpen.com">here.</a> Cheers!</p>
+    <div class="center">
+        <p class="welcome">{{vacation_settings.headline}} </p>
+        <p class="info">{{vacation_settings.message}}</p>
+        <p class="info">Expect a {{delay_weeks}} week delay in addition to estimated shipping times.</p>
+        <p>In the meantime, enjoy browsing, or place an order.</p>
+        <a href="{% url 'shop:main' %}">
+            <button type="button" class="btn waves-effect waves-light yellow accent-4 grey-text text-darken-3">Take me to The Penguin</button>
+        </a>
     </div>
 </body>
 </html>

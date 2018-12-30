@@ -13,8 +13,8 @@
                 <div class="card-panel white">
                     <h3 class="grey lighten-3 bulletin-head">{{bulletin.headline}}</h3>
                 <div class="bulletin-body">
-                    {{bulletin.text|replace_url|safe|truncatechars_html:150}} 
-                    {% if bulletin.text|is_trunc %}
+                    {{bulletin.text|safe|truncatechars_html:150}} 
+                    {% if bulletin.text|is_trunc:550 %}
                     <button type="button" class="btn waves-effect waves-gray btn-flat modal-trigger" id="{{bulletin.id}}"> read more </button>
                     {% endif %}
                 </div>

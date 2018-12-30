@@ -45,7 +45,6 @@ function addRadio(type, displayName, rate, carrier, service) {
 
 // executes when address form is submitted via post
 var callback = function(res){
-  console.log("response object:", res);
   if (res.cart_empty) {
     window.location.assign('/show/cart');
   }
@@ -154,18 +153,13 @@ var callback = function(res){
     $('select').material_select();
   }
   if (res.errors) {
-    console.log("there are errors:",res.errors);
     for (var i in res.errors) {
-      // console.log("the errors:", res.errors[i])
-      // console.log("the error field:", res.errors[i].field)
       switch (res.errors[i].field){
         case "email":
-          // console.log("there was an email error");
           $("#email-error").html(res.errors[i].message).css("display", "block");
           $("#email").css("border-bottom", "2px solid #d84315");
           break;
         case "street1":
-          console.log("what?")
           $("#street-error").html(res.errors[i].message).css("display", "block");
           $("#autocomplete").css("border-bottom", "2px solid #d84315");
           break;
@@ -248,7 +242,6 @@ $('#shipping-form').submit(function(e){
   e.preventDefault();
   var radios = document.forms["shipping-form"]["shipping"];
   var value;
-  // console.log(radios)
   if (validateRadios(radios)){
     for (var i in radios) {
       if (radios[i].checked) {
@@ -256,7 +249,6 @@ $('#shipping-form').submit(function(e){
         radioID = radios[i].id;
         var carrier = $("#" + radioID).attr("data-carrier")
         var service = $("#" + radioID).attr("data-service")
-        console.log("carrier and service:", carrier, service)
         $("#carrier").val(carrier);
         $("#service").val(service);
       }
@@ -289,7 +281,6 @@ c.className = "address-field"
 
 // sets validation focus out event listeners to desired fields
 var adFields = document.getElementsByClassName("address-field");
-// console.log(adFields)
 for (field of adFields) {
   field.addEventListener("focusout", function (e) {
     if (e.target.value == "") {
@@ -339,11 +330,8 @@ $("#same-address").change(function(){
   var form = document.getElementById('payment-form');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
-    // var valid = validate_form();
-    // console.log(valid);
     var cardData = getCardData();
     stripe.createToken(card, cardData).then(function(result) {
-      console.log("RESULT RESPONSE::::>", result);
       if (result.error) {
         // Inform the user if there was an error
         var errorElement = document.getElementById('card-errors');
@@ -372,16 +360,13 @@ $("#same-address").change(function(){
       "shipping": $("#shipping-form").serialize(),
       "payment": $("#payment-form").serialize()
     }
-    console.log(data['shipping'])
     $.post(url, data, function(res){
       if (res.error) {
-        console.log(res.error)
         $("#checkout-err").html(res.error);
         $("#checkout-err").css("display", "block");
       } else {
         $(".checkout-container").html(res);
       }
-      console.log("this is the final server response:", res);
       // check for errors
       // if errors, display them
       // else 
@@ -394,14 +379,12 @@ $("#same-address").change(function(){
   function getCardData(){
     // if 
     var data = {}
-    console.log("SERIALIZED DATA", $("#payment-form").serializeArray());
     var formData = $("#payment-form").serializeArray();
     for (var f in formData) {
       if (formData[f].name != "csrfmiddlewaretoken" && formData[f].name != "same_address") {
         data[formData[f].name] = formData[f].value;
       }
     }
-    console.log("CLEANED:", data);
     return data;
   }
 

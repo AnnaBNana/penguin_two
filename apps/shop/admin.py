@@ -1,10 +1,12 @@
 import unicodedata
 from django.contrib import admin
-from .models import Product, Image, Pen, Knife, Bulletin, Order, Sale, Address
+from .models import Product, Image, Pen, Knife, Bulletin, Order, Sale, Address, VacationSettings
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django_summernote.admin import SummernoteModelAdmin
 from sorl.thumbnail.admin import AdminImageMixin
 from .forms import SaleAdminForm, ProductAdminForm, PenAdminForm
+
+vacation_settings = VacationSettings.load()
 
 # helper functions 
 def obj_display(obj):
@@ -149,7 +151,17 @@ class BulletinAdmin(SummernoteModelAdmin):
         "text"
     ]
 
+
+class VacationSettingsAdmin(admin.ModelAdmin):
+    actions = None
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 admin.site.register(Bulletin, BulletinAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Sale, SaleAdmin)
+admin.site.register(VacationSettings, VacationSettingsAdmin)

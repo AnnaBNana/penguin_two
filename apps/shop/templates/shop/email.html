@@ -38,6 +38,9 @@
             </p>
             <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Best Regards,</p>
             <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Rick</p>
+            {% if vacation_settings.active %}
+            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif'; color: #d84315; font-style: oblique; font-size: 0.8rem">Please keep in mind that we are on vacation for the next {{delay_weeks}} weeks. Your order will not be shipped until the week of {{vacation_settings.end_date}}.</p>
+            {% endif %}
         </div>
         <h2 style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-align: center;">Order Summary</h2>
         <div class="row order-summary" style="padding: 0;margin: 20px auto;font-family: 'Roboto', 'Verdana', 'sans-serif';border: 1px solid #eeeeee;width: 90%;">

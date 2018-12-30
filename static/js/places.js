@@ -64,7 +64,6 @@ function fillInAddress() {
     // and fill the corresponding field on the form.
     for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
-        // console.log(addressType)
         if (componentForm[addressType]) {
             var val = place.address_components[i][componentForm[addressType]];
             getLabelFor(addressType).className = "active"
@@ -100,11 +99,8 @@ function geolocate() {
 }
 
 function getLabelFor(id) {
-    // console.log("ID:", id)
     var labels = document.getElementsByTagName('label');
-    // console.log("LABELS:", labels)
     for (var i in labels) {
-        // console.log("HTML FOR LABELS:", labels[i].htmlFor)
         if (labels[i].htmlFor == id) {
             return labels[i]
         }

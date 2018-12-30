@@ -9,8 +9,8 @@ def get_class_name(value):
     return value.__class__.__name__
 
 @register.filter
-def is_trunc(value):
-    return len(value) > 150
+def is_trunc(value, trunc):
+    return len(value) > trunc
 
 @register.filter
 def add_float(value, num):

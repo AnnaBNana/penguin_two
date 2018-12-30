@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import StringIO
-from datetime import datetime
+from datetime import (datetime, timedelta)
 
 import boto3
 from sorl.thumbnail import ImageField, get_thumbnail
@@ -17,6 +17,7 @@ from django.core.files.storage import default_storage as storage
 from django.core.files.uploadedfile import SimpleUploadedFile, InMemoryUploadedFile
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 
 from penguin.settings import THUMB_SIZE, AWS_STORAGE_BUCKET_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
@@ -220,3 +221,44 @@ class Bulletin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class SingletonModel(models.Model):
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(SingletonModel, self).save(*args, **kwargs)
+        self.set_cache()
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls):
+        if cache.get(cls.__name__) is None:
+            obj, created = cls.objects.get_or_create(pk=1)
+            if not created:
+                obj.set_cache()
+        return cache.get(cls.__name__)
+
+
+def auto_end_date():
+    return datetime.now().date() + timedelta(weeks=2)
+
+
+class VacationSettings(SingletonModel):
+    class Meta:
+        verbose_name = "Vacation Settings"
+        verbose_name_plural = "Vacation Settings"
+    def __unicode__(self):
+        return "Edit Vacation Settings"
+    def set_cache(self):
+        cache.set(self.__class__.__name__, self)
+    active = models.BooleanField(default=False)
+    headline = models.CharField(max_length=155, default="The Penguin is on vacation!")
+    message = models.TextField(max_length=75000, default="We will be back and will resume shipping on ")
+    end_date = models.DateField(default=auto_end_date)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

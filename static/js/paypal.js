@@ -1,6 +1,6 @@
 paypal.Button.render(
   {
-    env: "production", // Or 'production',
+    env: "production", // Or 'sandbox',
     client: {
       sandbox:
         "Adg9O06PQRVmZpYW61GezSzDHXsEwZiEPZRAx2cBQ5XaUWwyeIlWUOeXuEKiMfPL3jhhpPIMAbSOHazQ",
@@ -28,7 +28,6 @@ paypal.Button.render(
     },
     onAuthorize: function(data, actions) {
       return actions.payment.execute().then(function(payment) {
-        console.log(payment);
         var url = "/create/order";
         var context = {
           method: "paypal",
@@ -38,7 +37,6 @@ paypal.Button.render(
         };
         $.post(url, context, function(res) {
           // show success message
-          console.log(res);
           $(".checkout-container").html(res);
         });
       });

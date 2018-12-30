@@ -24,9 +24,7 @@ a:hover {
   height: 100vh; }
 
 .wrapper {
-  margin-left: 260px;
-  margin-right: 20px;
-  margin-bottom: 50px;
+  margin: 0 20px 50px 260px;
   flex: 1 0 auto; }
 
 .light-yellow {
@@ -141,6 +139,10 @@ nav ul li:hover {
   .modal-content .img-note {
     font-style: italic;
     display: inline-block; }
+  .card-panel .bulletin-body,
+  .modal-content .bulletin-body {
+    max-height: 60vh;
+    overflow: scroll; }
 
 .card-panel.checkout-total {
   padding: 10px; }
@@ -427,9 +429,6 @@ footer {
 div.col.s3#magic {
   padding: 0; }
 
-.custom-text-headline {
-  margin-top: 100px; }
-
 .temp-body {
   background-color: #212121;
   color: #ffffe7;
@@ -439,5 +438,14 @@ div.col.s3#magic {
     text-align: center; }
   .temp-body .info {
     font-size: 1.5em; }
+
+.warning {
+  color: #d84315;
+  font-style: oblique;
+  font-size: 0.8rem; }
+
+#blog,
+#article {
+  margin-top: 50px; }
 
 /*# sourceMappingURL=penguin.css.map */

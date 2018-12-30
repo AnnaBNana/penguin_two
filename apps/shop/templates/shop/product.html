@@ -30,17 +30,22 @@
       </div>
     </div>
     <div class="col s6 product-data">
+      {% if vacation_settings.active %}
+      <div class="row">
+        <p class="warning">{{vacation_message}}</p>
+      </div>
+      {% endif %}
       <div class="row">
         <div class="col s7 flow-text product-price">
           ${{product.price}}
         </div>
         {% if product.status == "A" %}
         <a href="{% url 'shop:add_to_cart' product.id %}" class="cart-btn">
-          <button type="button" class="btn yellow accent-4">Add to cart</button>
+          <button type="button" class="btn yellow accent-4 grey-text text-darken-3">Add to cart</button>
         </a>
         </a>
         {% else %}
-        <button type="button" class="btn yellow accent-4 disabled">Add to cart</button>
+        <button type="button" class="btn yellow accent-4 disabled grey-text text-darken-3">Add to cart</button>
         {% endif %}
         
       </div>
@@ -118,11 +123,16 @@
     </tbody>
   </table>
   {% endif %}
+  {% if vacation_settings.active %}
+  <div class="row">
+    <p class="warning">{{vacation_message}}</p>
+  </div>
+  {% endif %}
   <div class="row">
     {% if product.status == "A" %}
-    <a href="{% url 'shop:add_to_cart' product.id %}"><button type="button" class="btn yellow accent-4">Add to cart</button></a>
+    <a href="{% url 'shop:add_to_cart' product.id %}"><button type="button" class="btn yellow accent-4 grey-text text-darken-3">Add to cart</button></a>
     {% else %}
-    <button type="button" class="btn yellow accent-4 disabled">Add to cart</button>
+    <button type="button" class="btn yellow accent-4 disabled grey-text text-darken-3">Add to cart</button>
     {% endif %}
   </div>
   {% if product.pen.nib_alternative %}

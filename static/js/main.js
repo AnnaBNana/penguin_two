@@ -46,9 +46,6 @@ $(document).ready(function() {
   });
 
   $('.closer').click(function(e){
-    // console.log(e);
-    // console.log("hi");
-    // console.log(e.target.parentElement.parentElement.parentElement.id)
     var modalID = "#" + e.target.parentElement.parentElement.parentElement.id
     $(modalID).modal('close');
   });

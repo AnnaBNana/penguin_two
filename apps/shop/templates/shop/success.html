@@ -6,6 +6,12 @@
         <i class="fa fa-check-circle fa-4x light-green-text text-darken-1" aria-hidden="true"></i>
         <h3 class="light-green-text text-darken-1 success-msg">We got your order!</h3>
     </div>
+    {% if vacation_settings.active %}
+    <div class="center warning">
+        <p>Please keep in mind that we are on vacation for the next {{delay_weeks}} weeks.</p>
+        <p>Your order will not be shipped until the week of {{vacation_settings.end_date}}.</p>
+    </div>
+    {% endif %}
     <h4 class="center">Order Summary:</h4>
     <div class="row order-summary">
         <div class="col s6 order">

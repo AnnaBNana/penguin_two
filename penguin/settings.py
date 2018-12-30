@@ -123,6 +123,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'penguin.context_processors.cart_count',
+                'penguin.context_processors.vacation_settings',
                 'django.template.context_processors.static',
             ],
         },

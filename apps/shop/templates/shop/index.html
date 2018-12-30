@@ -13,8 +13,8 @@
           <div class="card-panel white">
             <h3 class="grey lighten-3 bulletin-head">{{bulletin.headline}}</h3>
             <div class="bulletin-body">
-               {{bulletin.text|replace_url|safe|truncatechars_html:150}}
-              {% if bulletin.text|is_trunc %}
+               {{bulletin.text|safe|truncatechars_html:550}}
+              {% if bulletin.text|is_trunc:550 %}
               <button type="button" class="btn waves-effect waves-gray btn-flat modal-trigger" id="{{bulletin.id}}">read more</button>
               {% endif %}
             </div>
@@ -35,7 +35,7 @@
         </div>
       </div>
       {% endfor %}
-      <a href="{% url 'shop:news' %}"><button class="waves-effect waves-light yellow accent-4 btn news-btn">see all news</button></a>
+      <a href="{% url 'shop:news' %}"><button class="waves-effect waves-light yellow accent-4 btn news-btn grey-text text-darken-3">see all news</button></a>
       <div class="divider"></div>
       <h3 class="ui center aligned header headline">Recently Added {{products.count}}</h3>
       <div class="row" id="main">
@@ -58,8 +58,8 @@
       </div>
       {% if products.has_next %}
       <a href="{% url 'shop:filter' %}?filter=recent&value=30&page=2">
-        <button type="button" class="waves-effect waves-light yellow accent-4 btn news-btn">See more recently added products</button>
-        </a>
+        <button type="button" class="waves-effect waves-light yellow accent-4 btn news-btn grey-text text-darken-3">See more recently added products</button>
+      </a>
       {% endif %}
     </div>
   {% endblock %}

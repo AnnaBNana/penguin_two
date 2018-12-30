@@ -41,6 +41,11 @@
     <div class="row rt">
       <p class="emphasis-small">Item Subtotal: ${{total}}</p>
     </div>
+    {% if vacation_settings.active %}
+    <div class="row right-align">
+      <p class="warning">{{vacation_message}}</p>
+    </div>
+    {% endif %}
     <div class="row rt">
       <a href="{% url 'shop:checkout' %}">
         <button class="btn yellow accent-4" type="button">Checkout</button>

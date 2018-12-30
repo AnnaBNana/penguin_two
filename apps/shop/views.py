@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.conf import settings
 
 from .forms import BillingAddressForm, AddressForm
-from models import Pen, Knife, Image, Bulletin, Product, Order, Sale, Address
+from models import Pen, Knife, Image, Bulletin, Product, Order, Sale, Address, VacationSettings
 import helpers as Helpers
 
 import stripe
@@ -49,22 +49,32 @@ MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']
 # TODO: every time you select products, must check if they are sold or not
 
 # ALL GET ROUTES
+def vacation_index(request):
+    return render(request, 'shop/temp_index.html')
 
-def index(request):
-    if 'cart' not in request.session:
-        request.session['cart'] = []
+def main_index(request):
     today = datetime.now()
     month_ago = today - timedelta(days=int(30))
     all_products = Product.objects.filter(status='A').order_by('-created_at').prefetch_related('pen').prefetch_related('image')
     paginator = Paginator(all_products, 24)
     products = paginator.page(1)
-
     context = {
         'products': products,
-        'bulletins': Bulletin.objects.filter(updated_at__range=(month_ago, today), active=True).order_by('-updated_at')[:3]
+        'bulletins': Bulletin.objects.filter(updated_at__range=(month_ago, today), active=True).order_by('-updated_at')[:1]
     }
 
     return render(request, 'shop/index.html', context)
+    
+
+def index(request):
+    vacation_settings = VacationSettings.load()
+    if 'cart' not in request.session:
+        request.session['cart'] = []
+    if vacation_settings.active:
+        return redirect(reverse('shop:vacation'))
+    else:
+        return redirect(reverse('shop:main'))
+
 
 def search(request):
     field = request.GET.get('filter')
@@ -92,7 +102,6 @@ def search(request):
             all_products = Product.objects.filter(pen__country__iexact="de", status="A", knife__isnull=True).exclude(query).prefetch_related("image")
             headline = "Other German Pens"
         else:
-            print(value)
             all_products = Product.objects.filter(make__iexact=value, status="A", knife__isnull=True).order_by('-updated_at').prefetch_related('image').prefetch_related('image')
             headline = "Pens Manufactured by {}".format(value.capitalize())
     elif field == "price":
@@ -137,11 +146,17 @@ def search(request):
     return render(request, 'shop/products.html', context)
 
 def product(request,id):
+    vacation_settings = VacationSettings.load()
     product = Product.objects.get(id=id)
     images = Image.objects.filter(product=product)
+    end = vacation_settings.end_date
+    begin = datetime.now().date()
+    weeks = (end-begin).days//7
+    vacation_message = 'Expect a minimum shipping delay of {} weeks.'.format(weeks)
     context = {
         "product": product,
         "images": images,
+        "vacation_message": vacation_message
     }
     return render(request, 'shop/product.html', context)
 
@@ -154,26 +169,29 @@ def news(request):
     return render(request, 'shop/news.html', context)
 
 def show_cart(request):
+    vacation_settings = VacationSettings.load()
     try:
-        cart = request.session["cart"]
+        cart = request.session['cart']
     except KeyError:
-        request.session["cart"] = []
+        request.session['cart'] = []
         cart = []
-    items = Product.objects.filter(id__in=(cart)).prefetch_related("image")
-    sold_items = items.filter(status="S")
-    available = items.filter(status="A")
-    sold_ids = [str(x) for x in sold_items.values_list("id", flat=True)]
-    price = items.aggregate(Sum("price"))["price__sum"]
+    items = Product.objects.filter(id__in=(cart)).prefetch_related('image')
+    sold_items = items.filter(status='S')
+    available = items.filter(status='A')
+    sold_ids = [str(x) for x in sold_items.values_list('id', flat=True)]
+    price = items.aggregate(Sum('price'))['price__sum']
     context = {}
     if sold_items:
-        context["error"] = "You waited too long! The following items were sold:"
-        context["sold_items"] = sold_items
-        for i in request.session["cart"]:
+        context['error'] = 'You waited too long! The following items were sold:'
+        context['sold_items'] = sold_items
+        for i in request.session['cart']:
             if i in sold_ids:
-                request.session["cart"].remove(i)
+                request.session['cart'].remove(i)
         request.session.modified = True
-    context["items"] = available
-    context["total"] = price
+    context['items'] = available
+    context['total'] = price
+    end_date = vacation_settings.end_date.strftime('%B %dth, %Y')
+    context['vacation_message'] = 'Please remember that items will not ship until the week of {}.'.format(end_date)
     return render(request, 'shop/cart.html', context)
 
 
@@ -206,7 +224,7 @@ def checkout(request):
 
 
 def complete(request):
-    order = Order.objects.get(id=17)
+    order = Order.objects.get(id=1)
     context = {
         "order": order
     }
@@ -253,16 +271,12 @@ def shipping_cost(request):
         phone = "510-754-3278"
     )
     address = add_address(request, messages)
-    # print "address after validation", address
     if 'shipping_address' in address:
         to_address = address['to_address']
         address_id = address['shipping_address'].id
     else:
         # return errors?
-        # print "return errors"
-        # print address
         return JsonResponse(address)
-    print(order_subtotal)
     data = {
         "item_ids": item_ids,
         "items": items,
@@ -271,7 +285,6 @@ def shipping_cost(request):
         "order_subtotal": order_subtotal
     }
     shipping_choices = get_shipping(request, data)
-    print(shipping_choices)
     context = {
         "total_cost": order_subtotal,
         "usps_shipment": shipping_choices["usps_shipment"], 
@@ -327,7 +340,6 @@ def order_handler(request):
     else:
         order_id = parsed_payment["id"]
     # this is the data we need to complete the order
-    # print request.POST
     data = {
         "method": request.POST['method'],
         "order_id": order_id,
@@ -343,7 +355,6 @@ def order_handler(request):
     if not order:
         return JsonResponse({"error": "There was a problem with your order, please contact <a href='mailto:rickpropas@comcast.net'>rickpropas@comcast.net</a>"})
     request.session["order_id"] = order.id
-    # print order
     # send emails to owner and client
     email_res = send_emails(request, order)
     context = {
@@ -377,7 +388,6 @@ def add_address(request, messages):
         )
     if response.status_code == 200:
         if not response.json().get("is_valid"):
-            # print "failed validation"
             message = "Email invalid"
             if response.json().get("did_you_mean"):
                 message += "; did you mean: {}".format(response.json().get("did_you_mean"))
@@ -462,7 +472,6 @@ def get_shipping(request, data):
         height = 5.375
         width = 1.625
     else:
-        # print "irregular items present"
         usps_shipment = None
         fedex_shipment = None
         if len(items) == 1:
@@ -615,3 +624,8 @@ def get_all_search_fields():
     knife_fields = Knife._meta.get_fields()
     knife_field_names = ["knife__" + field.name for field in knife_fields if field.get_internal_type() == "CharField" or field.get_internal_type() == "TextField"]
     return product_field_names + pen_field_names + knife_field_names
+
+
+def show_email(request):
+    order = Order.objects.get(pk=1)
+    return email_text(request, order, False)

@@ -44,9 +44,7 @@ a:hover {
 }
 
 .wrapper {
-  margin-left: 260px;
-  margin-right: 20px;
-  margin-bottom: 50px;
+  margin: 0 20px 50px 260px;
   flex: 1 0 auto;
 }
 
@@ -198,6 +196,10 @@ nav ul li:hover {
   .img-note {
     font-style: italic;
     display: inline-block;
+  }
+  .bulletin-body {
+    max-height: 60vh;
+    overflow: scroll;
   }
 }
 .card-panel.checkout-total {
@@ -546,9 +548,6 @@ footer {
 div.col.s3#magic {
   padding: 0;
 }
-.custom-text-headline {
-  margin-top: 100px;
-}
 
 // temp index styling
 .temp-body {
@@ -562,4 +561,13 @@ div.col.s3#magic {
   .info {
     font-size: 1.5em;
   }
+}
+.warning {
+  color: $warning;
+  font-style: oblique;
+  font-size: 0.8rem;
+}
+#blog,
+#article {
+  margin-top: 50px;
 }
