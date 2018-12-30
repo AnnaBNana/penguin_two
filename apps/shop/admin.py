@@ -6,8 +6,6 @@ from django_summernote.admin import SummernoteModelAdmin
 from sorl.thumbnail.admin import AdminImageMixin
 from .forms import SaleAdminForm, ProductAdminForm, PenAdminForm
 
-vacation_settings = VacationSettings.load()
-
 # helper functions 
 def obj_display(obj):
     model = unicodedata.normalize('NFKD', obj.model).encode('ascii', 'ignore')
