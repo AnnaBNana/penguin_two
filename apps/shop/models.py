@@ -252,6 +252,7 @@ class VacationSettings(SingletonModel):
     class Meta:
         verbose_name = "Vacation Settings"
         verbose_name_plural = "Vacation Settings"
+        managed = True
     def __unicode__(self):
         return "Edit Vacation Settings"
     def set_cache(self):
