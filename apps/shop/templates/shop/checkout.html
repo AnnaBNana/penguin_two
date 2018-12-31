@@ -7,10 +7,10 @@
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <div class="checkout-container">
   <div class="row checkout-body">
-    {% if error %}
+    {% if sold_items %}
     <div class="sold-items-err">
       <i class="fa fa-exclamation-triangle fa-2x err-circle" aria-hidden="true"></i>
-      {{error}} {% for item in sold_items %} {{item}} {% endfor %}
+      You waited too long! The following items were sold: {% for item in sold_items %} {{item}} {% endfor %}
     </div>
     {% endif %}
     <div class="sold-items-err" id="checkout-err"></div>

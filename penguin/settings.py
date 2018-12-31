@@ -23,18 +23,18 @@ SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = False
+DEBUG = True
 
 # DEV
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # PROD
 
-ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com', 'www.thepenguinpen.com']
+# ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com', 'www.thepenguinpen.com']
 
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 # loggers will log to penguin.log when debug == false
 LOGGING = {
@@ -134,29 +134,29 @@ WSGI_APPLICATION = 'penguin.wsgi.application'
 
 # DEV
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'penguin',
-#         'USER': 'postgres',
-#         'PASSWORD': 'somepassword',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-# PROD
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'penguin',
-        'USER': 'ubuntu',
-        'PASSWORD': 'root',
+        'USER': 'postgres',
+        'PASSWORD': 'somepassword',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+# PROD
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'penguin',
+#         'USER': 'ubuntu',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -192,11 +192,13 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
 
+CART_SESSION_ID = 'cart'
+
 # SSL settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_BROWSER_XSS_FILTER = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # static and media storage in s3 settings
 STATICFILES_DIRS = [
@@ -219,16 +221,26 @@ AWS_QUERYSTRING_AUTH = False
 
 # DEV static
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # PROD static
 # STATIC FILES STORAGE
-STATIC_LOCATION = 'static'
-STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
-STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
+# STATIC_LOCATION = 'static'
+# STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+# STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
 
 # media settings should be the same for dev and prod
 # MEDIA FILES STORAGE
 MEDIA_LOCATION = '/media/'
 MEDIA_URL = "http://{}/{}".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
 DEFAULT_FILE_STORAGE = 'penguin.storage_backends.MediaStorage'
+
+# CUSTOM GLOBAL VARIABLES
+STRIPE_PRIVATE_KEY = os.environ['STRIPE_PRIVATE_KEY']
+STRIPE_TEST_PRIVATE_KEY = os.environ['STRIPE_TEST_PRIVATE_KEY']
+EASYPOST_TEST_KEY = os.environ['EASYPOST_TEST_KEY']
+EASYPOST_PRODUCTION_KEY = os.environ['EASYPOST_PRODUCTION_KEY']
+MAILGUN_BASE_URL = "https://api.mailgun.net/v3/mg.thepenguinpen.com/"
+MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
+MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
+MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']

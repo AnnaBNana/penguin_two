@@ -6,20 +6,20 @@
 {% block content %}
 <div class="wrapper" id="store">
   <h3 class="header center">Your Cart:</h3>
+  {% if sold_items %}
+    <div class="sold-items-err">
+      <i class="fa fa-exclamation-triangle fa-2x err-circle" aria-hidden="true"></i>
+      You waited too long! The following items were sold:
+      {% for item in sold_items %}
+      {{item}}
+      {% endfor %}
+    </div>
+  {% endif %}
   {% if not items %}
   <div class="row">
     <h5 class="center red-text text-darken-2">There's nothing in your cart!</h5>
   </div>
   {% else %}
-    {% if error %} 
-      <div class="sold-items-err">
-        <i class="fa fa-exclamation-triangle fa-2x err-circle" aria-hidden="true"></i>
-        {{error}} 
-        {% for item in sold_items %}
-          {{item}}
-        {% endfor %}
-      </div>
-    {% endif %}
     {% for item in items %}
     <div class="row">
       <ul class="collection">
@@ -43,7 +43,7 @@
     </div>
     {% if vacation_settings.active %}
     <div class="row right-align">
-      <p class="warning">{{vacation_message}}</p>
+      <p class="warning">Please remember that items will not ship until the week of{{vacation_settings.end_date|date:"F dS, Y"}}</p>
     </div>
     {% endif %}
     <div class="row rt">
