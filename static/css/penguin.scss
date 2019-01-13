@@ -1,5 +1,5 @@
 $light-text: #ffffe7;
-$dark-grey: #212121;
+$dark-grey: #424242;
 $accent-yellow: #ffd600;
 $light-accent: #eeeeee;
 $warning: #d84315;
@@ -570,4 +570,18 @@ div.col.s3#magic {
 #blog,
 #article {
   margin-top: 50px;
+}
+
+.mega {
+  font-size: 20em;
+  font-weight: 1000;
+  color: $dark-grey;
+  margin-top: 40px;
+  color: $warning;
+}
+.err-404 {
+  color: $dark-grey;
+}
+.small-text {
+  font-size: 1.2em;
 }

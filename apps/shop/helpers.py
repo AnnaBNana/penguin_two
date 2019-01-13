@@ -6,8 +6,7 @@ INSURANCES = {
 }
 EXPRESS_INSURANCES = {
     (100, 200): 0.75,
-    (200, 500): 2.10,
-    
+    (200, 500): 2.10
 }
 
 
@@ -17,6 +16,7 @@ class Helpers:
         '''
         The price per additional $100 of insurance, valued over $300 up to $5,000, is $4.60 plus $0.90 per each $100 or fraction thereof.
         '''
+        cost = float(cost)
         if cost <= 300:
             for bounds, value in INSURANCES.items():
                 l, h = bounds
@@ -27,6 +27,7 @@ class Helpers:
 
     @classmethod
     def generate_insurance_express(self, cost):
+        cost = float(cost)
         if cost <= 100:
             return 0
         elif cost <= 500.01:
