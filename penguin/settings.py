@@ -221,7 +221,7 @@ AWS_QUERYSTRING_AUTH = False
 
 # DEV static
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 # PROD static
 # STATIC FILES STORAGE
