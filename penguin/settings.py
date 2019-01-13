@@ -23,18 +23,18 @@ SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # remove for deployment
-DEBUG = True
+DEBUG = False
 
 # DEV
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # PROD
 
-# ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com', 'www.thepenguinpen.com']
+ALLOWED_HOSTS = ['54.215.201.137', 'thepenguinpen.com', 'newpenguin.thepenguinpen.com', 'www.thepenguinpen.com']
 
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 # loggers will log to penguin.log when debug == false
 LOGGING = {
@@ -134,29 +134,29 @@ WSGI_APPLICATION = 'penguin.wsgi.application'
 
 # DEV
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'penguin',
-        'USER': 'postgres',
-        'PASSWORD': 'somepassword',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
-# PROD
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'penguin',
-#         'USER': 'ubuntu',
-#         'PASSWORD': 'root',
+#         'USER': 'postgres',
+#         'PASSWORD': 'somepassword',
 #         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
+
+# PROD
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'penguin',
+        'USER': 'ubuntu',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -195,10 +195,10 @@ SESSION_SAVE_EVERY_REQUEST = True
 CART_SESSION_ID = 'cart'
 
 # SSL settings
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_BROWSER_XSS_FILTER = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_BROWSER_XSS_FILTER = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # static and media storage in s3 settings
 STATICFILES_DIRS = [
@@ -221,13 +221,13 @@ AWS_QUERYSTRING_AUTH = False
 
 # DEV static
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 # PROD static
-# STATIC FILES STORAGE
-# STATIC_LOCATION = 'static'
-# STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
-# STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
+STATIC FILES STORAGE
+STATIC_LOCATION = 'static'
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
 
 # media settings should be the same for dev and prod
 # MEDIA FILES STORAGE
