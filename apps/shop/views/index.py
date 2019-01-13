@@ -53,3 +53,7 @@ def news(request):
         "bulletins": bulletins,
     }
     return render(request, 'shop/news.html', context)
+
+
+def not_found(request):
+    return render(request, 'shop/404.html')

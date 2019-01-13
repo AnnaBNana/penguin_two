@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^summernote/', include('django_summernote.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+handler404 = 'apps.shop.views.not_found'
 
 if settings.DEBUG:
     import debug_toolbar

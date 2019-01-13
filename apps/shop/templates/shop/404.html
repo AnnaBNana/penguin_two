@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Penguin</title>
+    {% load static %}
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="{% static 'slick/slick.css' %}" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="{% static 'slick/slick-theme.css' %}" media="screen,projection" />
+    <link rel="icon" type="image/png" href="{% static 'imgs/penguin-favicon.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/penguin.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper grey darken-3">
+                <div class="row">
+                    <div class="col s3">
+                        <a class="penguin_logo" href="{% url 'shop:index'%}">the &nbsp;<span class="yellow-text text-accent-4">pen</span>guin</a>
+                    </div>
+                    <div class="col s5">
+                        <form action="{% url 'shop:filter' %}" method="get" id="search-form">
+                            <div class="input-field col s6 right">
+                                <input type="hidden" name="filter" value="search">
+                                <input id="search" type="text" name="value" class="validate">
+                                <label for="search">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    Search Products
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col s4">
+                        <ul id="nav-mobile" class="right nav-list">
+                            <li class="cart"><a href="{% url 'shop:show_cart' %}" class="yellow-text text-accent-4"><i
+                                        class="fa fa-shopping-cart" aria-hidden="true"></i><span class="cart-count">{{cart}}</span></a></li>
+                            <li class="shop"><a href="{% url 'shop:index'%}">Shop</a></li>
+                            <li class="learn"><a href="{% url 'learn:index'%}">Learn</a></li>
+                            <li class="blog"><a href="{% url 'blog:index'%}">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main center-align">
+        <h1 class="mega">4<i class="err-404 far fa-sad-cry"></i>4</h1>
+    
+        <p class="small-text">That means we can't find what you're looking for. But it's ok, you probably have some
+            bookmarks for our old site.</p>
+        <a href="{% url 'shop:index'%}"><button class="btn yellow accent-4 grey-text text-darken-3">Welcome to our
+                new one.</button></a>
+    </div>
+</body>
+
+</html>
