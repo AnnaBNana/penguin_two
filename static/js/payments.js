@@ -72,13 +72,6 @@ var callback = function(res){
     }
     if (fedexShipment) {
       var ratesArray = fedexShipment.rates,
-      fedexLow = fedexShipment.rates[ratesArray.length - 1]
-      type = "fedex-low";
-      displayName = fedexLow.service.replace(/_/g, " ").toLowerCase() + ":";
-      rate = fedexLow.rate;
-      carrier = fedexLow.carrier;
-      service = fedexLow.service;
-      addRadio(type, displayName, rate, carrier, service);
       fedexHigh = fedexShipment.rates[ratesArray.length - 2]
       type = "fedex-high";
       displayName = fedexHigh.service.replace(/_/g, " ").toLowerCase() + ":";
@@ -92,7 +85,6 @@ var callback = function(res){
         current = shipment.rates[i]
         uspsLow = (current.service == "Priority" || current.service == "FirstClassPackageInternationalService") && current.carrier == "USPS"
         uspsHigh = (current.service == "Express" || current.service == "PriorityMailInternational") && current.carrier == "USPS"
-        fedexLow = (current.service == "GROUND_HOME_DELIVERY" || current.service == "INTERNATIONAL_ECONOMY") && current.carrier == "FedEx"
         fedexHigh = (current.service == "FEDEX_2_DAY" || current.service == "INTERNATIONAL_PRIORITY") && current.carrier == "FedEx"
         if (uspsHigh) {
           type = "usps-high"
@@ -107,15 +99,6 @@ var callback = function(res){
           if (uspsLow) {
             type = "usps-low"
             displayName = "USPS Priority:";
-            rate = current.rate;
-            carrier = current.carrier;
-            service = current.service;
-            addRadio(type, displayName, rate, carrier, service);
-          }
-          else if (fedexLow) {
-            // TODO: NOTE THAT LAST 2 OPTIONS ARE FEDEX
-            type = "fedex-low"
-            displayName = current.carrier + " " + current.service.replace(/_/g, " ").toLowerCase() + ":";
             rate = current.rate;
             carrier = current.carrier;
             service = current.service;
