@@ -224,7 +224,7 @@ AWS_QUERYSTRING_AUTH = False
 # STATIC_URL = '/static/'
 
 # PROD static
-STATIC FILES STORAGE
+# STATIC FILES STORAGE
 STATIC_LOCATION = 'static'
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
 STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
