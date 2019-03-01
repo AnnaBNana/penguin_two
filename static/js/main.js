@@ -17,9 +17,11 @@ $(document).ready(function() {
   // HIGHLIGHT ACTIVE SECTION IN NAVBAR
   if (loc.startsWith('/learn/')) {
     $('.learn').addClass('active');
+    $(".glasses").css("color", "tomato");
   }
   else if (loc.startsWith('/blog/')) {
     $('.blog').addClass('active');
+    $(".blog-icon").css("color", "tomato");
   } else {
     if (loc == "/filter") {
       var filter_value = parse_filter_value()
@@ -35,6 +37,7 @@ $(document).ready(function() {
       $('.cart').addClass('active');
     } else {
       $('.shop').addClass('active');
+      $(".pen").css("color", "tomato");
     }
   }
 

@@ -224,7 +224,7 @@ AWS_QUERYSTRING_AUTH = False
 # STATIC_URL = '/static/'
 
 # PROD static
-# STATIC FILES STORAGE
+STATIC FILES STORAGE
 STATIC_LOCATION = 'static'
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
 STATICFILES_STORAGE = 'penguin.storage_backends.StaticStorage'
@@ -241,6 +241,6 @@ STRIPE_TEST_PRIVATE_KEY = os.environ['STRIPE_TEST_PRIVATE_KEY']
 EASYPOST_TEST_KEY = os.environ['EASYPOST_TEST_KEY']
 EASYPOST_PRODUCTION_KEY = os.environ['EASYPOST_PRODUCTION_KEY']
 MAILGUN_BASE_URL = "https://api.mailgun.net/v3/mg.thepenguinpen.com/"
-MAILGUN_SENDER = "Rick Propas <rickpropas@comcast.net>"
+MAILGUN_SENDER = "Rick Propas <rickpropas@gmail.com>"
 MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
 MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']

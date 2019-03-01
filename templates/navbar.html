@@ -19,10 +19,29 @@
         </div>
         <div class="col s4">
           <ul id="nav-mobile" class="right nav-list">
-            <li class="cart"><a href="{% url 'shop:show_cart' %}" class="yellow-text text-accent-4"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="cart-count">{{cart}}</span></a></li>
-            <li class="shop"><a href="{% url 'shop:index'%}">Shop</a></li>
-            <li class="learn"><a href="{% url 'learn:index'%}">Learn</a></li>
-            <li class="blog"><a href="{% url 'blog:index'%}">Blog</a></li>
+            <li class="cart">
+              <a href="{% url 'shop:show_cart' %}" class="yellow-text text-accent-4">
+                <span class="fa-layers fa-fw fa-2x">
+                  <i class="fas fa-shopping-cart" data-fa-transform="grow-1 down-1"></i>
+                  <span class="fa-layers-text fa-inverse counter" data-fa-transform="shrink-8 up-1 right-2" style="font-weight:900; color:#424242">{{cart}}</span>
+                </span>
+              </a>
+            </li>
+            <li class="shop">
+              <a href="{% url 'shop:index'%}">
+                shop <span class="pen"><i class="fas fa-pen-fancy" data-fa-transform="grow-1 right-5"></i></span>
+              </a>
+            </li>
+            <li class="learn">
+              <a href="{% url 'learn:index'%}">
+                learn <span class="glasses"> <i class="fas fa-glasses fa-sm" data-fa-transform="grow-1 right-5"></i></span>
+              </a>
+            </li>
+            <li class="blog">
+              <a href="{% url 'blog:index'%}">
+                blog <span class="blog-icon"><i class="fas fa-blog" data-fa-transform="grow-1 right-5"></i></span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
