@@ -134,16 +134,16 @@ WSGI_APPLICATION = 'penguin.wsgi.application'
 
 # DEV
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'penguin',
-#         'USER': 'postgres',
-#         'PASSWORD': 'somepassword',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'penguin',
+        'USER': 'postgres',
+        'PASSWORD': 'somepassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # PROD
 

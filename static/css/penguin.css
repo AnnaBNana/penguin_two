@@ -90,11 +90,6 @@ nav ul li:hover {
 .note {
   font-size: 0.9em; }
 
-.cart-img {
-  max-height: 150px;
-  width: auto;
-  margin: 0 auto 5px auto; }
-
 .cart-text {
   margin-top: 25px; }
 
@@ -118,28 +113,28 @@ nav ul li:hover {
 .mods {
   vertical-align: top; }
 
-.card-panel,
+.card-yellow,
 .modal-content {
   border-bottom: 2px solid #ffd600;
   padding: 0; }
-  .card-panel .bulletin-head,
-  .card-panel .modal-head,
+  .card-yellow .bulletin-head,
+  .card-yellow .modal-head,
   .modal-content .bulletin-head,
   .modal-content .modal-head {
     font-size: 1.8em;
     font-weight: 100;
     border-bottom: 1px solid #bdbdbd;
     padding: 20px; }
-  .card-panel .bulletin-body,
-  .card-panel .modal-body,
+  .card-yellow .bulletin-body,
+  .card-yellow .modal-body,
   .modal-content .bulletin-body,
   .modal-content .modal-body {
     padding: 20px; }
-  .card-panel .img-note,
+  .card-yellow .img-note,
   .modal-content .img-note {
     font-style: italic;
     display: inline-block; }
-  .card-panel .bulletin-body,
+  .card-yellow .bulletin-body,
   .modal-content .bulletin-body {
     max-height: 60vh;
     overflow: scroll; }
@@ -460,5 +455,13 @@ div.col.s3#magic {
 
 .small-text {
   font-size: 1.2em; }
+
+.card-warning {
+  padding: 10px;
+  border: 2px solid #d84315;
+  color: #d84315; }
+
+.cart-thumb {
+  margin-top: 17px; }
 
 /*# sourceMappingURL=penguin.css.map */

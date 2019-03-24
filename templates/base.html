@@ -7,11 +7,11 @@
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'slick/slick.css' %}" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'slick/slick-theme.css' %}" media="screen,projection" />
-    <link rel="icon" type="image/png" href="{% static 'imgs/penguin-favicon.png' %}" />
-    <link rel="stylesheet" href="{% static 'css/penguin.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static '/materialize/css/materialize.min.css' %}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static '/slick/slick.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static '/slick/slick-theme.css' %}" media="screen,projection" />
+    <link rel="icon" type="image/png" href="{% static '/imgs/penguin-favicon.png' %}" />
+    <link rel="stylesheet" href="{% static '/css/penguin.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
@@ -23,8 +23,8 @@
     {% block footer %}
     {% include 'footer.html' %}
     {% endblock %}
-    <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/materialize/js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/slick/slick.min.js' %}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/all.js" integrity="sha384-qD/MNBVMm3hVYCbRTSOW130+CWeRIKbpot9/gR1BHkd7sIct4QKhT1hOPd+2hO8K" crossorigin="anonymous"></script>
   </body>
   </html>

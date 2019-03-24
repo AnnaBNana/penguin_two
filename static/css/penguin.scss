@@ -141,13 +141,6 @@ nav ul li:hover {
   font-size: 0.9em;
 }
 
-.cart-img {
-  // margin-bottom: 5px;
-  max-height: 150px;
-  width: auto;
-  margin: 0 auto 5px auto;
-}
-
 .cart-text {
   margin-top: 25px;
 }
@@ -178,7 +171,7 @@ nav ul li:hover {
   vertical-align: top;
 }
 
-.card-panel,
+.card-yellow,
 .modal-content {
   border-bottom: 2px solid $accent-yellow;
   padding: 0;
@@ -584,4 +577,12 @@ div.col.s3#magic {
 }
 .small-text {
   font-size: 1.2em;
+}
+.card-warning {
+  padding: 10px;
+  border: 2px solid $warning;
+  color: $warning;
+}
+.cart-thumb {
+  margin-top: 17px;
 }
