@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^learn/', include('apps.learn.urls', namespace='learn')),
     url(r'^blog/', include('apps.blog.urls', namespace='blog')),
     url(r'^summernote/', include('django_summernote.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'apps.shop.views.not_found'
 
