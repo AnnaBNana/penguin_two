@@ -88,10 +88,3 @@ class Cart:
         }
 
         return context 
-
-
-
-
-
-
-

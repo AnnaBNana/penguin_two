@@ -16,5 +16,4 @@ urlpatterns = [
     url(r'^shipping_cost$', views.shipping_cost, name="shipping_cost"),
     url(r'^cart_total$', views.get_cart_total, name="cart_total"),
     url(r'^create/order$', views.order_handler, name="order_handler"),
-    url(r'^show_email$', views.show_email, name='show_email')
 ]

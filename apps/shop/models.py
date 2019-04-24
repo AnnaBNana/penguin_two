@@ -263,3 +263,10 @@ class VacationSettings(SingletonModel):
     end_date = models.DateField(default=auto_end_date)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class SalesSummaryPanel(Product):
+    class Meta:
+        proxy = True
+        verbose_name = 'Sales Summary Panel'
+        verbose_name_plural = 'Sales Summary Panel'

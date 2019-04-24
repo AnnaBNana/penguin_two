@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_summernote',
     'storages',
     'sorl.thumbnail',
@@ -241,6 +242,6 @@ STRIPE_TEST_PRIVATE_KEY = os.environ['STRIPE_TEST_PRIVATE_KEY']
 EASYPOST_TEST_KEY = os.environ['EASYPOST_TEST_KEY']
 EASYPOST_PRODUCTION_KEY = os.environ['EASYPOST_PRODUCTION_KEY']
 MAILGUN_BASE_URL = "https://api.mailgun.net/v3/mg.thepenguinpen.com/"
-MAILGUN_SENDER = "Rick Propas <rickpropas@gmail.com>"
+MAILGUN_SENDER = "The Penguin <mailgun@thepenguinpen.com>"
 MAILGUN_PRIVATE_KEY = os.environ['MAILGUN_PRIVATE_KEY']
 MAILGUN_PUBLIC_KEY = os.environ['MAILGUN_PUBLIC_KEY']

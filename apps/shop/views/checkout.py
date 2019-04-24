@@ -168,7 +168,6 @@ def get_shipping(request, data):
     items = data["items"]
     to_address = data["to_address"]
     from_address = data["from_address"]
-    order_subtotal = data["order_subtotal"]
     weight = items.aggregate(Sum('weight'))['weight__sum']
     special_shipping = items.filter(special_shipping=True).count()
     knives = items.exclude(knife__isnull=True)
@@ -311,11 +310,6 @@ def order_handler(request):
     return render(request, "shop/success.html", context)
 
 
-def show_email(request):
-    order = Order.objects.get(pk=1)
-    return email_text(request, order, False)
-
-
 def create_order(data):
     address_id = data["address_id"][0]
     try:
@@ -368,7 +362,7 @@ def send_emails(request, order):
         auth=("api", settings.MAILGUN_PRIVATE_KEY),
         data={
             "from": settings.MAILGUN_SENDER,
-            "to": [settings.MAILGUN_SENDER],
+            "to": ['Rick Propas <rickpropas@gmail.com>'],
             "subject": order_subject,
             "html": order_text
         }
@@ -380,7 +374,7 @@ def send_emails(request, order):
             settings.MAILGUN_BASE_URL + "messages",
             auth=("api", settings.MAILGUN_PRIVATE_KEY),
             data={
-                "from": "Anna Propas <apropas@gmail.com>",
+                "from": settings.MAILGUN_SENDER,
                 "to": ["Anna Propas <apropas@gmail.com>"],
                 "subject": "[urgent] Error!",
                 "html": "Owner delivery email was not sent for order number {}. Please investigate further".format(order.id)

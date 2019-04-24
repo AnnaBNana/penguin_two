@@ -1,0 +1,62 @@
+{% extends 'admin/change_list.html' %}
+{% load humanize %}
+{% block content_title %}
+<h1> Sales Summary </h1>
+{% endblock %}
+{% block result_list %}
+<div class="results">
+    <table>
+        <thead>
+            <th>
+                <div class="text">
+                    <a href="">Item</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                    <a href="">Sold Date</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                    <a href="">Revenue</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                    <a href="">Cost</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                    <a href="">Net Revenue</a>
+                </div>
+            </th>
+        </thead>
+        <tbody>
+            {% for product in sold_products %}
+            <tr class="{% cycle 'row1' 'row2' %}">
+                    
+                    
+                    <td><a href="{% url 'admin:shop_product_change' product.id %}">#{{product.id}} {{product.make}} {{product.model}}</a></td>
+                    <td>{{product.sold_date}}</td>
+                    <td align='right'>${{product.price|intcomma}}</td>
+                    <td align='right'>${{product.cost|intcomma}}</td>
+                    <td align='right'>${{product.net_rev|intcomma}}</td>
+                    
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Totals:</td>
+                <td></td>
+                <td align='right'>${{totals.total_price|intcomma}}</td>
+                <td align='right'>${{totals.total_cost|intcomma}}</td>
+                <td align='right'>${{totals.total_revenue|intcomma}}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+{% block pagination %}{% endblock %}

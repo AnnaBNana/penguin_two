@@ -1,16 +1,38 @@
 import unicodedata
 from django.contrib import admin
-from .models import Product, Image, Pen, Knife, Bulletin, Order, Sale, Address, VacationSettings
+from django.utils import timezone
+from django.db.models import F, Sum
+from django.db.models.functions import ExtractMonth, ExtractYear
+from django.contrib.admin.views.main import ChangeList
+
+from .models import (
+    Product,
+    Image,
+    Pen,
+    Knife,
+    Bulletin,
+    Order,
+    Sale,
+    Address,
+    VacationSettings,
+    SalesSummaryPanel
+)
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django_summernote.admin import SummernoteModelAdmin
 from sorl.thumbnail.admin import AdminImageMixin
 from .forms import SaleAdminForm, ProductAdminForm, PenAdminForm
+from .list_filters import MonthFilter
 
 # helper functions 
-def obj_display(obj):
-    model = unicodedata.normalize('NFKD', obj.model).encode('ascii', 'ignore')
-    make = unicodedata.normalize('NFKD', obj.make).encode('ascii', 'ignore')
-    return "#{}: {} {}".format(obj.id, make, model)
+def product(obj):
+    return "#{}: {} {}".format(
+        obj.id, 
+        unicodedata.normalize('NFKD', obj.make).encode('ascii', 'ignore'),
+        unicodedata.normalize('NFKD', obj.model).encode('ascii', 'ignore')
+    )
+
+def net_revenue(obj):
+    return obj.price - obj.cost
 
 def mark_sold(modeladmin, request, queryset):
     queryset.update(status="S")
@@ -83,11 +105,11 @@ class ProductAdmin(SummernoteModelAdmin):
         "pen__nib_flexibility",
     ]
     list_filter = [
-        "make",
         "status",
-        "pen__year",
+        "purchase_date",
+        "make"
     ]
-    list_display = (obj_display,)
+    list_display = (product, 'sold_date', 'cost', 'price', net_revenue)
     actions = [
         mark_for_sale,
         mark_sold
@@ -158,8 +180,48 @@ class VacationSettingsAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+
+class SalesSummaryPanelAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/sales_summary_panel_change_list.html'
+    ordering = ('-sold_date', 'id')
+    list_filter = [
+        MonthFilter
+        ]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def changelist_view(self, request, extra_context=None):
+        response = super(SalesSummaryPanelAdmin, self).changelist_view(
+            request,
+            extra_context=extra_context,
+        )
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        sold_products = qs.filter(status="S").annotate(net_rev=F('price') - F('cost'))
+        month_summary = (sold_products
+            .annotate(sold_month=ExtractMonth('sold_date'))
+            .annotate(sold_year=ExtractYear('sold_date'))
+            .values('sold_month', 'sold_year')
+            .annotate(total_revenue=Sum(F('price') - F('cost')))
+            .order_by()
+        )
+        totals = sold_products.aggregate(total_revenue=Sum(F('price') - F('cost')), total_cost=Sum('cost'), total_price=Sum('price'))
+        response.context_data['sold_products'] = sold_products
+        response.context_data['totals'] = totals
+        response.context_data['month_summary'] = month_summary
+
+        return response
+
 admin.site.register(Bulletin, BulletinAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Sale, SaleAdmin)
 admin.site.register(VacationSettings, VacationSettingsAdmin)
+admin.site.register(SalesSummaryPanel, SalesSummaryPanelAdmin)
