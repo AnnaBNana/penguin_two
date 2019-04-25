@@ -43,9 +43,29 @@ def checkout(request):
         return redirect(reverse("shop:show_cart"))
 
     context['address_form'] = AddressForm()
-    context['billing_form'] = BillingAddressForm()
 
-    return render(request, 'shop/checkout.html', context)
+    return render(request, 'shop/nuevo_checkout.html', context)
+
+def shipping(request):
+    cart = Cart(request)
+    context = cart.create_cart_context()
+
+    if not cart.items:
+        return redirect(reverse("shop:show_cart"))
+    # get shipping
+    # put shipping in session?
+    return redirect(reverse("shop:payments"))
+
+def payments(request):
+    cart = Cart(request)
+    context = cart.create_cart_context()
+
+    if not cart.items:
+        return redirect(reverse("shop:show_cart"))
+    # shipping and order info in session
+    # use to display order info
+    context['billing_form'] = BillingAddressForm()
+    return render(request, 'shop/payments.html', context)
 
 
 def shipping_cost(request):

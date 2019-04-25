@@ -87,4 +87,8 @@ class Cart:
             'sold_items': sold_items
         }
 
-        return context 
+        return context
+
+    def get_shipping_cost(self, address):
+        shipping = 0
+        return shipping

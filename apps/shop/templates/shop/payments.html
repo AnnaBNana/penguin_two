@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block sidebar %} {% endblock %}
+{% block content %}
+{% load static %}
+<div class="checkout-container">
+    <div class="row checkout-body">
+        <div class="col s12">
+            <form action="/shipping" method="post" id="shipping-form">
+                {% csrf_token %}
+                <input type="hidden" name="carrier" value="" id="carrier">
+                <input type="hidden" name="service" value="" id="service">
+                <p id="usps-low-wrapper" class="radio-shipping-option">
+                    <input name="shipping" type="radio" id="usps-low" class="usps-low shipping-radio with-gap" />
+                    <label for="usps-low" id="usps-low-label"></label>
+                    <span class="usps-low-value"></span>
+                </p>
+                <p id="usps-high-wrapper" class="radio-shipping-option">
+                    <input name="shipping" type="radio" id="usps-high" class="usps-high shipping-radio with-gap" />
+                    <label for="usps-high" id="usps-high-label"></label> <span class="usps-high-value"></span>
+                </p>
+                <p id="fedex-high-wrapper" class="radio-shipping-option">
+                    <input name="shipping" type="radio" id="fedex-high" class="fedex-high shipping-radio with-gap" />
+                    <label for="fedex-high" id="fedex-high-label"></label> <span class="fedex-high-value"></span>
+                </p>
+                <div class="col s12 right-align loading-message" id="shipping-error">
+                    Please choose a shipping option.
+                </div>
+                <div class="input-field col s6">
+                    <button type="button" id="back-to-address" class="yellow accent-4 waves-effect waves-light btn left">Back to
+                        Address</button>
+                </div>
+                <div class="input-field col s6">
+                    <button type="submit" id="shipping-submit"
+                        class="yellow accent-4 waves-effect waves-light btn right">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

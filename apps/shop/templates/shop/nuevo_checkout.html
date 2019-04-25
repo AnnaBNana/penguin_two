@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block sidebar %} {% endblock %}
+{% block content %}
+{% load static %}
+<div class="checkout-container">
+    <div class="row checkout-body">
+        <div class="col s12">
+            <form action="{% url 'shop:shipping' %}" method="post" id="address-form">
+                {% csrf_token %}
+                <input type="hidden" name="address_id" id="address_id">
+                <div class="input-field col s12">
+                    {{address_form.addressee}}
+                    <label for="recip">Recipient</label>
+                    <span id="addressee-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.phone}}
+                    <label for="phone">Phone</label>
+                    <span id="phone-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.email}}
+                    <label for="email">Email</label>
+                    <span id="email-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s8">
+                    {{address_form.street}}
+                    <label for="street_number">Street</label>
+                    <span id="street-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s4">
+                    {{address_form.apt}}
+                    <label for="apt">Suite or Apt#</label>
+                    <span id="apt-error" class="errors"></span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.city}}
+                    <label for="locality">City</label>
+                    <span id="city-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.state}}
+                    <label for="administrative_area_level_1">State</label>
+                    <span id="state-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.zip_code}}
+                    <label for="postal_code">Postal Code</label>
+                    <span id="zip_code-error" class="errors">This field is required</span>
+                </div>
+                <div class="input-field col s6">
+                    {{address_form.country}}
+                    <label for="country">Country</label>
+                    <span id="country-error" class="errors">This field is required</span>
+                </div>
+                <div id="address-error" class="errors col s12 right"></div>
+                <div class="col s12 right-align loading-message" id="loading-message">
+                    getting shipping rates...
+                </div>
+                <div class="input-field col s6">
+                    <a href="{% url 'shop:show_cart' %}">
+                        <button type="button" id="back-to-cart" class="yellow accent-4 waves-effect waves-light btn left">Back
+                            to Cart</button>
+                    </a>
+                </div>
+                <div class="input-field col s6">
+                    <button type="submit" id="address-submit" class="yellow accent-4 waves-effect waves-light btn right"><i
+                            class="far fa-compass fa-spin" id="address-loading"></i> Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
