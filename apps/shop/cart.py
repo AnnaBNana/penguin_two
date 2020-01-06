@@ -3,6 +3,21 @@ from django.db.models import Sum
 
 from models import Product
 
+
+class Address:
+    def __init__(self, address):
+        print(address)
+        self.recipient = address.get('addressee')
+        self.phone_number = address.get('phone')
+        self.email = address.get('email')
+        self.street = address.get('street')
+        self.apt = address.get('apt')
+        self.city = address.get('city')
+        self.state = address.get('state')
+        self.zip_code = address.get('zip_code')
+        self.country = address.get('country')
+
+
 class Cart:
     '''
     class representing the cart objects
@@ -59,6 +74,17 @@ class Cart:
         items = Product.objects.filter(id__in=(self.items))
         return items.aggregate(Sum('price'))['price__sum']
 
+    def special_packaging(self):
+        avail_items, sold_items = self.get_items()
+        if len(self.items):
+            return True
+        for item in avail_items:
+            if item.special_packaging:
+                return True
+        return False
+
+
+
     def get_items(self):
         '''
         get available and sold items, return tuple
@@ -90,5 +116,6 @@ class Cart:
         return context
 
     def get_shipping_cost(self, address):
+        self.special_packaging()        
         shipping = 0
         return shipping

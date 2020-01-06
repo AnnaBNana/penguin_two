@@ -5,7 +5,7 @@
 {% load static %}
 <div class="checkout-container">
     <div class="row checkout-body">
-        <div class="col s12">
+        <div class="col s7">
             <form action="{% url 'shop:shipping' %}" method="post" id="address-form">
                 {% csrf_token %}
                 <input type="hidden" name="address_id" id="address_id">
@@ -60,15 +60,34 @@
                 </div>
                 <div class="input-field col s6">
                     <a href="{% url 'shop:show_cart' %}">
-                        <button type="button" id="back-to-cart" class="yellow accent-4 waves-effect waves-light btn left">Back
+                        <button type="button" id="back-to-cart" class="yellow accent-4 waves-effect waves-light grey-text text-darken-3 btn left">Back
                             to Cart</button>
                     </a>
                 </div>
                 <div class="input-field col s6">
-                    <button type="submit" id="address-submit" class="yellow accent-4 waves-effect waves-light btn right"><i
+                    <button type="submit" id="address-submit" class="yellow accent-4 waves-effect waves-light grey-text text-darken-3 btn right"><i
                             class="far fa-compass fa-spin" id="address-loading"></i> Next</button>
                 </div>
             </form>
+        </div>
+        <div class="col s4 offset-s1">
+            <div class="card-panel card-yellow checkout-total">
+                <div class="row">
+                    <h5 class="center-align">Your Order:</h5>
+                </div>
+                {% for item in items %}
+                <div class="row item-row">
+                    <p class="col s10">{{item}}</p>
+                    <p class="col s2">${{item.price}}</p>
+                </div>
+                {% endfor %}
+                <div class="clearfix"></div>
+            </div>
+            <h5 class="right-align">
+                <p class="col s8 left-align">Your order sub-total: </p>
+                <p class="col s4 right-align" id="order-amount">$<span id="order-subtotal"
+                        data-cost="{{total_cost}}">{{total}}</span></p>
+            </h5>
         </div>
     </div>
 </div>

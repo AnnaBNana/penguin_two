@@ -22,7 +22,7 @@ from ..forms import (
     AddressForm
 )
 from ..helpers import Helpers
-from ..cart import Cart
+from ..cart import Cart, Address
 
 logger = logging.getLogger(__name__)
 easypost.api_key = settings.EASYPOST_PRODUCTION_KEY
@@ -48,12 +48,19 @@ def checkout(request):
 
 def shipping(request):
     cart = Cart(request)
+    address = Address(request.POST)
     context = cart.create_cart_context()
 
     if not cart.items:
         return redirect(reverse("shop:show_cart"))
+
+    print(context)
+    print(address)
+    cart.get_shipping_cost(address)
+    
     # get shipping
     # put shipping in session?
+
     return redirect(reverse("shop:payments"))
 
 def payments(request):
