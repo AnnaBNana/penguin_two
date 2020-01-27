@@ -37,42 +37,35 @@ def checkout(request):
     render checkout if cart contains items
     '''
     cart = Cart(request)
-    context = cart.create_cart_context()
 
-    if not cart.items:
+    if not cart.item_ids:
         return redirect(reverse("shop:show_cart"))
 
-    context['address_form'] = AddressForm()
+    cart.context['address_form'] = AddressForm()
 
-    return render(request, 'shop/nuevo_checkout.html', context)
+    return render(request, 'shop/nuevo_checkout.html', cart.context)
 
 def shipping(request):
     cart = Cart(request)
-    address = Address(request.POST)
-    context = cart.create_cart_context()
-
-    if not cart.items:
+    if not cart.item_ids:
         return redirect(reverse("shop:show_cart"))
 
-    print(context)
-    print(address)
-    cart.get_shipping_cost(address)
-    
-    # get shipping
-    # put shipping in session?
+    address = Address(request.POST)
+    shipping_options = address.get_shipping_options(cart)
 
-    return redirect(reverse("shop:payments"))
+    cart.context['shipping_options'] = shipping_options
+
+    return JsonResponse(cart.context)
 
 def payments(request):
     cart = Cart(request)
-    context = cart.create_cart_context()
 
-    if not cart.items:
+    if not cart.item_ids:
         return redirect(reverse("shop:show_cart"))
     # shipping and order info in session
     # use to display order info
-    context['billing_form'] = BillingAddressForm()
-    return render(request, 'shop/payments.html', context)
+    cart.context['billing_form'] = BillingAddressForm()
+    return render(request, 'shop/payments.html', cart.context)
 
 
 def shipping_cost(request):
