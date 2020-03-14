@@ -15,8 +15,8 @@ LOCALES = {
 
 @attr.s
 class ShippingOptions(object):
-    locale = attr.ib(kw_only=True)
-    order_size = attr.ib(kw_only=True)
+    locale = attr.ib()
+    order_size = attr.ib()
     order_size_cat = attr.ib(init=False)
     options = attr.ib(init=False)
 
@@ -81,7 +81,7 @@ class Cart:
             self.remove(sold_ids)
 
         self.total = self._get_total()
-        self.special_packaging = self._req_special_packaging(items)
+        self.special_packaging = self._req_special_shipping(items)
         self.context = {'items': items, 'total': self.total}
 
     def _get_items(self, item_ids):
@@ -99,14 +99,14 @@ class Cart:
         items = Product.objects.filter(id__in=(self.item_ids))
         return items.aggregate(Sum('price'))['price__sum']
 
-    def _req_special_packaging(self, items):
+    def _req_special_shipping(self, items):
         '''
         returns boolean to indicate whether package requires special shipping
         '''
         if len(self.item_ids) > 5:
             return True
         for item in items:
-            if item.special_packaging:
+            if item.special_shipping:
                 return True
         return False
 
