@@ -18,8 +18,8 @@
             <h5>Order:</h5>
             <p>Order #: {{order.id}}</p>
             <p>Order total: ${{order.subtotal|add_float:order.shipping}}</p>
-            <p>Shipping carrier: {{order.shipping_carrier}}</p>
-            <p>Shipping service: {{order.shipping_service}}</p>
+            <p>Shipping carrier: {{order.get_shipping_carrier_display}}</p>
+            <p>Shipping service: {{order.get_shipping_service_display}}</p>
         </div>
         <div class="col s6 address">
             <h5>Address:</h5>

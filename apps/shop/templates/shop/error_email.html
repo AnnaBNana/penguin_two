@@ -6,40 +6,40 @@
 </head>
 
 <body style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+
     <div class="wrapper" style="padding: 0;margin: 0 auto;font-family: 'Roboto', 'Verdana', 'sans-serif';width: 80%;">
-        {% if seller%}
-        <div class="seller-text" style="padding: 0;margin: 20px 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
-            Congratulations! You made a sale! The email we sent your client is shown below. Don't forget to mark your orders complete
-            and email the client at
-            <a href="mailto:{{order.shipping_address.email}}" style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-decoration: none;color: #0288d1;">{{order.shipping_address.email}}</a> once their order has shipped.
-        </div>
-        <ul style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';margin-bottom: 20px;">
-            {% for item in order.products.all %}
-            <lip style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">id#: {{order.id}}, item description: {{item}} {% endfor %}
-            </lip>
-        </ul>
-        {% endif %}
         <div class="header" style="padding: 10px 20px;margin: 0;font-family: 'Lobster Two', 'Arial Narrow', Arial, sans-serif;width: 100%;font-size: 2em;color: #fff;background-color: #424242;">
             the
             <span class="yellow" style="padding: 0;margin: 0;font-family: 'Lobster Two', 'Arial Narrow', Arial, sans-serif;color: #ffd600;">pen</span>guin
         </div>
         <div class="blurb" style="padding: 20px;margin: 0 auto;font-family: 'Roboto', 'Verdana', 'sans-serif';width: 80%;line-height: 1.5em;">
-
-            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Dear {{order.shipping_address.addressee|firstonly|capleading}},</p>
-            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Thank you very much for your purchase of this 
-                {% for item in order.products.all %}
-                    {{item}}
-                    {% if item != order.products.last %}
-                    ,
-                    {% endif %}
-                {% endfor %}
-                . {{thank_you}} I hope you will use and enjoy {{prep}} for many years to come.
-            </p>
-            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Best Regards,</p>
-            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">Rick</p>
-            {% if vacation_settings.active %}
-            <p style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif'; color: #d84315; font-style: oblique; font-size: 0.8rem">Please keep in mind that we are on vacation for the next {{delay_weeks}} weeks. Your order will not be shipped until the week of {{vacation_settings.end_date}}.</p>
-            {% endif %}
+            <div style="padding: 0;margin: 20px 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">
+                <p>
+                    <span style="color: #d84315; font-weight: bold;"> WARNING! </span>Something went wrong when e-mailing the
+                    customer.
+                </p>
+                <p>This means either:
+                    <ol>
+                        <li>there is an error in your service</li>
+                        <li>the client email was not valid</li>
+                        <li>there was an error in the mailgun service</li>
+                    </ol>
+                </p>
+                <p>Below is the client's information. Please attempt to contact them via email or phone, or they will not be notified. You will also receive the standard sales e-mail shortly with further order details.</p>
+                <p>e-mail: 
+                    <a href="mailto:{{order.shipping_address.email}}" style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-decoration: none;color: #0288d1;">
+                        {{order.shipping_address.email}}
+                    </a>
+                </p>
+                <p>phone: <a href="tel:{{order.shipping_address.phone}}" style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-decoration: none;color: #0288d1;">{{order.shipping_address.phone}}</a></p>
+            </div>
+        <p>Items in order:</p>
+        <ul style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';margin-bottom: 20px;">
+            {% for item in order.products.all %}
+            <li style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';">item id#: {{item.id}}, item
+                description: {{item}} {% endfor %}
+            </li>
+        </ul>
         </div>
         <h2 style="padding: 0;margin: 0;font-family: 'Roboto', 'Verdana', 'sans-serif';text-align: center;">Order Summary</h2>
         <div class="row order-summary" style="padding: 0;margin: 20px auto;font-family: 'Roboto', 'Verdana', 'sans-serif';border: 1px solid #eeeeee;width: 90%;">

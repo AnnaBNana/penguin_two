@@ -1,11 +1,12 @@
 from django import forms
 from django.db import models    
-from django.forms import ModelForm, TextInput, NumberInput, ModelMultipleChoiceField, Select, widgets
+from django.forms import ModelForm, TextInput, NumberInput, ModelMultipleChoiceField, Select, widgets, ChoiceField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from .models import Order, Address, Sale, Product
 
+from phonenumbers import COUNTRY_CODE_TO_REGION_CODE
 from django_countries.widgets import CountrySelectWidget
 from django_countries.fields import LazyTypedChoiceField
 from django_countries import countries, Countries
@@ -23,18 +24,23 @@ class AddressForm(ModelForm):
             'zip_code',
             'country',
             'phone',
+            'phone_prefix',
             'email'
         ]
         widgets = {
             'addressee': TextInput(attrs={'required': "true", "id": "recip", "class": "address-field"}),
-            'street': TextInput(attrs={'id': 'autocomplete', 'class': 'field address-field','required': "true"}),
+            'street': TextInput(attrs={'id': 'autocomplete', 'class': 'input-field col mods field address-field', 'required': "true"}),
             'city': TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'locality','required': "true"}),
             'state': TextInput(attrs={'class': 'input-field col mods field address-field', 'id': 'administrative_area_level_1','required': "true"}),
             'zip_code': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'postal_code','required': "true"}),
-            'phone': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'phone','required': "true"}),
+            'phone': TextInput(attrs={'class': 'input-field col mods', 'id': 'phone'}),
+            'phone_prefix': Select(attrs={'class': 'input-field col mods', 'id': 'phone-prefix'}),
             'email': TextInput(attrs={'class': 'input-field col mods address-field', 'id': 'email','required': "true"}),
-            'apt': TextInput(attrs={'class': 'input-field col mods', 'id': 'apt'}),
+            'apt': TextInput(attrs={'class': 'input-field col mods', 'id': 'apt'})
         }
+    phone_prefix = ChoiceField(choices=[
+        ('+{}'.format(key), '+{} ({})'.format(key, value[0])) for key, value in COUNTRY_CODE_TO_REGION_CODE.items()
+    ])
 
 class BillingAddressForm(forms.Form):
     name = forms.CharField(required=True,widget=forms.TextInput(attrs={"id": "billing-name", "class": "address-field"}))

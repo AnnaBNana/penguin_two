@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import StringIO
 from datetime import (datetime, timedelta)
+import attr
 
 import boto3
 from sorl.thumbnail import ImageField, get_thumbnail
@@ -19,6 +20,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
+from fixtures import SHIPPING_OPTIONS
 
 from penguin.settings import THUMB_SIZE, AWS_STORAGE_BUCKET_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
@@ -59,8 +61,24 @@ ORDER_METHOD = (
 )
 
 CARRIER_CHOICES = (
-    ("USPS", "USPS"),
-    ("FedEx", "Fedex"),
+    ("usps", "USPS"),
+    ("fedex", "FedEx"),
+)
+
+LOCALES = (
+    ('US', 'United States of America'),
+    ('CA', 'Canada'),
+    ('INTER', 'International')
+)
+
+SERVICE_TYPES = (
+    ('flat_rate', 'Flat Rate'),
+    ('express', 'Express')
+)
+
+ORDER_SIZE_CAT = (
+    ('lte5', '5 or fewer'),
+    ('gt5', 'more than 5')
 )
 
 def validate_year(value):
@@ -74,12 +92,6 @@ def validate_year(value):
 
 
 class OrderManager(models.Manager):
-    def validate_create(self, data):
-        for field in data:
-            if not data[field]:
-                return False
-        return True
-
     def update_sold_items(self,items): # this sucks
         with transaction.atomic():
             for item in items:
@@ -116,16 +128,28 @@ class OrderManager(models.Manager):
 
 
 class Sale(models.Model):
+
     def __unicode__(self):
         return self.headline
+
     headline = models.TextField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Address(models.Model):
+
     def __unicode__(self):
-        return "{} \n{} {} \n{}, {} {}".format(self.addressee,self.street,self.apt,self.city,self.state,self.zip_code,self.country)
+        return "{} \n{} {} \n{}, {} {} \n{}".format(
+            self.addressee,
+            self.street,
+            self.apt,
+            self.city,
+            self.state,
+            self.zip_code,
+            self.country
+        )
+
     addressee = models.CharField(max_length=255)
     street = models.CharField(max_length=255)
     apt = models.CharField(max_length=12, null=True, blank=True)
@@ -133,20 +157,28 @@ class Address(models.Model):
     state = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=12)
     country = countries.CountryField(blank_label="Select Country")
-    phone = phonenumber.PhoneNumberField()
+    phone = phonenumber.PhoneNumberField(null=True, blank=True)
     email = models.EmailField(max_length=254)
 
 
 class Order(models.Model):
+
     def __unicode__(self):
-        return "{} order for\n{}\nStatus: {}\nSubtotal: ${}\nShipping: ${}".format(self.order_method.title(), self.shipping_address, self.status, self.subtotal, self.shipping)
+        return "{} order for\n{}\nStatus: {}\nSubtotal: ${}\nShipping: ${}".format(
+            self.order_method.title(),
+            self.shipping_address,
+            self.status,
+            self.subtotal,
+            self.shipping
+        )
+
     order_method = models.CharField(max_length=10, choices=ORDER_METHOD)
-    order_id = models.CharField(max_length=255)
+    order_id = models.CharField(max_length=255, blank=True, null=True)
     subtotal = models.DecimalField(max_digits=8,decimal_places=2,validators=[MinValueValidator(0.01)])
     shipping = models.DecimalField(max_digits=8,decimal_places=2,validators=[MinValueValidator(0.01)])
-    shipping_address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name="shipping_address")
+    shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="order")
     shipping_carrier = models.CharField(max_length=25, choices=CARRIER_CHOICES)
-    shipping_service = models.CharField(max_length=55)
+    shipping_service = models.CharField(max_length=55, choices=SERVICE_TYPES)
     status = models.CharField(max_length=10,choices=ORDER_STATUS)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -154,8 +186,10 @@ class Order(models.Model):
 
 
 class Product(models.Model):
+
     def __unicode__(self):
         return "{} {}".format(self.make, self.model)
+
     make = models.CharField(max_length=55)
     model = models.CharField(max_length=55)
     condition = models.CharField(max_length=25,choices=CONDITIONS)
@@ -174,7 +208,7 @@ class Product(models.Model):
     in_stock = models.IntegerField(default=1, validators=[MinValueValidator(0)], help_text="If number is 0 product must be marked sold.")
     sold_date = models.DateField(blank=True,null=True)
     sale = models.ForeignKey(Sale, related_name='products', blank=True, null=True, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order,related_name='products', blank=True, null=True, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order,related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -196,6 +230,7 @@ class Pen(models.Model):
 class Knife(models.Model):
     class Meta:
         verbose_name_plural = "knives"
+
     product = models.OneToOneField(Product, related_name='knife', on_delete=models.CASCADE)
     knife_type = models.CharField(max_length=25)
     blade_material = models.CharField(max_length=25)
@@ -204,8 +239,10 @@ class Knife(models.Model):
 
 
 class Image(models.Model):
+
     def __unicode__(self):
         return "Image for: {}".format(self.product)
+
     product = models.ForeignKey(Product, related_name='image', blank=True, null=True, on_delete=models.CASCADE)
     image = ImageField(null=True, upload_to='images')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -213,8 +250,10 @@ class Image(models.Model):
 
 
 class Bulletin(models.Model):
+
     def __unicode__(self):
         return "{}".format(self.headline)
+
     headline = models.CharField(max_length=155)
     text = models.TextField(max_length=75000)
     active = models.BooleanField(default=True)
@@ -253,10 +292,13 @@ class VacationSettings(SingletonModel):
         verbose_name = "Vacation Settings"
         verbose_name_plural = "Vacation Settings"
         managed = True
+
     def __unicode__(self):
         return "Edit Vacation Settings"
+
     def set_cache(self):
         cache.set(self.__class__.__name__, self)
+
     active = models.BooleanField(default=False)
     headline = models.CharField(max_length=155, default="The Penguin is on vacation!")
     message = models.TextField(max_length=75000, default="We will be back and will resume shipping on ")
@@ -270,3 +312,38 @@ class SalesSummaryPanel(Product):
         proxy = True
         verbose_name = 'Sales Summary Panel'
         verbose_name_plural = 'Sales Summary Panel'
+
+
+class ShippingOptions(models.Model):
+
+    def __unicode__(self):
+        oder_size_cats = {item[0]: item[1] for item in ORDER_SIZE_CAT}
+        carriers = {item[0]: item[1] for item in CARRIER_CHOICES}
+        service_types = {item[0]: item[1] for item in SERVICE_TYPES}
+        locales = {item[0]: item[1] for item in LOCALES}
+        return "${}: {} {} {} {} items".format(
+            self.price,
+            carriers[self.carrier],
+            service_types[self.service_type],
+            locales[self.locale.upper()],
+            oder_size_cats[self.order_size_cat]
+        )
+
+    order_size_cat = models.TextField(choices=ORDER_SIZE_CAT)
+    carrier = models.TextField(choices=CARRIER_CHOICES)
+    service_type = models.TextField(choices=SERVICE_TYPES)
+    locale = models.TextField(choices=LOCALES)
+    price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0.01)])
+    days_low = models.IntegerField()
+    days_high = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def display_dict(self):
+        service_type_display = self.get_service_type_display()
+        carrier_display = self.get_carrier_display()
+        values = self.__dict__
+        values.pop('_state')
+        values['service_type_display'] = service_type_display
+        values['carrier_display'] = carrier_display
+        return values

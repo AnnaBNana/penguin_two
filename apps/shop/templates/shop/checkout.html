@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 <script src="https://js.stripe.com/v3/"></script>
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AeLNC6tjMpH3BANJJz7Q1CiPOeK5cS4sYxsWMzno1aEV7CGA59L-G-T7Xgfv4RZYg42PGS60pEwTerHY"></script>
 <div class="checkout-container">
   <div class="row checkout-body">
     {% if sold_items %}
@@ -33,17 +33,21 @@
             <label for="recip">Recipient</label>
             <span id="addressee-error" class="errors">This field is required</span>
           </div>
-          <div class="input-field col s6">
+          <div class="input-field col s2">
+            {{address_form.phone_prefix}}
+            <label for="id_phone_prefix">Country Code</label>
+          </div>
+          <div class="input-field col s5">
             {{address_form.phone}}
             <label for="phone">Phone</label>
             <span id="phone-error" class="errors">This field is required</span>
           </div>
-          <div class="input-field col s6">
+          <div class="input-field col s5">
             {{address_form.email}}
             <label for="email">Email</label>
             <span id="email-error" class="errors">This field is required</span>
           </div>
-          <div class="input-field col s8">
+          <div class="input-field col s6">
             {{address_form.street}}
             <label for="street_number">Street</label>
             <span id="street-error" class="errors">This field is required</span>
@@ -91,24 +95,9 @@
       <div id="shipping" class="col s12">
         <form action="/shipping" method="post" id="shipping-form">
           {% csrf_token %}
-          <input type="hidden" name="carrier" value="" id="carrier">
-          <input type="hidden" name="service" value="" id="service">
-          <p id="usps-low-wrapper" class="radio-shipping-option">
-            <input name="shipping" type="radio" id="usps-low" class="usps-low shipping-radio with-gap" />
-            <label for="usps-low" id="usps-low-label"></label>
-            <span class="usps-low-value"></span>
-          </p>
-          <p id="usps-high-wrapper" class="radio-shipping-option">
-            <input name="shipping" type="radio" id="usps-high" class="usps-high shipping-radio with-gap" />
-            <label for="usps-high" id="usps-high-label"></label> <span class="usps-high-value"></span>
-          </p>
-          <p id="fedex-high-wrapper" class="radio-shipping-option">
-            <input name="shipping" type="radio" id="fedex-high" class="fedex-high shipping-radio with-gap" />
-            <label for="fedex-high" id="fedex-high-label"></label> <span class="fedex-high-value"></span>
-          </p>
-          <div class="col s12 right-align loading-message" id="shipping-error">
-            Please choose a shipping option.
-          </div>
+          <div id="shipping-input-target"></div>
+          <input type="hidden" id="carrier" name="carrier">
+          <input type="hidden" id="service" name="service">
           <div class="input-field col s6">
               <button type="button" id="back-to-address" class="yellow accent-4 waves-effect waves-light btn left">Back to Address</button>
           </div>
@@ -119,7 +108,7 @@
       </div>
       <!-- tab content, section 3 -->
       <div id="payment" class="col s12">
-        <button type="button" class="grey darken-3 waves-effect waves-light btn cc-btn"><i class="fa fa-credit-card" aria-hidden="true"></i> Credit Card</button>
+        <button type="button" class="grey darken-3 waves-effect waves-light btn cc-btn"><i class="fa fa-credit-card" aria-hidden="true"></i> Pay with Credit Card Via Stripe</button>
         <div id="paypal-button"></div>
         <div class="card-options">
           <h5 class="center-align">Card Details</h5>
@@ -133,47 +122,6 @@
               <!-- Used to display Element errors -->
             </div>
             <p>
-              <input type="checkbox" id="same-address" name="same_address" checked/>
-              <label for="same-address" class="same-address">My billing address is the same as my delivery address</label>
-            </p>
-            <!-- insert fields for billing address -->
-            <div id="billing-fields">
-              <div class="input-field col s12">
-                {{billing_form.name}}
-                <label for="billing-name">Name on Card</label>
-                <span id="billing-name-error" class="errors">This field is required</span>
-              </div>
-              <div class="input-field col s8">
-                {{billing_form.address_line1}}
-                <label for="billing-street">Street</label>
-                <span id="billing-street-error" class="errors">This field is required</span>
-              </div>
-              <div class="input-field col s4">
-                {{billing_form.address_line2}}
-                <label for="billing-apt">Suite or Apt#</label>
-                <span id="billing-apt-error" class="errors"></span>
-              </div>
-              <div class="input-field col s6">
-                {{billing_form.address_city}}
-                <label for="billing-city">City</label>
-                <span id="billing-city-error" class="errors">This field is required</span>
-              </div>
-              <div class="input-field col s6">
-                {{billing_form.address_state}}
-                <label for="billing-state">State</label>
-                <span id="billing-state-error" class="errors">This field is required</span>
-              </div>
-              <div class="input-field col s6">
-                {{billing_form.address_zip}}
-                <label for="billing-zip">Postal Code</label>
-                <span id="billing-zip_code-error" class="errors">This field is required</span>
-              </div>
-              <div class="input-field col s6">
-                {{billing_form.address_country}}
-                <label for="billing-country">Country</label>
-                <span id="billing-country-error" class="errors">This field is required</span>
-              </div>
-            </div>
             <div class="input-field col s12">
               <button type="submit" class="yellow accent-4 waves-effect waves-light btn">Complete My Purchase</button>
             </div>
@@ -201,6 +149,7 @@
         <p class="col s8 left-align">Your order sub-total: </p><p class="col s4 right-align" id="order-amount">$<span id="order-subtotal" data-cost="{{total_cost}}">{{total}}</span></p>
       </h5>
     </div>
+  
   </div>
 
 <script>
@@ -208,10 +157,9 @@
 </script>
 <!-- stripe payments + custom payment-related JS -->
 <script src="{% static 'js/payments.js' %}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1sdfD_NFnRSrPHgqU5gHQERFWcsKfVr4&libraries=places&callback=initAutocomplete" async
-defer></script>
-<script type="text/javascript" src="{% static 'js/places.js' %}"></script>
-{% comment %} <script type="text/javascript" src="{% static 'js/billingplaces.js' %}"></script> {% endcomment %}
-<script type="text/javascript" src="{% static 'js/paypal.js' %}"></script>
+<script src="{% static 'js/shipping.js' %}"></script>
+<script src="{% static 'js/address-shipping-handler.js' %}"></script>
+<script src="{% static 'js/checkout.js' %}"></script>
+<script src="{% static 'js/paypal.js' %}"></script>
 
 {% endblock %}

@@ -15,6 +15,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
+    <!-- preloader for checkout must be in base to overlay all elements -->
+    <div id="ovl" class="loading-overlay"></div>
+    <div id="preloader" class="preloader">
+      <div class="load-icon">
+        <i class="fas fa-pen-nib fa-3x fa-pulse"></i>
+      </div>
+      <p>We are processing your payment information...</p>
+    </div>
     {% block navbar %}
     {% include 'navbar.html' %}
     {% endblock %}

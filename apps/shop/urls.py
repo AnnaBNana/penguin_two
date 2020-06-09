@@ -10,12 +10,11 @@ urlpatterns = [
     url(r'^show/cart$', views.show_cart, name='show_cart'),
     url(r'^remove/cart/(?P<product_id>\d+)$', views.remove_cart, name='remove_from_cart'),
     url(r'^checkout$', views.checkout, name='checkout'),
-    url(r'^checkout/complete$', views.complete, name='complete'),
     url(r'^news$', views.news, name='news'),
     url(r'^filter$', views.search, name='filter'),
-    url(r'^shipping_cost$', views.shipping_cost, name="shipping_cost"),
     url(r'^cart_total$', views.get_cart_total, name="cart_total"),
     url(r'^create/order$', views.order_handler, name="order_handler"),
+    url(r'^capture/order$', views.capture_paypal, name="payment_capture"),
     url(r'^shipping$', views.shipping, name='shipping'),
     url(r'^payments$', views.payments, name='payments'),
 ]

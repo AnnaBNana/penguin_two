@@ -1,0 +1,254 @@
+[
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "US",
+            "price": 15.00,
+            "days_low": 1,
+            "days_high": 3,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "US",
+            "price": 60.00,
+            "days_low": 1,
+            "days_high": 2,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "US",
+            "price": 100.00,
+            "days_low": 1,
+            "days_high": 2,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "US",
+            "price": 30.00,
+            "days_low": 1,
+            "days_high": 3,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "US",
+            "price": 60.00,
+            "days_low": 1,
+            "days_high": 2,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "US",
+            "price": 100.00,
+            "days_low": 1,
+            "days_high": 2,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "CA",
+            "price": 32.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "ca",
+            "price": 80.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "ca",
+            "price": 100.00,
+            "days_low": 2,
+            "days_high": 4,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "ca",
+            "price": 40.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "ca",
+            "price": 80.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "ca",
+            "price": 100.00,
+            "days_low": 2,
+            "days_high": 4,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "INTER",
+            "price": 40.00,
+            "days_low": 10,
+            "days_high": 20,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "INTER",
+            "price": 80.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "lte5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "INTER",
+            "price": 100.00,
+            "days_low": 2,
+            "days_high": 4,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "flat_rate",
+            "locale": "INTER",
+            "price": 75.00,
+            "days_low": 10,
+            "days_high": 20,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "usps",
+            "service_type": "express",
+            "locale": "INTER",
+            "price": 80.00,
+            "days_low": 5,
+            "days_high": 7,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    },
+    {
+        "model": "shop.ShippingOptions",
+        "fields": {
+            "order_size_cat": "gt5",
+            "carrier": "fedex",
+            "service_type": "express",
+            "locale": "INTER",
+            "price": 100.00,
+            "days_low": 2,
+            "days_high": 4,
+            "created_at": "2020-03-22T23:02:00",
+            "updated_at": "2020-03-22T23:02:00"
+        }
+    }
+]

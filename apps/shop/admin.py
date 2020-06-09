@@ -15,7 +15,8 @@ from .models import (
     Sale,
     Address,
     VacationSettings,
-    SalesSummaryPanel
+    SalesSummaryPanel,
+    ShippingOptions
 )
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django_summernote.admin import SummernoteModelAdmin
@@ -134,6 +135,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [
         ProductInline
     ]
+    readonly_fields = ['id']
     search_fields = [
         "order_method",
         "order_id",
@@ -219,9 +221,20 @@ class SalesSummaryPanelAdmin(admin.ModelAdmin):
 
         return response
 
+
+class ShippingOptionsAdmin(SummernoteModelAdmin):
+    model = ShippingOptions
+
+
+class AddressAdmin(SummernoteModelAdmin):
+    model = Address
+
+
 admin.site.register(Bulletin, BulletinAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Sale, SaleAdmin)
 admin.site.register(VacationSettings, VacationSettingsAdmin)
 admin.site.register(SalesSummaryPanel, SalesSummaryPanelAdmin)
+admin.site.register(ShippingOptions, ShippingOptionsAdmin)
+admin.site.register(Address, AddressAdmin)

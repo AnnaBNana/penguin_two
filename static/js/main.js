@@ -100,5 +100,25 @@ $(document).ready(function() {
 
   // display materialize select menus
   $('select').material_select();
-
+  document.querySelectorAll(
+    '.select-wrapper'
+  ).forEach(
+    t => t.addEventListener(
+      'click', e => e.stopPropagation()
+    )
+  );
+  $('select[required]').css({
+    display: 'inline',
+    position: 'absolute',
+    float: 'left',
+    padding: 0,
+    margin: 0,
+    border: '1px solid rgba(255,255,255,0)',
+    height: 0,
+    width: 0,
+    top: '2em',
+    left: '3em',
+    opacity: 0,
+    pointerEvents: 'none'
+  });
 });

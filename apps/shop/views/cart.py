@@ -1,3 +1,4 @@
+import attr
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import JsonResponse
@@ -39,5 +40,5 @@ def show_cart(request):
     render cart
     '''
     cart = Cart(request)
-    context = cart.create_cart_context()
+    context = attr.asdict(cart)
     return render(request, 'shop/cart.html', context)
