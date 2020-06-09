@@ -58,9 +58,6 @@ def get_paypal_client():
     return PayPalHttpClient(environment)
 
 
-PAYPAL_CLIENT = get_paypal_client()
-
-
 def checkout(request):
     '''
     get cart contents
@@ -248,7 +245,7 @@ def create_paypal_order(order):
     req.prefer('return=representation')
     req_body = create_paypal_order_body(order)
     req.request_body(req_body)
-    return PAYPAL_CLIENT.execute(req)
+    return get_paypal_client().execute(req)
 
 
 def send_all_emails(order):
@@ -451,7 +448,7 @@ def capture_paypal(request):
 
     req = AuthorizationsCaptureRequest(ids['authorizationID'])
     req.request_body(create_paypal_capture(order))
-    PAYPAL_CLIENT.execute(req)
+    get_paypal_client().execute(req)
 
     context = {
         "order": order,
