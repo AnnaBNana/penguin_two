@@ -23,6 +23,7 @@ idna==2.6
 ipaddress==1.0.18
 jmespath==0.9.3
 olefile==0.44
+paypal-checkout-serversdk==1.0.1
 paypalhttp==1.0.0
 phonenumbers==8.12.4
 Pillow==4.3.0

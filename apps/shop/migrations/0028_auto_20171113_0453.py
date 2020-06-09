@@ -16,13 +16,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='billing_address',
-            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='billing_address', to='shop.Address'),
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='order', to='shop.Address'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='order',
             name='shipping_address',
-            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='shipping_address', to='shop.Address'),
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='order', to='shop.Address'),
             preserve_default=False,
         ),
     ]
