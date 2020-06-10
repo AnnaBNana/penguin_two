@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 <script src="https://js.stripe.com/v3/"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=AeLNC6tjMpH3BANJJz7Q1CiPOeK5cS4sYxsWMzno1aEV7CGA59L-G-T7Xgfv4RZYg42PGS60pEwTerHY"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AeLNC6tjMpH3BANJJz7Q1CiPOeK5cS4sYxsWMzno1aEV7CGA59L-G-T7Xgfv4RZYg42PGS60pEwTerHY&intent=authorize"></script>
 <div class="checkout-container">
   <div class="row checkout-body">
     {% if sold_items %}
