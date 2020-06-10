@@ -50,7 +50,12 @@ stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
 def get_paypal_client():
     # Creating Access Token for Sandbox
-    environment = SandboxEnvironment(
+    if settings.ENV == 'LOCAL':
+        initializer = SandboxEnvironment
+    else:
+        initializer = LiveEnvironment
+
+    environment = initializer(
         client_id=settings.PAYPAL_CLIENT_ID,
         client_secret=settings.PAYPAL_SECRET
     )
