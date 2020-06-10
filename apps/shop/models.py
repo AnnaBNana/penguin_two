@@ -316,6 +316,10 @@ class SalesSummaryPanel(Product):
 
 class ShippingOptions(models.Model):
 
+    class Meta:
+        verbose_name = "Shipping Options"
+        verbose_name_plural = "Shipping Options"
+
     def __unicode__(self):
         oder_size_cats = {item[0]: item[1] for item in ORDER_SIZE_CAT}
         carriers = {item[0]: item[1] for item in CARRIER_CHOICES}
@@ -329,13 +333,13 @@ class ShippingOptions(models.Model):
             oder_size_cats[self.order_size_cat]
         )
 
-    order_size_cat = models.TextField(choices=ORDER_SIZE_CAT)
-    carrier = models.TextField(choices=CARRIER_CHOICES)
-    service_type = models.TextField(choices=SERVICE_TYPES)
-    locale = models.TextField(choices=LOCALES)
+    order_size_cat = models.CharField(choices=ORDER_SIZE_CAT, max_length=255, verbose_name='Order Size')
+    carrier = models.CharField(choices=CARRIER_CHOICES, max_length=255, verbose_name='Shipping Carrier')
+    service_type = models.CharField(choices=SERVICE_TYPES, max_length=255)
+    locale = models.CharField(choices=LOCALES, max_length=255)
     price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0.01)])
-    days_low = models.IntegerField()
-    days_high = models.IntegerField()
+    days_low = models.IntegerField(verbose_name='Delivery Date Range Min')
+    days_high = models.IntegerField(verbose_name='Delivery Date Range Max')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
