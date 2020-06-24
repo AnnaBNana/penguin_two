@@ -166,8 +166,6 @@ def create_order(data):
     order.save()
     # add order id to each item just sold
     order.products.set(items)
-    # wat?!?! this should be on the product model
-    Order.objects.update_sold_items(items)
     return order
 
 
@@ -189,13 +187,15 @@ def order_handler(request):
     parsed_payment = urlparse.parse_qs(form_data.get('payment'))
     parsed_address = urlparse.parse_qs(form_data.get('address'))
     parsed_shipping = urlparse.parse_qs(form_data.get('shipping'))
-    
-    order_address = Address.objects.get(id=parsed_address.get('address_id', [None])[0])
+
+    order_address = Address.objects.get(
+        id=parsed_address.get('address_id', [None])[0])
 
     order_id = None
     stripe_charge = None
     if purchase_method == "card":
-        charge_cents = int(100 * (float(items_total) + float(parsed_shipping["cost"][0])))
+        charge_cents = int(100 * (float(items_total) +
+                                  float(parsed_shipping["cost"][0])))
         try:
             stripe_charge = setup_stripe_charge(
                 charge_cents,
@@ -235,6 +235,8 @@ def order_handler(request):
     if stripe_charge:
         stripe.Charge.capture(stripe_charge.get('charge'))
 
+    Order.objects.update_sold_items(items)
+
     context = {
         "order": order,
         "message": "success!"
@@ -272,7 +274,8 @@ def send_all_emails(order):
         )
         logger.error(error_subject)
         context = {"order": order, "message": e.message}
-        error_email_text = render_to_string("shop/error_email.html", context=context)
+        error_email_text = render_to_string(
+            "shop/error_email.html", context=context)
         try:
             send_email(settings.ADMIN_EMAIL, error_subject, error_email_text)
         except (ValueError, RetryError) as e:
@@ -365,7 +368,8 @@ def send_email(recipient, subject, text):
         logger.error(message)
         raise ValueError(message)
     else:
-        logger.error('Mailgun API error:: [%s] %s', response.status_code, response.text)
+        logger.error('Mailgun API error:: [%s] %s',
+                     response.status_code, response.text)
         raise ValueError('RETRY')
 
 
@@ -442,12 +446,21 @@ def create_paypal_capture(order):
         "amount": {
             "currency_code": "USD",
             "value": str(order.subtotal + order.shipping),
-            },
+        },
         "final_capture": True
     }
 
 
 def capture_paypal(request):
+    #kick user out of checkout if cart is empty
+    try:
+        cart = request.session['cart']
+    except KeyError:
+        request.session['cart'] = []
+        logger.error('there was a cart error')
+        return JsonResponse({"cart_empty": True})
+
+    items = Product.objects.filter(pk__in=cart)
     ids = json.loads(request.body)
     order = Order.objects.get(id=request.session.get('order_id'))
 
@@ -455,6 +468,7 @@ def capture_paypal(request):
     req.request_body(create_paypal_capture(order))
     get_paypal_client().execute(req)
 
+    Order.objects.update_sold_items(items)
     context = {
         "order": order,
         "message": "success!"
