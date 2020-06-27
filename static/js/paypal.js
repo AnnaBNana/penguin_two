@@ -6,7 +6,7 @@ paypal.Buttons({
       "shipping": $("#shipping-form").serialize(),
       "payment": ""
     })
-    res = fetch('/create/order', {
+    return fetch('/create/order', {
       method: 'POST',
       headers: {
         'X-CSRFToken': getCookie('csrftoken'),
@@ -17,9 +17,15 @@ paypal.Buttons({
     }).then(function (res) {
       return res.json();
     }).then(function (data) {
+      if (data.cart_empty) {
+        window.location.assign('/show/cart');
+      }
       return data.id;
-    });
-    return res
+    })
+    // .catch(function(error) {
+    //   console.log("error");
+    //   console.log(error)
+    // });
   },
   onApprove: function (data, actions) {
     // Authorize the transaction
@@ -60,5 +66,9 @@ paypal.Buttons({
         $("#checkout-err").css("display", "block");
       });
     });
-  }
+  },
+  // onError: function (err) {
+  //   console.log(err)
+  //   console.log('err!!!!')
+  // }
 }).render('#paypal-button');

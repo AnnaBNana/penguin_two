@@ -3,7 +3,6 @@
 {% block sidebar %} {% endblock %}
 {% block content %}
 {% load static %}
-<script src="https://js.stripe.com/v3/"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=AeLNC6tjMpH3BANJJz7Q1CiPOeK5cS4sYxsWMzno1aEV7CGA59L-G-T7Xgfv4RZYg42PGS60pEwTerHY&intent=authorize"></script>
 <div class="checkout-container">
   <div class="row checkout-body">
@@ -108,7 +107,6 @@
       </div>
       <!-- tab content, section 3 -->
       <div id="payment" class="col s12">
-        <button type="button" class="grey darken-3 waves-effect waves-light btn cc-btn"><i class="fa fa-credit-card" aria-hidden="true"></i> Pay with Credit Card Via Stripe</button>
         <div id="paypal-button"></div>
         <div class="card-options">
           <h5 class="center-align">Card Details</h5>
@@ -155,10 +153,8 @@
 <script>
   var cost = "{{total|escapejs}}"
 </script>
-<!-- stripe payments + custom payment-related JS -->
 <script src="{% static 'js/payments.js' %}"></script>
 <script src="{% static 'js/shipping.js' %}"></script>
-<script src="{% static 'js/address-shipping-handler.js' %}"></script>
 <script src="{% static 'js/checkout.js' %}"></script>
 <script src="{% static 'js/paypal.js' %}"></script>
 

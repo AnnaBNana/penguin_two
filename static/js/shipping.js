@@ -1,7 +1,7 @@
 // stop form submit for address for, validate and send ajax req
-$('#address-form').submit(function (e) {
-    e.preventDefault();
-    var url = "/shipping"
+$('#address-form').submit(function(e) {
+    e.preventDefault(e);
+    var url = "/shipping";
     var data = $(this).serialize();
 
     $("#address-loading").css("display", "inline-block");
@@ -21,20 +21,20 @@ var shippingCallback = function (res) {
         window.location.assign('/show/cart');
     }
     if (res.errors) {
-        for (key in res.errors) {
-            $("#" + key + "-error").text(res.errors[key][0])
+        for (var key in res.errors) {
+            $("#" + key + "-error").text(res.errors[key][0]);
             $("#" + key + "-error").show();
-            $("#" + key + "-error").text(res.errors[key][0])
-            $("#" + key).css({ 'background-color': '#f7d9d0', 'border-bottom': '2px solid #d84315'})
+            $("#" + key + "-error").text(res.errors[key][0]);
+            $("#" + key).css({ 'background-color': '#f7d9d0', 'border-bottom': '2px solid #d84315'});
             $("#" + key).change(function(){
                 $("#" + key).css({ 'background-color': '', 'border-bottom': '' });
-            })
-        }
+            });
+        };
     } else {
         if (res.shippingOptions) {
-            let targetElementId = "shipping-input-target"
-            $("#" + targetElementId).empty()
-            for (let i = 0; i < res.shippingOptions.length; i++) {
+            var targetElementId = "shipping-input-target";
+            $("#" + targetElementId).empty();
+            for (var i = 0; i < res.shippingOptions.length; i++) {
                 addShippingOptionTo(res.shippingOptions[i], targetElementId);
             }
             $(".shipping-option").bind("click", shippingSelectionHandler);
@@ -48,9 +48,9 @@ var shippingCallback = function (res) {
 
 // add radio shipping option to target element
 function addShippingOptionTo(opt, targetId) {
-    let inputId = `choice-${opt.id}`;
-    let labelText = `${opt.carrier_display} ${opt.service_type_display} $${opt.price}`;
-    let containerId = "radio-target-wrapper" + opt.id;
+    var inputId = `choice-${opt.id}`;
+    var labelText = `${opt.carrier_display} ${opt.service_type_display} $${opt.price}`;
+    var containerId = "radio-target-wrapper" + opt.id;
 
     var containerObject = $("<div></div>")
         .attr("id", containerId)

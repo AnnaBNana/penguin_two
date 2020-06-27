@@ -3,7 +3,6 @@ import logging
 import urlparse
 import attr
 
-import stripe
 import requests
 from tenacity import (
     retry,
@@ -45,8 +44,6 @@ from ..cart import Cart
 
 
 logger = logging.getLogger(__name__)
-stripe.api_key = settings.STRIPE_PRIVATE_KEY
-
 
 def get_paypal_client():
     # Creating Access Token for Sandbox
@@ -192,23 +189,6 @@ def order_handler(request):
         id=parsed_address.get('address_id', [None])[0])
 
     order_id = None
-    stripe_charge = None
-    if purchase_method == "card":
-        charge_cents = int(100 * (float(items_total) +
-                                  float(parsed_shipping["cost"][0])))
-        try:
-            stripe_charge = setup_stripe_charge(
-                charge_cents,
-                parsed_payment['stripeToken'][0],
-                order_address.email
-            )
-            if 'error' in stripe_charge:
-                return JsonResponse(stripe_charge)
-            else:
-                order_id = stripe_charge['charge'].id
-        except RetryError as e:
-            return JsonResponse({'error': e.message.exception_info()[0].message})
-
     # this is the data we need to complete the order
     data = {
         "order_method": purchase_method,
@@ -230,10 +210,6 @@ def order_handler(request):
     if purchase_method == 'paypal':
         paypal_order = create_paypal_order(order)
         return JsonResponse(paypal_order.result.dict())
-
-    #  capture the order here using the order id (if paid with stripe)
-    if stripe_charge:
-        stripe.Charge.capture(stripe_charge.get('charge'))
 
     Order.objects.update_sold_items(items)
 
@@ -317,29 +293,6 @@ def email_text(order, seller):
     if seller:
         context["seller"] = True
     return render_to_string("shop/email.html", context=context)
-
-
-@retry(wait=wait_exponential(multiplier=1, min=4, max=10), stop=stop_after_attempt(4))
-def setup_stripe_charge(amount, stripe_token, email):
-    # some exceptions are caught as they will not benefit from retries, others result in retries and raise RetryException exception when retry limit expires
-    error_msg = ''
-    try:
-        charge = stripe.Charge.create(
-            amount=amount,
-            currency="usd",
-            capture=False,
-            source=stripe_token,
-            description="Charge for order to {}".format(email)
-        )
-        return {'charge': charge}
-    except stripe.error.CardError as e:
-        error_msg = e.message
-    except stripe.error.InvalidRequestError as e:
-        error_msg = e.message
-    except stripe.error.AuthenticationError as e:
-        error_msg = e.message
-    return {'error': error_msg}
-
 
 @retry(
     wait=wait_exponential(multiplier=1, min=4, max=10),
