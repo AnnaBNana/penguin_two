@@ -23,7 +23,8 @@
   <div class="row">
     <div class="col s12">
       <div class="card-panel card-warning">
-        <p>Problems checking out? Adblockers interfere with our checkout process in many cases. We do not serve ads, but you may need to turn off your ad-blocker to complete your purchase. Sorry for the inconvenience; we are working to remedy this issue.</p>
+        <p>Our online checkout is temporarily unavailable. Sorry for the inconvenience. To order please contact Rick at
+        <a href="mailto:rickpropas@comcast.net">rickpropas@comcast.net</a></p>
       </div>
     </div>
   </div>
@@ -52,9 +53,9 @@
     </div>
     {% endif %}
     <div class="row rt">
-      <a href="{% url 'shop:checkout' %}">
-        <button class="btn yellow accent-4 grey-text text-darken-3" type="button">Checkout</button>
-      </a>
+      <!-- <a href="{% url 'shop:checkout' %}"> -->
+        <button class="btn yellow accent-4 grey-text text-darken-3" type="button" disabled>Checkout</button>
+      <!-- </a> -->
     </div>
     {% endif %}
   </div>
